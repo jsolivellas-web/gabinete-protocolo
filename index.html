@@ -173,6 +173,14 @@ label.btn{cursor:pointer}
 .inv-card.a4{max-width:560px;font-size:.92rem}
 .inv-logo{display:block;max-height:90px;max-width:60%;margin:0 auto 14px;object-fit:contain}
 .inv-card.l .inv-logo{margin-left:0}
+#pk-incl{display:flex;flex-direction:column;gap:4px}
+.incl-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.incl-row input[type=checkbox]{width:auto}
+.incl-t{flex:1;min-width:160px;border-color:transparent;background:transparent;padding:5px 7px}
+.incl-t:hover,.incl-t:focus{border-color:var(--line-2);background:var(--sheet)}
+.incl-row.off .incl-t{text-decoration:line-through;color:var(--ink-2)}
+.incl-desc{display:flex;align-items:center;gap:6px;color:var(--ink-2)}
+.incl-desc input{width:100px}
 .verdict{font-family:var(--f-display);font-size:2.6rem;font-weight:700;line-height:1}
 @media (max-width:900px){
   .app{grid-template-columns:minmax(0,1fr)}
@@ -1711,11 +1719,15 @@ const sceneSVG = k => `<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid 
 const packFoto = id => Store.data.fotos.find(f => f.id === id)?.img;
 function packCalc(p, cfg){
   const n = num(cfg.n);
-  const base = p.fijo + p.pp * n;
+  const bruto = p.fijo + p.pp * n;
+  // Servicios del pack que el cliente no quiere: se descuentan (por defecto, la parte proporcional del pack).
+  const share = bruto / Math.max(1, p.incluye.length);
+  const quitados = (cfg.incluye || []).filter(i => !i.on).map(i => ({nombre:i.t, imp:-(i.desc === '' || i.desc == null ? Math.round(share) : num(i.desc))}));
+  const base = bruto + quitados.reduce((s, q) => s + q.imp, 0);
   const ex = p.extras.map((e, i) => ({nombre:e[0], precio:e[1], unidad:e[2], on:!!cfg.extras[i]})).filter(e => e.on).map(e => ({...e, imp:e.unidad === 'persona' ? e.precio * n : e.precio}));
   const cu = (cfg.custom || []).filter(c => c.nombre).map(c => ({nombre:c.nombre, precio:num(c.precio), unidad:c.unidad || 'fijo', imp:(c.unidad === 'persona' ? n : 1) * num(c.precio)}));
   const sub = base + [...ex, ...cu].reduce((s, e) => s + e.imp, 0), iva = sub * .21;
-  return {n, base, ex, cu, sub, iva, total:sub + iva};
+  return {n, bruto, share, quitados, base, ex, cu, sub, iva, total:sub + iva};
 }
 function contrListHTML(){
   const cs = [...Store.data.contrataciones].sort((a, b) => (b.creado || '').localeCompare(a.creado || ''));
@@ -1741,7 +1753,7 @@ function renderPacks(v){
       <section class="card"><h2>Mis contrataciones</h2><div id="contr-list">${contrListHTML()}</div></section>`;
     $('#pack-q').oninput = e => $('#pack-grid').innerHTML = packGridHTML(e.target.value);
     v.onclick = e => {
-      const b = e.target.closest('[data-pack]'); if (b){ const p = PACKS.find(x => x.id === b.dataset.pack); UI.pack = {packId:p.id, n:p.n, nombre:'', fecha:'', cliente:'', contacto:'', notas:'', extras:{}, custom:[]}; render(); window.scrollTo(0, 0); }
+      const b = e.target.closest('[data-pack]'); if (b){ const p = PACKS.find(x => x.id === b.dataset.pack); UI.pack = {packId:p.id, n:p.n, nombre:'', fecha:'', cliente:'', contacto:'', notas:'', extras:{}, custom:[], incluye:p.incluye.map(t => ({t, on:true, desc:''}))}; render(); window.scrollTo(0, 0); }
       const d = e.target.closest('[data-pack-foto-del]'); if (d) Store.remove('fotos', d.dataset.packFotoDel);
       const o = e.target.closest('[data-open-ev]'); if (o){ UI.evento = clone(Store.get('eventos', o.dataset.openEv)); go('eventos'); }
     };
@@ -1755,7 +1767,9 @@ function renderPacks(v){
   v.innerHTML = `<header class="row between"><div><div class="eyebrow">${esc(p.tipo)}</div><h1>${esc(p.nombre)}</h1></div><button class="ghost" data-back>← Volver a los packs</button></header>
   <div class="grid prec-grid">
     <section class="card"><div class="pack-img" style="border-radius:var(--r)">${foto ? `<img src="${foto}" alt="">` : sceneSVG(p.escena)}</div>
-      <p>${esc(p.desc)}</p><h3>Incluye</h3><ul class="small" style="margin:0;padding-left:18px">${p.incluye.map(i => `<li>${esc(i)}</li>`).join('')}</ul>
+      <p>${esc(p.desc)}</p><div class="row between"><h3>Incluye</h3><button class="small ghost" data-incl-reset>Restablecer el pack</button></div>
+      <p class="small muted" style="margin:0">Desmarca lo que el cliente no quiera: se descuenta del precio (puedes cambiar el importe). También puedes reescribir cada servicio a su gusto.</p>
+      <div id="pk-incl"></div>
       <h3>Complementos</h3><div id="pk-extras">${p.extras.map((e, i) => `<label class="check"><input type="checkbox" id="pk-ex-${i}" data-ex="${i}" ${cfg.extras[i] ? 'checked' : ''}><span style="flex:1">${esc(e[0])}</span><span class="mono small">${eur(e[1])}${e[2] === 'persona' ? ' / ' + esc(p.unidad.split(' ')[0].replace(/s$/, '')) : ''}</span></label>`).join('')}</div>
       <h3>Añadir otros complementos</h3><div id="pk-custom"></div><button class="small" data-add-custom>+ Añadir complemento</button></section>
     <section class="card"><h2>Tu contratación</h2>
@@ -1766,13 +1780,18 @@ function renderPacks(v){
       <p class="small muted">Al contratar se guarda la solicitud en «Mis contrataciones» y se crea el evento con sus partidas de presupuesto, listo para planificar.</p></section>
   </div>`;
   const paintCustom = () => $('#pk-custom').innerHTML = cfg.custom.map((c, i) => `<div class="row" style="margin-bottom:6px"><input id="custom.${i}.nombre" data-k="custom.${i}.nombre" value="${esc(c.nombre)}" placeholder="Complemento" style="flex:2"><input id="custom.${i}.precio" data-k="custom.${i}.precio" type="number" step="any" value="${esc(c.precio)}" placeholder="Precio €" style="flex:1"><select id="custom.${i}.unidad" data-k="custom.${i}.unidad" style="flex:1"><option value="fijo" ${c.unidad !== 'persona' ? 'selected' : ''}>Precio fijo</option><option value="persona" ${c.unidad === 'persona' ? 'selected' : ''}>Por unidad</option></select><button class="ghost small danger" data-del-custom="${i}">✕</button></div>`).join('');
+  cfg.incluye ??= p.incluye.map(t => ({t, on:true, desc:''}));
+  const paintIncl = () => { const sh = Math.round(packCalc(p, cfg).share);
+    $('#pk-incl').innerHTML = cfg.incluye.map((it, i) => `<div class="incl-row ${it.on ? '' : 'off'}"><input type="checkbox" id="pk-inc-${i}" data-inc="${i}" ${it.on ? 'checked' : ''} aria-label="Incluir en el pack"><input id="incluye.${i}.t" data-k="incluye.${i}.t" value="${esc(it.t)}" class="incl-t" aria-label="Servicio incluido">${it.on ? '' : `<label class="small incl-desc">Descuento <input id="incluye.${i}.desc" data-k="incluye.${i}.desc" type="number" step="any" value="${esc(it.desc)}" placeholder="${sh}"> €</label>`}</div>`).join(''); };
   const paintSum = () => { const c = packCalc(p, cfg);
-    $('#pk-sum').innerHTML = `<div class="tbl-wrap"><table><tbody><tr><td>Pack ${esc(p.nombre)} (${c.n} ${esc(p.unidad)})</td><td class="num">${eur(c.base)}</td></tr>${[...c.ex, ...c.cu].map(e => `<tr><td>${esc(e.nombre)}${e.unidad === 'persona' ? ` <span class="muted small">(${eur(e.precio)} × ${c.n})</span>` : ''}</td><td class="num">${eur(e.imp)}</td></tr>`).join('')}
+    $('#pk-sum').innerHTML = `<div class="tbl-wrap"><table><tbody><tr><td>Pack ${esc(p.nombre)} (${c.n} ${esc(p.unidad)})</td><td class="num">${eur(c.bruto)}</td></tr>${c.quitados.map(q => `<tr><td class="muted">Sin «${esc(q.nombre)}»</td><td class="num">${eur(q.imp)}</td></tr>`).join('')}${[...c.ex, ...c.cu].map(e => `<tr><td>${esc(e.nombre)}${e.unidad === 'persona' ? ` <span class="muted small">(${eur(e.precio)} × ${c.n})</span>` : ''}</td><td class="num">${eur(e.imp)}</td></tr>`).join('')}
       <tr><td class="muted">Base imponible</td><td class="num">${eur(c.sub)}</td></tr><tr><td class="muted">IVA (21%)</td><td class="num">${eur(c.iva)}</td></tr><tr><td><b>Total</b></td><td class="num"><b>${eur(c.total)}</b></td></tr></tbody></table></div>`; };
-  paintCustom(); paintSum();
-  bindEditor(v, cfg, {onInput:paintSum, onChange:paintSum});
+  paintIncl(); paintCustom(); paintSum();
+  bindEditor(v, cfg, {onInput:k => { paintSum(); if (k === 'n') $$('#pk-incl input[type=number]').forEach(x => x.placeholder = Math.round(packCalc(p, cfg).share)); }, onChange:paintSum});
   v.onclick = async e => {
     if (e.target.closest('[data-back]')){ UI.pack = null; render(); return; }
+    const inc = e.target.closest('[data-inc]'); if (inc){ cfg.incluye[inc.dataset.inc].on = inc.checked; paintIncl(); paintSum(); return; }
+    if (e.target.closest('[data-incl-reset]')){ cfg.incluye = p.incluye.map(t => ({t, on:true, desc:''})); paintIncl(); paintSum(); return; }
     const x = e.target.closest('[data-ex]'); if (x){ cfg.extras[x.dataset.ex] = x.checked; paintSum(); }
     if (e.target.closest('[data-add-custom]')){ cfg.custom.push({nombre:'', precio:'', unidad:'fijo'}); paintCustom(); }
     const dc = e.target.closest('[data-del-custom]'); if (dc){ cfg.custom.splice(+dc.dataset.delCustom, 1); paintCustom(); paintSum(); }
@@ -1783,19 +1802,21 @@ function renderPacks(v){
 }
 function packBlocks(p, cfg){
   const c = packCalc(p, cfg);
-  const rows = [[`Pack ${p.nombre} (${c.n} ${p.unidad})`, eur(c.base)], ...[...c.ex, ...c.cu].map(e => [e.nombre + (e.unidad === 'persona' ? ` (${eur(e.precio)} × ${c.n})` : ''), eur(e.imp)]), ['Base imponible', eur(c.sub)], ['IVA (21%)', eur(c.iva)], ['TOTAL', eur(c.total)]];
-  return [{t:'title', text:`Propuesta · ${p.nombre}`}, {t:'p', text:`${cfg.nombre || p.tipo}${cfg.fecha ? ' · ' + fdate(cfg.fecha) : ''}${cfg.cliente ? ' · ' + cfg.cliente : ''}`}, {t:'p', text:p.desc}, {t:'h', text:'Incluye'}, ...p.incluye.map(i => ({t:'p', text:'• ' + i})),
+  const inc = (cfg.incluye || p.incluye.map(t => ({t, on:true}))), si = inc.filter(i => i.on).map(i => i.t), no = inc.filter(i => !i.on).map(i => i.t);
+  const rows = [[`Pack ${p.nombre} (${c.n} ${p.unidad})`, eur(c.bruto)], ...c.quitados.map(q => [`Sin «${q.nombre}»`, eur(q.imp)]), ...[...c.ex, ...c.cu].map(e => [e.nombre + (e.unidad === 'persona' ? ` (${eur(e.precio)} × ${c.n})` : ''), eur(e.imp)]), ['Base imponible', eur(c.sub)], ['IVA (21%)', eur(c.iva)], ['TOTAL', eur(c.total)]];
+  return [{t:'title', text:`Propuesta · ${p.nombre}`}, {t:'p', text:`${cfg.nombre || p.tipo}${cfg.fecha ? ' · ' + fdate(cfg.fecha) : ''}${cfg.cliente ? ' · ' + cfg.cliente : ''}`}, {t:'p', text:p.desc}, {t:'h', text:'Incluye'}, ...si.map(i => ({t:'p', text:'• ' + i})), ...(no.length ? [{t:'h', text:'No incluido, a petición del cliente'}, ...no.map(i => ({t:'p', text:'• ' + i}))] : []),
     {t:'h', text:'Desglose'}, {t:'table', head:['Concepto','Importe'], rows, widths:[.75,.25], align:['left','right'], boldRows:[rows.length - 1]}, ...(cfg.notas ? [{t:'h', text:'Observaciones'}, {t:'p', text:cfg.notas}] : []), {t:'p', text:'Precios orientativos, IVA incluido. Validez de la propuesta: 30 días.', size:8.5, i:true}];
 }
 async function contratarPack(p, cfg){
   const c = packCalc(p, cfg);
+  const inc = cfg.incluye || p.incluye.map(t => ({t, on:true})), si = inc.filter(i => i.on).map(i => i.t), no = inc.filter(i => !i.on).map(i => i.t);
   const ev = newEvento(p.tipo);
-  Object.assign(ev, {nombre:cfg.nombre || p.nombre, fecha:cfg.fecha, aforo:c.n, estado:'Confirmado', anfitrion:cfg.cliente, contacto:cfg.contacto, descripcion:`Contratado el pack «${p.nombre}». Incluye: ${p.incluye.join('; ')}.${cfg.notas ? '\n' + cfg.notas : ''}`});
-  ev.partidas = [{concepto:`Pack ${p.nombre} (base)`, previsto:+(c.base * 1.21).toFixed(2), real:''}, ...[...c.ex, ...c.cu].map(e => ({concepto:e.nombre, previsto:+(e.imp * 1.21).toFixed(2), real:''}))];
-  ev.proveedores = [{proveedor:'Pack ' + p.nombre, servicio:p.incluye.join(', '), contacto:'', coste:+c.total.toFixed(2), estado:'Contratado'}];
+  Object.assign(ev, {nombre:cfg.nombre || p.nombre, fecha:cfg.fecha, aforo:c.n, estado:'Confirmado', anfitrion:cfg.cliente, contacto:cfg.contacto, descripcion:`Contratado el pack «${p.nombre}». Incluye: ${si.join('; ')}.${no.length ? ` No incluye (a petición del cliente): ${no.join('; ')}.` : ''}${cfg.notas ? '\n' + cfg.notas : ''}`});
+  ev.partidas = [{concepto:`Pack ${p.nombre}${no.length ? ' (ajustado)' : ' (base)'}`, previsto:+(c.base * 1.21).toFixed(2), real:''}, ...[...c.ex, ...c.cu].map(e => ({concepto:e.nombre, previsto:+(e.imp * 1.21).toFixed(2), real:''}))];
+  ev.proveedores = [{proveedor:'Pack ' + p.nombre, servicio:si.join(', '), contacto:'', coste:+c.total.toFixed(2), estado:'Contratado'}];
   ev.id = uid();
   if (!(await Store.save('eventos', ev))) return;
-  await Store.save('contrataciones', {id:uid(), packId:p.id, packNombre:p.nombre, nombre:ev.nombre, fecha:cfg.fecha, n:c.n, cliente:cfg.cliente, extras:[...c.ex, ...c.cu].map(e => e.nombre), total:+c.total.toFixed(2), estado:'Solicitada', eventoId:ev.id, creado:new Date().toISOString()});
+  await Store.save('contrataciones', {id:uid(), packId:p.id, packNombre:p.nombre, nombre:ev.nombre, fecha:cfg.fecha, n:c.n, cliente:cfg.cliente, extras:[...c.ex, ...c.cu].map(e => e.nombre), sinIncluir:no, total:+c.total.toFixed(2), estado:'Solicitada', eventoId:ev.id, creado:new Date().toISOString()});
   modal('Pack contratado', `<p>Se ha guardado la solicitud del pack <b>${esc(p.nombre)}</b> por <b>${eur(c.total)}</b> y se ha creado el evento «${esc(ev.nombre)}» con su presupuesto.</p><div class="row"><button class="primary" data-goev>Abrir el evento</button><button data-close>Seguir viendo packs</button></div>`, m => {
     $('[data-goev]', m).onclick = () => { m.remove(); UI.pack = null; UI.evento = clone(ev); UI.evTab = 'datos'; go('eventos'); };
     $('[data-close]', m).addEventListener('click', () => { UI.pack = null; render(); });
