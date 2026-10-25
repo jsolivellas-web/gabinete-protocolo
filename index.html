@@ -181,6 +181,16 @@ label.btn{cursor:pointer}
 .incl-row.off .incl-t{text-decoration:line-through;color:var(--ink-2)}
 .incl-desc{display:flex;align-items:center;gap:6px;color:var(--ink-2)}
 .incl-desc input{width:100px}
+.guide{border:1px solid var(--line);border-left:3px solid var(--gold);background:var(--sheet);border-radius:var(--r);padding:12px 14px}
+.guide-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font-size:.9rem}
+.guide-top > div:first-child{min-width:0;flex:1}
+.guide-pasos{margin:10px 0 0;padding-left:20px;font-size:.88rem;display:flex;flex-direction:column;gap:3px}
+.ex-banner{background:var(--gold-soft);color:var(--ink);border:1px solid var(--gold);border-radius:var(--r);padding:10px 14px;font-size:.88rem}
+.flujo{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px}
+.paso{flex:1 1 140px;flex-direction:column;align-items:flex-start;white-space:normal;text-align:left;padding:12px;gap:4px;min-width:0}
+.paso-n{font-family:var(--f-mono);font-weight:600;color:var(--sheet);background:var(--accent);border-radius:999px;width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;font-size:.8rem}
+.flecha{align-self:center;color:var(--ink-2);font-size:1.2rem}
+@media (max-width:700px){.flecha{display:none}}
 .verdict{font-family:var(--f-display);font-size:2.6rem;font-weight:700;line-height:1}
 @media (max-width:900px){
   .app{grid-template-columns:minmax(0,1fr)}
@@ -293,6 +303,7 @@ const Store = {
     }, () => {}));
   },
   async save(col, obj){
+    delete obj._ejemplo;
     obj.actualizado = new Date().toISOString();
     if (!obj.id) obj.id = uid();
     const plain = clone(obj);
@@ -551,6 +562,7 @@ const llTr = r => Array.isArray(r[1]) ? r[1] : TRK[r[1]];
    ============================================================ */
 const VIEWS = [
   {id:'panel', label:'Panel', group:'Inicio'},
+  {id:'guia', label:'Guía y ejemplos', group:'Inicio'},
   {id:'eventos', label:'Eventos', group:'Organizar', count:() => Store.data.eventos.length},
   {id:'catalogo', label:'Tipos de evento', group:'Organizar'},
   {id:'packs', label:'Packs y contratación', group:'Organizar', count:() => Store.data.contrataciones.length},
@@ -577,7 +589,7 @@ function render(){
   renderNav();
   const v = $('#view'); v.onclick = null;
   v.onchange = null;
-  ({panel:renderPanel, eventos:renderEventos, catalogo:renderCatalogo, packs:renderPacks, invitaciones:renderInvitaciones, actas:renderActas, noticias:renderNoticias, precedencia:renderPrecedencia, tratamientos:renderTratamientos, evaluacion:renderEvaluacion}[UI.view] || renderPanel)(v);
+  ({panel:renderPanel, guia:renderGuia, eventos:renderEventos, catalogo:renderCatalogo, packs:renderPacks, invitaciones:renderInvitaciones, actas:renderActas, noticias:renderNoticias, precedencia:renderPrecedencia, tratamientos:renderTratamientos, evaluacion:renderEvaluacion}[UI.view] || renderPanel)(v);
 }
 function refreshLists(){
   renderNav();
@@ -603,6 +615,7 @@ function renderPanel(v){
   v.innerHTML = `
   <header><div class="eyebrow">Panel de control</div><h1>Todo el gabinete, en una mesa</h1>
   <p class="lede">Organiza cualquier acto, del viaje de estudios a la visita oficial: actas con presupuesto, precedencias, colocación en mesa, tratamientos y evaluación SMART.</p></header>
+  <div class="guide"><div class="guide-top"><div><b>¿Primera vez?</b> <span class="muted">Abre la guía: hay un ejemplo completo en cada apartado para ver cómo se rellena.</span></div><button class="small primary" data-view-go="guia">Guía y ejemplos</button></div></div>
   <div class="grid g4">
     <div class="card kpi"><span class="l">Eventos</span><span class="v">${evs.length}</span><span class="small muted">${prox.length} por celebrar</span></div>
     <div class="card kpi"><span class="l">Próximos 30 días</span><span class="v">${prox30}</span><span class="small muted">desde hoy</span></div>
@@ -686,6 +699,7 @@ function renderEventos(v){
   if (!UI.evento){
     v.innerHTML = `<header class="row between"><div><div class="eyebrow">Organizar</div><h1>Eventos</h1><p class="lede">Ficha completa de cada acto: datos, protocolo, lista de control, tareas, escaleta, proveedores, invitados y presupuesto. Todo se puede compartir.</p></div>
       <div class="row"><button data-export-all>Exportar todo</button><button data-import>Importar</button><button class="primary" data-act="new-ev">Nuevo evento</button></div></header>
+      ${guideBar('eventos')}
       <section class="card" id="ev-list">${evListHTML()}</section>`;
     v.onclick = e => {
       const o = e.target.closest('[data-open-ev]'); if (o){ UI.evento = clone(Store.get('eventos', o.dataset.openEv)); render(); }
@@ -699,6 +713,7 @@ function renderEventos(v){
   const tabs = [['datos','Datos y protocolo'],['check','Lista de control'],['tareas','Tareas'],['escaleta','Escaleta'],['invitados','Invitados'],['prov','Proveedores'],['pres','Presupuesto'],['compartir','Compartir']];
   v.innerHTML = `<header class="row between"><div><div class="eyebrow">${esc(d.tipo || 'Evento')}</div><h1>${esc(d.nombre || 'Nuevo evento')}</h1></div>
     <div class="row"><button class="ghost" data-back>← Volver</button>${d.id ? '<button class="ghost danger" data-del-ev>Borrar</button>' : ''}<button class="primary" data-save-ev>Guardar</button></div></header>
+    ${exBanner(d)}
     <div class="tabs" id="ev-tabs">${tabs.map(([id, l]) => `<button data-tab="${id}" class="${UI.evTab === id ? 'on' : ''}">${l}</button>`).join('')}</div>
     <section class="card" id="ev-body"></section>`;
   const body = $('#ev-body');
@@ -828,6 +843,7 @@ function importDialog(){
    ============================================================ */
 function renderCatalogo(v){
   v.innerHTML = `<header><div class="eyebrow">Organizar</div><h1>Tipos de evento</h1><p class="lede">${ALL_TYPES.length} tipos agrupados por ámbito. Al elegir uno se crea el evento con su tipo de protocolo, una lista de control propia y las partidas de presupuesto habituales.</p></header>
+  ${guideBar('catalogo')}
   <input id="cat-q" placeholder="Buscar un tipo (boda, congreso, maratón…)" style="max-width:420px">
   <div class="cat-grid" id="cat-grid">${catGridHTML('')}</div>`;
   $('#cat-q').oninput = e => $('#cat-grid').innerHTML = catGridHTML(e.target.value);
@@ -861,6 +877,7 @@ function actaTotals(a){
 function renderActas(v){
   if (!UI.acta){
     v.innerHTML = `<header class="row between"><div><div class="eyebrow">Organizar</div><h1>Actas y presupuestos</h1><p class="lede">Redacta el acta de cada reunión. Cada propuesta lleva sus partidas y el programa genera el presupuesto con imprevistos e IVA.</p></div><button class="primary" data-new-acta>Nueva acta</button></header>
+    ${guideBar('actas')}
     <section class="card" id="acta-list">${actaListHTML()}</section>`;
     v.onclick = e => { if (e.target.closest('[data-new-acta]')){ UI.acta = newActa(); UI.actaTab = 'datos'; render(); } const o = e.target.closest('[data-open-acta]'); if (o){ UI.acta = clone(Store.get('actas', o.dataset.openActa)); UI.actaTab = 'datos'; render(); } };
     return;
@@ -868,6 +885,7 @@ function renderActas(v){
   const a = UI.acta;
   const tabs = [['datos','Datos de la reunión'],['props','Propuestas y acuerdos'],['pres','Presupuesto'],['acta','Acta redactada']];
   v.innerHTML = `<header class="row between"><div><div class="eyebrow">Acta</div><h1>${esc(a.tipo)}</h1></div><div class="row"><button class="ghost" data-back>← Volver</button>${a.id ? '<button class="ghost danger" data-del-acta>Borrar</button>' : ''}<button class="primary" data-save-acta>Guardar</button></div></header>
+  ${exBanner(a)}
   <div class="tabs" id="acta-tabs">${tabs.map(([id, l]) => `<button data-tab="${id}" class="${UI.actaTab === id ? 'on' : ''}">${l}</button>`).join('')}</div>
   <section class="card" id="acta-body"></section>`;
   const body = $('#acta-body');
@@ -1080,6 +1098,7 @@ function heuristicNews(text){
 }
 function renderNoticias(v){
   v.innerHTML = `<header><div class="eyebrow">Protocolo</div><h1>Análisis de noticias</h1><p class="lede">Pega una noticia sobre un acto (empresarial, institucional, deportivo, religioso…) y obtén un esquema: tipo de protocolo, acto, presidencia, autoridades en su orden de precedencia, intervenciones y símbolos.</p></header>
+  ${guideBar('noticias')}
   <section class="card">
     <label class="f">Texto de la noticia<textarea id="news-text" style="min-height:200px" placeholder="Pega aquí el texto completo de la noticia…">${esc(lsGet('gp_news_draft', ''))}</textarea></label>
     <div class="row"><button class="primary ai-only" id="news-ai"><span class="ai-badge" style="background:rgba(255,255,255,.2);color:inherit">IA</span> Analizar con Claude</button><button id="news-basic">Análisis rápido (sin IA)</button><button class="ghost" id="news-stop" hidden>Detener</button><span class="small muted no-ai">El análisis con IA está disponible al abrir esta página en Claude.</span></div>
@@ -1175,6 +1194,7 @@ function precFromInvitados(ev){
 function renderPrecedencia(v){
   const amb = AMBITOS[P.ambito];
   v.innerHTML = `<header><div class="eyebrow">Protocolo</div><h1>Precedencias y mesas</h1><p class="lede">Añade a las autoridades o invitados, elige el ámbito del acto y el programa los ordena y los sienta en una mesa presidencial, redonda o de banquete.</p></header>
+  ${guideBar('precedencia')}
   <div class="grid prec-grid" id="prec-grid">
     <section class="card">
       <h2>1. Asistentes</h2>
@@ -1328,6 +1348,7 @@ function svgBanquete(items, ingles){
    ============================================================ */
 function renderTratamientos(v){
   v.innerHTML = `<header><div class="eyebrow">Protocolo</div><h1>Tratamientos</h1><p class="lede">Cómo dirigirse de palabra y por escrito a cada personalidad: Casa Real, Gobierno, autonomías, justicia, Fuerzas Armadas, diplomacia, confesiones religiosas, universidad, nobleza, empresa y celebridades.</p></header>
+  ${guideBar('tratamientos')}
   <div class="row"><input id="tr-q" placeholder="Buscar (obispo, alcalde, embajador, actor…)" style="max-width:380px"><div class="chips" id="tr-g">${['Todos', ...TRAT.map(g => g.g)].map((g, i) => `<button class="chip" data-g="${esc(g)}" ${i === 0 ? 'style="border-color:var(--accent);color:var(--accent)"' : ''}>${esc(g)}</button>`).join('')}</div></div>
   <div id="tr-out"></div>
   <section class="card"><div class="eyebrow">Fuente oficial</div><h2>Lista de tratamientos del Govern de les Illes Balears</h2>
@@ -1398,12 +1419,14 @@ function renderEvaluacion(v){
   if (!UI.evaluacion){
     v.innerHTML = `<header class="row between"><div><div class="eyebrow">Medir</div><h1>Evaluación del acto</h1><p class="lede">Mide asistencia, presupuesto, satisfacción por áreas, impacto e incidencias, y comprueba cada objetivo con el método SMART.</p></div>
       <div class="row"><select id="ev-pick" style="max-width:260px"><option value="">Evaluar un evento guardado…</option>${Store.data.eventos.map(e => `<option value="${e.id}">${esc(e.nombre)}</option>`).join('')}</select><button class="primary" data-new-eval>Nueva evaluación</button></div></header>
+      ${guideBar('evaluacion')}
       <section class="card" id="eval-list">${evalListHTML()}</section>`;
     v.onclick = e => { if (e.target.closest('[data-new-eval]')){ UI.evaluacion = newEvaluacion(Store.get('eventos', $('#ev-pick').value)); render(); } const o = e.target.closest('[data-open-eval]'); if (o){ UI.evaluacion = clone(Store.get('evaluaciones', o.dataset.openEval)); render(); } };
     return;
   }
   const x = UI.evaluacion;
   v.innerHTML = `<header class="row between"><div><div class="eyebrow">Evaluación</div><h1>${esc(x.nombre || 'Nuevo acto')}</h1></div><div class="row"><button class="ghost" data-back>← Volver</button>${x.id ? '<button class="ghost danger" data-del-eval>Borrar</button>' : ''}<button class="primary" data-save-eval>Guardar</button></div></header>
+  ${exBanner(x)}
   <section class="card" id="eval-res"></section>
   <section class="card" id="eval-form"></section>`;
   const form = $('#eval-form');
@@ -1748,6 +1771,7 @@ function packGridHTML(q = ''){
 function renderPacks(v){
   if (!UI.pack){
     v.innerHTML = `<header><div class="eyebrow">Organizar</div><h1>Packs y contratación</h1><p class="lede">Ejemplos de cada tipo de evento con todo lo que incluyen. Abre uno para ajustar asistentes, añadir complementos y contratarlo: se crea el evento con su presupuesto.</p></header>
+      ${guideBar('packs')}
       <div class="row"><input id="pack-q" placeholder="Buscar pack (boda, congreso, carrera…)" style="max-width:380px"><span class="small muted">Precios orientativos. Puedes sustituir cada ilustración por una foto propia.</span></div>
       <div class="pack-grid" id="pack-grid">${packGridHTML()}</div>
       <section class="card"><h2>Mis contrataciones</h2><div id="contr-list">${contrListHTML()}</div></section>`;
@@ -1765,6 +1789,7 @@ function renderPacks(v){
   }
   const cfg = UI.pack, p = PACKS.find(x => x.id === cfg.packId), foto = packFoto(p.id);
   v.innerHTML = `<header class="row between"><div><div class="eyebrow">${esc(p.tipo)}</div><h1>${esc(p.nombre)}</h1></div><button class="ghost" data-back>← Volver a los packs</button></header>
+  ${exBanner(cfg)}
   <div class="grid prec-grid">
     <section class="card"><div class="pack-img" style="border-radius:var(--r)">${foto ? `<img src="${foto}" alt="">` : sceneSVG(p.escena)}</div>
       <p>${esc(p.desc)}</p><div class="row between"><h3>Incluye</h3><button class="small ghost" data-incl-reset>Restablecer el pack</button></div>
@@ -1875,6 +1900,7 @@ function renderInvitaciones(v){
   const I = UI.inv ??= Object.assign({tipo:'tarjeton', eventoId:'', anfitrion:'', cargo:'', trat:'', dest:'', motivo:'', fecha:'', hora:'', lugar:'', ciudad:'', vest:'', rsvp:'', rsvpFecha:'', notas:'', logo:''}, lsGet('gp_inv', {}));
   const catSel = UI.invCat || 'oficial';
   v.innerHTML = `<header><div class="eyebrow">Organizar</div><h1>Invitaciones</h1><p class="lede">Qué tipo de invitación corresponde a cada evento, qué partes lleva y con cuánta antelación se envía. Después, redáctala con tus datos y descárgala en PDF o Word.</p></header>
+  ${guideBar('invitaciones')}
   <section class="card"><h2>¿Qué invitación uso?</h2>
     <div class="chips" id="inv-cats">${CATS.filter((c, i, a) => a.findIndex(y => y.id === c.id) === i).map(c => `<button class="chip" data-icat="${c.id}" ${c.id === catSel ? 'style="border-color:var(--accent);color:var(--accent)"' : ''}>${esc({oficial:'Oficiales, políticos y religiosos', empresarial:'Empresariales', deportivo:'Deportivos', academico:'Académicos y escolares', social:'Sociales y familiares', cultural:'Culturales', gala:'Galas y premios'}[c.id] || c.nombre)}</button>`).join('')}</div>
     <div class="trat-grid" id="inv-rec">${(INV_CAT[catSel] || INV_CAT.general).map((id, k) => { const t = INV.find(z => z.id === id); return `<div class="trat"><div class="k">${k === 0 ? 'Recomendada' : 'También se usa'}</div><div class="tt">${esc(t.nombre)}</div><div class="small"><b>Para:</b> ${esc(t.ambito)}</div><div class="small"><b>Envío:</b> ${esc(t.envio)}</div><div class="small"><b>Formato:</b> ${esc(t.formato)}</div><div class="small"><b>Partes:</b><ul style="margin:4px 0 0;padding-left:18px">${t.partes.map(p => `<li>${esc(p)}</li>`).join('')}</ul></div><div class="small muted">${esc(t.nota)}</div><button class="small" data-usar="${t.id}" style="align-self:flex-start;margin-top:4px">Redactar esta invitación ↓</button></div>`; }).join('')}</div>
@@ -1911,6 +1937,87 @@ function renderInvitaciones(v){
     if (e.target.closest('[data-inv-docx]')) exportDoc('docx', name, invBlocks(r), {logo:I.logo, center:r.center, logoCm:r.center ? 5 : 4, font:'Times New Roman'});
     if (e.target.closest('[data-inv-copy]')) copyText(r.lines.map(l => l.gap ? '' : l.text).join('\n'), 'Texto copiado');
   };
+}
+
+/* ============================================================
+   GUÍA Y EJEMPLOS: un ejemplo completo por apartado (no se guarda hasta pulsar Guardar)
+   ============================================================ */
+const GUIA = {
+  eventos:{t:'Eventos', d:'La ficha central de cada acto: datos, protocolo, lista de control, tareas, escaleta, invitados, proveedores y presupuesto.',
+    pasos:['Pulsa «Nuevo evento» o elige un tipo en «Tipos de evento».','Rellena «Datos y protocolo» y, si quieres, sube el logotipo o el anuncio.','Marca la lista de control y reparte las tareas con fecha y responsable.','Prepara la escaleta y la lista de invitados con su tratamiento.','Anota proveedores y presupuesto (previsto y real).','En «Compartir», descarga la ficha en PDF o Word, o copia el resumen.']},
+  catalogo:{t:'Tipos de evento', d:'Más de cien tipos de acto agrupados por ámbito, cada uno con su lista de control y sus partidas.',
+    pasos:['Busca el tipo de acto (boda, congreso, maratón…).','Pulsa el tipo: se crea un evento nuevo con su tipo de protocolo.','La lista de control y las partidas de presupuesto ya vienen cargadas.']},
+  packs:{t:'Packs y contratación', d:'Ejemplos de cada evento con todo incluido, que se adaptan al cliente y se contratan.',
+    pasos:['Abre un pack con «Ver y contratar».','Indica asistentes, fecha y cliente.','En «Incluye», desmarca lo que el cliente no quiera y ajusta el descuento.','Marca complementos o añade otros con su precio.','Descarga la propuesta en PDF o Word para el cliente.','Pulsa «Contratar»: se guarda la solicitud y se crea el evento con su presupuesto.']},
+  actas:{t:'Actas y presupuestos', d:'El acta de cada reunión, con el presupuesto de lo que se propone calculado solo.',
+    pasos:['Pulsa «Nueva acta» y rellena asistentes y orden del día.','En «Propuestas y acuerdos», añade cada propuesta con sus partidas de gasto.','Anota los acuerdos y el resultado de cada votación.','En «Presupuesto», revisa base, imprevistos, IVA y total; descárgalo en Word o PDF.','En «Acta redactada», genera el texto y descárgalo en Word o PDF con el logotipo.']},
+  invitaciones:{t:'Invitaciones', d:'Qué invitación corresponde a cada acto y un redactor que la deja lista para imprimir.',
+    pasos:['Elige el ámbito del acto y mira la invitación recomendada.','Pulsa «Redactar esta invitación» o rellena con un evento guardado.','Elige el tratamiento del destinatario y completa fecha, lugar y S.R.C.','Sube el escudo, logotipo o imagen.','Descárgala en PDF o Word.']},
+  noticias:{t:'Análisis de noticias', d:'Convierte una noticia en un esquema de protocolo con las autoridades ordenadas.',
+    pasos:['Pega el texto completo de la noticia.','Pulsa «Análisis rápido» (o «Analizar con Claude» dentro de Claude).','Revisa el tipo de protocolo y el orden de autoridades.','Pulsa «Llevar a Precedencias y mesas» para sentarlas.']},
+  precedencia:{t:'Precedencias y mesas', d:'Ordena a las autoridades según la norma y las coloca en la mesa.',
+    pasos:['Elige el ámbito del acto (estatal, autonómico, Illes Balears, empresa…).','Añade a cada persona con su cargo y nombre.','Indica quién es el anfitrión y si preside o cede la presidencia.','Elige la mesa: presidencial, redonda, de banquete o el orden de banderas.','Copia el orden para la escaleta o para el plano.']},
+  tratamientos:{t:'Tratamientos', d:'Cómo dirigirse a cada personalidad, de palabra y por escrito.',
+    pasos:['Busca el cargo (alcalde, obispo, rector…).','Consulta el tratamiento, la abreviatura y cómo saludar.','Para Baleares y el Estado, abre la lista oficial del Govern, ordenada por precedencia.']},
+  evaluacion:{t:'Evaluación del acto', d:'Mide cómo ha ido el acto con indicadores y objetivos SMART.',
+    pasos:['Pulsa «Nueva evaluación» o elige un evento guardado.','Anota asistentes y gasto, previstos y reales.','Puntúa de 1 a 5 cada área según las encuestas.','Para cada objetivo, puntúa los criterios SMART y anota meta y resultado.','Lee el índice global y descarga el informe.']}
+};
+const GUIA_ORDEN = ['catalogo','packs','eventos','actas','invitaciones','precedencia','tratamientos','noticias','evaluacion'];
+function guideBar(view){
+  const g = GUIA[view]; if (!g) return '';
+  return `<div class="guide"><div class="guide-top"><div><b>¿Cómo se usa?</b> <span class="muted">${esc(g.d)}</span></div><div class="row" style="gap:6px"><button class="small" data-guia-pasos="${view}">Ver pasos</button><button class="small primary" data-ejemplo="${view}">Ver ejemplo</button></div></div>
+    <ol class="guide-pasos" id="gp-${view}" hidden>${g.pasos.map(p => `<li>${esc(p)}</li>`).join('')}</ol></div>`;
+}
+const exBanner = o => o && o._ejemplo ? `<div class="ex-banner"><b>Ejemplo de muestra.</b> Recorre las pestañas para ver cómo se rellena cada parte. No se guarda a menos que pulses «Guardar»; puedes cambiarlo y usarlo como plantilla.</div>` : '';
+document.addEventListener('click', e => {
+  const p = e.target.closest('[data-guia-pasos]'); if (p){ const ol = document.getElementById('gp-' + p.dataset.guiaPasos); if (ol){ ol.hidden = !ol.hidden; p.textContent = ol.hidden ? 'Ver pasos' : 'Ocultar pasos'; } return; }
+  const x = e.target.closest('[data-ejemplo]'); if (x){ EJEMPLOS[x.dataset.ejemplo]?.(); }
+});
+const EJ_FECHA = '2026-12-11';
+function ejemploEvento(){
+  const ev = newEvento('Entrega de premios');
+  ev.checklist.forEach((c, i) => c.ok = i < 7);
+  return Object.assign(ev, {_ejemplo:true, nombre:'(Ejemplo) Gala de los Premios de Turismo 2026', estado:'Planificación', fecha:EJ_FECHA, hora:'19:00', lugar:'Auditorio municipal', direccion:'Paseo Marítimo, 1', aforo:350,
+    publico:'Empresas del sector, premiados, autoridades y prensa', anfitrion:'Ayuntamiento (Concejalía de Turismo)', responsable:'Jefa de protocolo', contacto:'protocolo@ejemplo.es · 971 000 000', vestimenta:'Traje oscuro', protocolo:'Protocolo oficial',
+    presidencia:'La alcaldesa (anfitriona). Si asiste la presidenta autonómica, la alcaldesa le cede la presidencia y se sienta a su derecha.',
+    descripcion:'Gala anual en la que el Ayuntamiento reconoce a las empresas y personas que más han aportado al turismo. 8 categorías, entrega por autoridades y cóctel posterior.',
+    objetivos:'Reunir a 300 asistentes, entregar los 8 premios en 75 minutos y conseguir 12 apariciones en prensa antes del 18 de diciembre.',
+    tareas:[{tarea:'Cerrar el acta del jurado', area:'Administración', responsable:'Secretaría', fecha:'2026-11-13', estado:'Hecha'},{tarea:'Confirmar asistencia de autoridades', area:'Protocolo', responsable:'Protocolo', fecha:'2026-12-01', estado:'En curso'},{tarea:'Encargar trofeos y diplomas', area:'Logística', responsable:'Producción', fecha:'2026-11-20', estado:'Hecha'},{tarea:'Enviar convocatoria a medios', area:'Comunicación', responsable:'Prensa', fecha:'2026-12-08', estado:'Pendiente'},{tarea:'Ensayo general con presentador', area:'Técnica', responsable:'Regiduría', fecha:'2026-12-11', estado:'Pendiente'}],
+    escaleta:[{hora:'18:15', actividad:'Llegada de premiados y prensa', responsable:'Azafatas', lugar:'Vestíbulo'},{hora:'18:40', actividad:'Recepción de autoridades por la alcaldesa', responsable:'Protocolo', lugar:'Entrada principal'},{hora:'19:00', actividad:'Bienvenida del presentador', responsable:'Presentador', lugar:'Escenario'},{hora:'19:05', actividad:'Vídeo resumen del año turístico', responsable:'Técnica', lugar:'Pantalla'},{hora:'19:10', actividad:'Entrega de los 8 premios', responsable:'Regiduría', lugar:'Escenario'},{hora:'20:05', actividad:'Intervención del concejal de Turismo', responsable:'Protocolo', lugar:'Atril'},{hora:'20:15', actividad:'Clausura de la alcaldesa', responsable:'Protocolo', lugar:'Atril'},{hora:'20:25', actividad:'Foto de familia y cóctel', responsable:'Catering', lugar:'Terraza'}],
+    invitados:[{nombre:'(Ej.) Presidenta autonómica', cargo:'Presidente/a de las Illes Balears', tratamiento:'M. Hble. Sra.', mesa:'Presidencia', rsvp:'Confirmado'},{nombre:'(Ej.) Alcaldesa', cargo:'Batle/batlessa de Palma', tratamiento:'Excma. Sra.', mesa:'Presidencia', rsvp:'Confirmado'},{nombre:'(Ej.) Consejero de Turismo', cargo:'Conseller/a del Govern de les Illes Balears', tratamiento:'Hble. Sr.', mesa:'Presidencia', rsvp:'Pendiente'},{nombre:'(Ej.) Rectora', cargo:'Rector/a de la Universitat de les Illes Balears', tratamiento:'Excma. i Mgfca. Sra.', mesa:'Fila 1', rsvp:'Confirmado'},{nombre:'(Ej.) Presidente de la asociación hotelera', cargo:'Invitado de honor', tratamiento:'Sr.', mesa:'Fila 1', rsvp:'Representado'},{nombre:'(Ej.) Premiada categoría Sostenibilidad', cargo:'Premiada', tratamiento:'Sra.', mesa:'Fila 2', rsvp:'Confirmado'}],
+    proveedores:[{proveedor:'(Ej.) Trofeos Llevant', servicio:'8 estatuillas y diplomas', contacto:'trofeos@ejemplo.es', coste:1450, estado:'Contratado'},{proveedor:'(Ej.) Sonido Mar', servicio:'Sonido, luces y pantalla', contacto:'—', coste:2800, estado:'Presupuestado'},{proveedor:'(Ej.) Catering Sa Plaça', servicio:'Cóctel 300 personas', contacto:'—', coste:6600, estado:'Pedir presupuesto'},{proveedor:'(Ej.) Presentador', servicio:'Conducción de la gala', contacto:'—', coste:900, estado:'Contratado'}],
+    partidas:[{concepto:'Trofeos y diplomas', previsto:1500, real:1450},{concepto:'Presentador', previsto:900, real:900},{concepto:'Iluminación escénica y sonido', previsto:2800, real:''},{concepto:'Cóctel', previsto:6600, real:''},{concepto:'Azafatas (4)', previsto:640, real:''},{concepto:'Imprenta y señalética', previsto:450, real:410},{concepto:'Imprevistos', previsto:600, real:''}]});
+}
+const EJEMPLOS = {
+  eventos:() => { UI.evento = ejemploEvento(); UI.evTab = 'datos'; go('eventos'); },
+  catalogo:() => { UI.evento = Object.assign(newEvento('Viaje de estudios'), {_ejemplo:true, nombre:'(Ejemplo) Viaje de estudios de 4.º de ESO', fecha:'2027-04-12', fechaFin:'2027-04-16', aforo:42, lugar:'Andalucía (Granada, Córdoba y Sevilla)', anfitrion:'IES de ejemplo', responsable:'Tutora de 4.º A', objetivos:'Viaje cultural de 5 días con 42 alumnos y 3 profesores, con un coste máximo de 450 € por alumno.'}); UI.evTab = 'check'; go('eventos'); },
+  packs:() => { const p = PACKS.find(x => x.id === 'boda-esencial'); UI.pack = {_ejemplo:true, packId:p.id, n:120, nombre:'(Ejemplo) Boda de Laura y Marc', fecha:'2027-06-12', cliente:'Laura y Marc', contacto:'laura@ejemplo.es', notas:'Menú sin gluten para 4 invitados. Ceremonia al aire libre.', extras:{0:true, 2:true}, custom:[{nombre:'Violinista en la ceremonia', precio:300, unidad:'fijo'}], incluye:p.incluye.map((t, i) => ({t:i === 5 ? 'DJ 4 horas (lo traen los novios)' : t, on:i !== 5, desc:i === 5 ? 300 : ''}))}; go('packs'); },
+  actas:() => { UI.acta = Object.assign(newActa(), {_ejemplo:true, tipo:'Reunión del comité organizador', entidad:'(Ejemplo) Comité de los Premios de Turismo 2026', numero:'3', fecha:'2026-11-05', horaInicio:'17:00', horaFin:'18:30', lugar:'Sala de juntas del Ayuntamiento', presidente:'(Ej.) Concejal de Turismo', secretario:'(Ej.) Técnica de protocolo',
+    asistentes:'Concejal de Turismo (presidente)\nTécnica de protocolo (secretaria)\nResponsable de comunicación\nResponsable de producción\nRepresentante de la asociación hotelera', ausentes:'Interventora municipal (excusa su asistencia)',
+    ordenDia:'Lectura y aprobación del acta anterior\nPropuestas para la gala del 11 de diciembre\nPlan de comunicación\nRuegos y preguntas',
+    desarrollo:'1. Se aprueba por unanimidad el acta de la sesión anterior.\n2. Producción presenta tres propuestas para la gala, que se debaten y votan.\n3. Comunicación expone el calendario de notas de prensa y redes sociales.',
+    propuestas:[{titulo:'Cóctel posterior a la gala', descripcion:'Cóctel de pie para 300 personas en la terraza del auditorio.', proponente:'Producción', responsable:'Producción', plazo:'2026-11-30', estado:'Aprobada', partidas:[{concepto:'Cubierto de cóctel', cantidad:300, precio:18},{concepto:'Camareros', cantidad:12, precio:120}]},
+      {titulo:'Retransmisión en directo', descripcion:'Emisión en las redes del Ayuntamiento con dos cámaras.', proponente:'Comunicación', responsable:'Comunicación', plazo:'2026-12-01', estado:'Aprobada', partidas:[{concepto:'Equipo de streaming', cantidad:1, precio:1400},{concepto:'Técnico de realización', cantidad:1, precio:350}]},
+      {titulo:'Photocall con alfombra', descripcion:'Photocall de 3 × 2 m con el logotipo de los premios.', proponente:'Asociación hotelera', responsable:'', plazo:'', estado:'Aplazada', partidas:[{concepto:'Photocall y alfombra', cantidad:1, precio:600}]}],
+    acuerdos:[{texto:'Aprobar el cóctel posterior a la gala', favor:5, contra:0, abst:0, resultado:'Aprobado por unanimidad'},{texto:'Aprobar la retransmisión en directo', favor:4, contra:0, abst:1, resultado:'Aprobado'},{texto:'Aplazar el photocall a la próxima reunión, a la espera de patrocinio', favor:5, contra:0, abst:0, resultado:'Aplazado'}],
+    ruegos:'La representante de la asociación hotelera pide que se reserven 20 plazas para sus asociados.'}); UI.actaTab = 'props'; go('actas'); },
+  invitaciones:() => { UI.inv = {tipo:'tarjeton', eventoId:'', anfitrion:'La Alcaldesa', cargo:'Alcaldesa del Ayuntamiento', trat:'Ilmo. Sr. D.', dest:'(Ej.) Joan Pons Mas', motivo:'entrega de los Premios de Turismo 2026', fecha:EJ_FECHA, hora:'19:00', lugar:'Auditorio municipal, Paseo Marítimo, 1', ciudad:'Palma', vest:'Traje oscuro', rsvp:'protocolo@ejemplo.es · 971 000 000', rsvpFecha:'2026-12-04', notas:'Se ruega presentar esta invitación en el acceso.', logo:''}; UI.invCat = 'oficial'; go('invitaciones'); setTimeout(() => $('#inv-gen')?.scrollIntoView(), 50); toast('Ejemplo cargado: un tarjetón oficial. Prueba a cambiar el tipo de invitación.'); },
+  noticias:() => { go('noticias'); const t = $('#news-text'); t.value = 'NOTICIA DE EJEMPLO (FICTICIA) · Palma, 11 de diciembre de 2026. La presidenta del Govern, Marta Vidal, presidió ayer en el Teatre Principal la entrega de las Medallas de Oro de la Comunidad. Asistieron el ministro de Cultura, Jordi Serra; el alcalde de Palma, Tomeu Riera; el presidente del Consell de Mallorca, Pere Font; y el rector de la Universitat, Antoni Coll. El acto comenzó con el himno y la lectura de los acuerdos de concesión, y cerró con la intervención de la presidenta.'; lsSet('gp_news_draft', t.value); $('#news-basic').click(); },
+  precedencia:() => { const ok = () => { Object.assign(P, {ambito:'baleares', mesa:'presidencial', modoAnf:'cede', personas:[
+      {id:'ej1', nombre:'(Ej.) Tomeu Riera', cargo:'Batle/batlessa de Palma'},{id:'ej2', nombre:'(Ej.) Marta Vidal', cargo:'Presidente/a de las Illes Balears'},{id:'ej3', nombre:'(Ej.) Jordi Serra', cargo:'Ministros del Gobierno'},{id:'ej4', nombre:'(Ej.) Pere Font', cargo:'Presidente/a de consejo insular'},{id:'ej5', nombre:'(Ej.) Antoni Coll', cargo:'Rector/a de la Universitat de les Illes Balears'},{id:'ej6', nombre:'(Ej.) Aina Mas', cargo:'Conseller/a del Govern de les Illes Balears'},{id:'ej7', nombre:'(Ej.) Miquel Sastre', cargo:'Delegado/a del Gobierno en la Comunidad Autónoma'}], anfitrion:'ej1'}); savePrec(); go('precedencia'); toast('Ejemplo: el alcalde organiza y cede la presidencia a la presidenta del Govern.'); };
+    if (P.personas.length && !P.personas.every(x => String(x.nombre).startsWith('(Ej'))) confirmBox('El ejemplo sustituirá la lista de personas que tienes ahora en Precedencias. ¿Continuar?', ok); else ok(); },
+  tratamientos:() => { go('tratamientos'); const q = $('#tr-q'); q.value = 'rector'; q.dispatchEvent(new Event('input')); toast('Ejemplo: así se trata a un rector. Prueba a buscar «alcalde» u «obispo».'); },
+  evaluacion:() => { UI.evaluacion = Object.assign(newEvaluacion(), {_ejemplo:true, nombre:'(Ejemplo) Gala de los Premios de Turismo 2025', fecha:'2025-12-12', asisPrev:300, asisReal:276, presPrev:13500, presReal:14120, encuestas:118, medios:14, redes:23500, incidencias:2, incidenciasTxt:'Fallo del micrófono inalámbrico durante 2 minutos; la entrega empezó 10 minutos tarde.',
+    areas:AREAS.map((a, i) => ({area:a, nota:[4, 3, 5, 4, 4, 2, 4, 5][i]})),
+    smart:[{objetivo:'Reunir a 300 asistentes el 12 de diciembre', indicador:'Asistentes acreditados', meta:300, resultado:276, limite:'2025-12-12', e:5, m:5, a:4, r:4, t:5},{objetivo:'Conseguir 12 apariciones en prensa antes del 19 de diciembre', indicador:'Noticias publicadas', meta:12, resultado:14, limite:'2025-12-19', e:5, m:5, a:4, r:5, t:5},{objetivo:'Que el 80 % de los encuestados valore la gala con 4 o más', indicador:'% de valoraciones ≥ 4', meta:80, resultado:71, limite:'2025-12-31', e:4, m:5, a:3, r:5, t:4}],
+    fuertes:'Protocolo y atención a invitados muy bien valorados. Buena repercusión en prensa.', mejoras:'Prueba de sonido completa antes de abrir puertas. Empezar a la hora.'}); go('evaluacion'); }
+};
+function renderGuia(v){
+  v.innerHTML = `<header><div class="eyebrow">Inicio</div><h1>Guía y ejemplos</h1><p class="lede">Un recorrido por el programa con un ejemplo completo en cada apartado. Los ejemplos no se guardan: ábrelos, míralos y úsalos como plantilla.</p></header>
+  <section class="card"><h2>El recorrido de un acto</h2>
+    <div class="flujo">${[['catalogo','1','Elegir el tipo','o un pack'],['packs','2','Contratar el pack','al gusto del cliente'],['eventos','3','Planificar','tareas, escaleta, presupuesto'],['actas','4','Reunir al comité','acta y presupuesto'],['invitaciones','5','Invitar','tipo y redacción'],['precedencia','6','Sentar a las autoridades','precedencias y mesa'],['evaluacion','7','Evaluar','indicadores y SMART']].map(([id, n, t, d], i, a) => `<button class="paso" data-ejemplo="${id}"><span class="paso-n">${n}</span><b>${t}</b><span class="small muted">${d}</span></button>${i < a.length - 1 ? '<span class="flecha" aria-hidden="true">→</span>' : ''}`).join('')}</div>
+    <p class="small muted">Pulsa cualquier paso para abrir su ejemplo. Los tratamientos y el análisis de noticias sirven de consulta en cualquier momento.</p></section>
+  <div class="trat-grid">${GUIA_ORDEN.map(id => { const g = GUIA[id]; return `<div class="trat"><div class="k">${esc(VIEWS.find(x => x.id === id)?.group || '')}</div><div class="tt">${esc(g.t)}</div><div class="small">${esc(g.d)}</div><ol class="small" style="margin:4px 0;padding-left:18px">${g.pasos.map(p => `<li>${esc(p)}</li>`).join('')}</ol><div class="row" style="margin-top:auto"><button class="small primary" data-ejemplo="${id}">Ver ejemplo</button><button class="small ghost" data-view-go="${id}">Ir al apartado</button></div></div>`; }).join('')}</div>`;
 }
 
 /* ============================================================
