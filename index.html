@@ -285,9 +285,9 @@ function aiError(e){
 /* ============================================================
    ALMACÉN: base de datos compartida del artefacto o, si no está, este navegador
    ============================================================ */
-const COLS = ['eventos', 'actas', 'evaluaciones', 'contrataciones', 'fotos'];
+const COLS = ['eventos', 'actas', 'evaluaciones', 'contrataciones', 'fotos', 'convocatorias'];
 const Store = {
-  mode:'local', db:null, data:{eventos:[], actas:[], evaluaciones:[], contrataciones:[], fotos:[]},
+  mode:'local', db:null, data:{eventos:[], actas:[], evaluaciones:[], contrataciones:[], fotos:[], convocatorias:[]},
   loadLocal(){ COLS.forEach(c => this.data[c] = lsGet('gp_' + c, [])); },
   noteMode(){
     if (this.mode === 'cloud'){ $('#storage-note').innerHTML = `<b>Guardado en tu cuenta.</b> ${esc(SB_USER.email)}<br>Tus datos están en la nube y los verás desde cualquier ordenador.`; return; }
@@ -566,6 +566,7 @@ const VIEWS = [
   {id:'eventos', label:'Eventos', group:'Organizar', count:() => Store.data.eventos.length},
   {id:'catalogo', label:'Tipos de evento', group:'Organizar'},
   {id:'packs', label:'Packs y contratación', group:'Organizar', count:() => Store.data.contrataciones.length},
+  {id:'convocatorias', label:'Convocatorias', group:'Organizar', count:() => Store.data.convocatorias.length},
   {id:'actas', label:'Actas y presupuestos', group:'Organizar', count:() => Store.data.actas.length},
   {id:'invitaciones', label:'Invitaciones', group:'Organizar'},
   {id:'noticias', label:'Análisis de noticias', group:'Protocolo'},
@@ -589,12 +590,12 @@ function render(){
   renderNav();
   const v = $('#view'); v.onclick = null;
   v.onchange = null;
-  ({panel:renderPanel, guia:renderGuia, eventos:renderEventos, catalogo:renderCatalogo, packs:renderPacks, invitaciones:renderInvitaciones, actas:renderActas, noticias:renderNoticias, precedencia:renderPrecedencia, tratamientos:renderTratamientos, evaluacion:renderEvaluacion}[UI.view] || renderPanel)(v);
+  ({panel:renderPanel, guia:renderGuia, eventos:renderEventos, catalogo:renderCatalogo, packs:renderPacks, convocatorias:renderConvocatorias, invitaciones:renderInvitaciones, actas:renderActas, noticias:renderNoticias, precedencia:renderPrecedencia, tratamientos:renderTratamientos, evaluacion:renderEvaluacion}[UI.view] || renderPanel)(v);
 }
 function refreshLists(){
   renderNav();
   if (UI.view === 'panel') renderPanel($('#view'));
-  const map = {eventos:['#ev-list', evListHTML], actas:['#acta-list', actaListHTML], evaluacion:['#eval-list', evalListHTML]};
+  const map = {eventos:['#ev-list', evListHTML], actas:['#acta-list', actaListHTML], convocatorias:['#conv-list', convListHTML], evaluacion:['#eval-list', evalListHTML]};
   const m = map[UI.view]; if (m && $(m[0])) $(m[0]).innerHTML = m[1]();
   if (UI.view === 'packs' && $('#pack-grid')){ $('#pack-grid').innerHTML = packGridHTML($('#pack-q')?.value || ''); $('#contr-list').innerHTML = contrListHTML(); }
 }
@@ -629,7 +630,7 @@ function renderPanel(v){
     </section>
     <section class="card"><h2>Accesos rápidos</h2>
       <div class="grid g2">
-        ${[['packs','Contratar un pack','Ejemplos por tipo de evento con complementos'],['invitaciones','Preparar invitaciones','El tipo adecuado para cada acto, en PDF o Word'],['actas','Redactar un acta','Con presupuesto en Word o PDF'],['noticias','Analizar una noticia','Tipo de protocolo y orden de autoridades'],['precedencia','Ordenar autoridades','Mesa presidencial, redonda o de banquete'],['tratamientos','Consultar tratamientos','Monarquía, política, Iglesia, celebridades'],['evaluacion','Evaluar un acto','Indicadores y objetivos SMART'],['catalogo','Ver tipos de evento',ALL_TYPES.length + ' tipos con su lista de control']].map(([id, t, d]) => `<button style="flex-direction:column;align-items:flex-start;white-space:normal;text-align:left;padding:12px" data-view-go="${id}"><b>${t}</b><span class="small muted">${d}</span></button>`).join('')}
+        ${[['packs','Contratar un pack','Ejemplos por tipo de evento con complementos'],['invitaciones','Preparar invitaciones','El tipo adecuado para cada acto, en PDF o Word'],['convocatorias','Convocar una reunión','Con el plazo legal de cada tipo de órgano'],['actas','Redactar un acta','Con presupuesto en Word o PDF'],['noticias','Analizar una noticia','Tipo de protocolo y orden de autoridades'],['precedencia','Ordenar autoridades','Mesa presidencial, redonda o de banquete'],['tratamientos','Consultar tratamientos','Monarquía, política, Iglesia, celebridades'],['evaluacion','Evaluar un acto','Indicadores y objetivos SMART'],['catalogo','Ver tipos de evento',ALL_TYPES.length + ' tipos con su lista de control']].map(([id, t, d]) => `<button style="flex-direction:column;align-items:flex-start;white-space:normal;text-align:left;padding:12px" data-view-go="${id}"><b>${t}</b><span class="small muted">${d}</span></button>`).join('')}
       </div>
     </section>
   </div>`;
@@ -1940,6 +1941,161 @@ function renderInvitaciones(v){
 }
 
 /* ============================================================
+   CONVOCATORIAS DE REUNIÓN: tipos por ámbito, plazos y redactor
+   dias = antelación mínima orientativa (habiles: días hábiles); modelo = fórmula del texto
+   ============================================================ */
+const REUNIONES = [
+  {id:'junta-sa', ambito:'Empresarial', nombre:'Junta general de accionistas (S.A.)', organo:'Junta General de Accionistas', convoca:'El Consejo de Administración (o los administradores)', dias:30, plazo:'Al menos un mes antes (art. 176 LSC). Entre 1.ª y 2.ª convocatoria, al menos 24 horas (art. 177 LSC).', envio:'Web corporativa inscrita o, si no hay, BORME y un diario de la provincia; o como digan los estatutos.', contenido:['Denominación de la sociedad','Fecha, hora y lugar (1.ª y 2.ª convocatoria)','Orden del día','Cargo de quien firma','Derecho de información y de representación'], norma:'Ley de Sociedades de Capital (arts. 173–177, 197)', modelo:'sociedad', acta:'Junta general de accionistas', segunda:'24 horas después'},
+  {id:'junta-sl', ambito:'Empresarial', nombre:'Junta general de socios (S.L.)', organo:'Junta General de Socios', convoca:'El órgano de administración', dias:15, plazo:'Al menos 15 días antes (art. 176 LSC).', envio:'Comunicación individual y escrita a cada socio o web corporativa, según estatutos.', contenido:['Denominación de la sociedad','Fecha, hora y lugar','Orden del día','Cargo de quien firma','Derecho de información'], norma:'Ley de Sociedades de Capital (arts. 173–176, 196)', modelo:'sociedad', acta:'Junta general de accionistas', segunda:''},
+  {id:'consejo-admin', ambito:'Empresarial', nombre:'Consejo de administración', organo:'Consejo de Administración', convoca:'El/La Presidente/a del Consejo', dias:null, plazo:'Lo que fijen los estatutos o el reglamento del consejo (habitualmente 3 a 5 días).', envio:'Correo electrónico o carta a cada consejero con la documentación.', contenido:['Fecha, hora y lugar o medio telemático','Orden del día','Documentación de cada punto'], norma:'Ley de Sociedades de Capital (arts. 245–248) y estatutos', modelo:'general', acta:'Consejo de administración', segunda:''},
+  {id:'comite-direccion', ambito:'Empresarial', nombre:'Comité de dirección o reunión de equipo', organo:'Comité de Dirección', convoca:'La Dirección General', dias:null, plazo:'Por costumbre, de 3 a 7 días antes.', envio:'Correo con invitación de calendario y enlace, si es en línea.', contenido:['Objetivo de la reunión','Fecha, hora, duración y lugar o enlace','Orden del día con responsables','Documentación previa'], norma:'Normas internas de la organización', modelo:'general', acta:'Reunión de trabajo', segunda:''},
+  {id:'pleno', ambito:'Institucional', nombre:'Pleno municipal', organo:'Pleno del Ayuntamiento', convoca:'El/La Alcalde/sa', dias:2, habiles:true, plazo:'Ordinario y extraordinario: al menos 2 días hábiles (art. 46.2.b LBRL). Urgente: sin plazo, el Pleno ratifica la urgencia.', envio:'Notificación a cada concejal (sede electrónica) con el orden del día; expedientes a disposición en Secretaría.', contenido:['Carácter de la sesión (ordinaria, extraordinaria, urgente)','Fecha, hora y lugar','Orden del día','Segunda convocatoria (dos días después, art. 90 ROF)'], norma:'Ley 7/1985 de Bases de Régimen Local (art. 46) y ROF (arts. 80–90)', modelo:'pleno', acta:'Pleno municipal', segunda:'dos días después, a la misma hora'},
+  {id:'organo-colegiado', ambito:'Institucional', nombre:'Órgano colegiado de la Administración (comisión, consejo, mesa)', organo:'Comisión', convoca:'El/La Presidente/a del órgano', dias:2, plazo:'Lo que fijen sus normas de funcionamiento (habitualmente 48 horas).', envio:'Por medios electrónicos, con la documentación (art. 17.3 Ley 40/2015).', contenido:['Orden del día','Fecha, hora y lugar o medio a distancia','Documentación necesaria para deliberar','Condiciones de asistencia a distancia, si la hay'], norma:'Ley 40/2015 de Régimen Jurídico del Sector Público (arts. 15–18)', modelo:'general', acta:'Reunión de coordinación', segunda:''},
+  {id:'reunion-institucional', ambito:'Institucional', nombre:'Reunión institucional o de trabajo entre entidades', organo:'Reunión de trabajo', convoca:'La autoridad o cargo que organiza', dias:null, plazo:'De 1 a 2 semanas antes; confirmar el nivel de representación de cada parte.', envio:'Carta o saluda y, después, correo con los detalles prácticos.', contenido:['Quién convoca y en calidad de qué','Asuntos que se tratarán','Fecha, hora, lugar y duración','Participantes previstos y su rango','Confirmación de asistencia y acompañantes'], norma:'Usos de protocolo (equivalencia de rango entre las partes)', modelo:'carta', acta:'Reunión de trabajo', segunda:''},
+  {id:'asamblea-asociacion', ambito:'Asociativo', nombre:'Asamblea general de asociación', organo:'Asamblea General', convoca:'El/La Presidente/a, por acuerdo de la Junta Directiva', dias:15, plazo:'Lo que digan los estatutos (habitualmente 15 días). La ordinaria se reúne al menos una vez al año para cuentas y presupuesto (art. 11.3 LO 1/2002).', envio:'Correo o carta a cada socio y anuncio en la sede o la web.', contenido:['Carácter (ordinaria o extraordinaria)','Fecha, hora y lugar en 1.ª y 2.ª convocatoria','Orden del día','Derecho de voto y delegación'], norma:'Ley Orgánica 1/2002 del Derecho de Asociación y estatutos', modelo:'general', acta:'Asamblea general ordinaria', segunda:'media hora después'},
+  {id:'junta-directiva', ambito:'Asociativo', nombre:'Junta directiva de asociación, club o fundación', organo:'Junta Directiva', convoca:'El/La Presidente/a', dias:null, plazo:'Según estatutos (habitualmente 48 horas a una semana).', envio:'Correo electrónico a sus miembros.', contenido:['Fecha, hora y lugar','Orden del día','Documentación'], norma:'Estatutos de la entidad', modelo:'general', acta:'Junta directiva', segunda:''},
+  {id:'patronato', ambito:'Asociativo', nombre:'Patronato de una fundación', organo:'Patronato', convoca:'El/La Presidente/a del Patronato', dias:null, plazo:'Según estatutos. Cuentas: dentro de los 6 meses siguientes al cierre del ejercicio.', envio:'Comunicación individual a cada patrono.', contenido:['Fecha, hora y lugar','Orden del día','Cuentas o plan de actuación, si procede'], norma:'Ley 50/2002 de Fundaciones (y ley autonómica, si aplica) y estatutos', modelo:'general', acta:'Junta directiva', segunda:''},
+  {id:'propietarios', ambito:'Vecinal', nombre:'Junta de propietarios (comunidad de vecinos)', organo:'Junta de Propietarios', convoca:'El/La Presidente/a de la comunidad (o la cuarta parte de los propietarios)', dias:6, plazo:'Ordinaria: al menos 6 días antes. Extraordinaria: con la antelación que sea posible (art. 16.3 LPH).', envio:'En el domicilio de cada propietario en España o, si no es posible, en el tablón de anuncios (art. 9 LPH).', contenido:['Asuntos que se tratarán','Lugar, día y hora en 1.ª y 2.ª convocatoria','Relación de propietarios que no están al corriente de pago','Advertencia de privación del derecho de voto'], norma:'Ley 49/1960 de Propiedad Horizontal (arts. 15 y 16)', modelo:'propietarios', acta:'Asamblea general ordinaria', segunda:'media hora después'},
+  {id:'consejo-escolar', ambito:'Educativo', nombre:'Consejo escolar', organo:'Consejo Escolar', convoca:'El/La Director/a del centro', dias:7, plazo:'Ordinaria: al menos una semana antes. Extraordinaria: 48 horas (reglamentos orgánicos de centros).', envio:'Comunicación a cada miembro con la documentación.', contenido:['Fecha, hora y lugar','Orden del día','Documentación que se debatirá'], norma:'LOE (arts. 126–127) y reglamento orgánico de centros', modelo:'general', acta:'Consejo escolar', segunda:''},
+  {id:'claustro', ambito:'Educativo', nombre:'Claustro de profesorado', organo:'Claustro de Profesorado', convoca:'El/La Director/a del centro', dias:null, plazo:'Según el reglamento orgánico (habitualmente 4 días; extraordinario, 48 horas).', envio:'Correo o plataforma del centro.', contenido:['Fecha, hora y lugar','Orden del día'], norma:'LOE (art. 128–129) y reglamento orgánico', modelo:'general', acta:'Claustro', segunda:''},
+  {id:'familias', ambito:'Educativo', nombre:'Reunión de familias o AMPA', organo:'Reunión de familias', convoca:'La tutoría, la dirección o la junta de la AMPA', dias:null, plazo:'De 1 a 2 semanas antes.', envio:'Circular, agenda escolar o aplicación del centro.', contenido:['Curso o grupo','Fecha, hora y lugar','Temas que se tratarán','Si hay servicio de guardería o en línea'], norma:'Normas de organización del centro', modelo:'general', acta:'Reunión de trabajo', segunda:''},
+  {id:'asamblea-deportiva', ambito:'Deportivo', nombre:'Asamblea general de club o federación', organo:'Asamblea General', convoca:'El/La Presidente/a', dias:15, plazo:'Según estatutos y la ley del deporte aplicable (habitualmente 15 días).', envio:'Comunicación a socios o asambleístas y publicación en la web.', contenido:['Carácter de la asamblea','Fecha, hora y lugar en 1.ª y 2.ª convocatoria','Orden del día','Presupuesto y cuentas, si procede'], norma:'Ley 39/2022 del Deporte, ley autonómica y estatutos', modelo:'general', acta:'Asamblea general ordinaria', segunda:'media hora después'},
+  {id:'comite-evento', ambito:'Eventos', nombre:'Comité organizador de un evento', organo:'Comité Organizador', convoca:'El/La Presidente/a del comité o la dirección del evento', dias:null, plazo:'Una semana antes; reuniones periódicas fijadas en el calendario.', envio:'Correo con invitación de calendario.', contenido:['Fecha, hora y lugar o enlace','Orden del día','Estado de tareas y presupuesto'], norma:'Organización interna', modelo:'general', acta:'Reunión del comité organizador', segunda:''},
+  {id:'comite-empresa', ambito:'Laboral', nombre:'Comité de empresa o comisión negociadora', organo:'Comité de Empresa', convoca:'El/La Presidente/a del comité (o la parte que lo solicita)', dias:null, plazo:'Según el reglamento del comité o el convenio.', envio:'Comunicación escrita a sus miembros y, si es negociación, a la otra parte.', contenido:['Fecha, hora y lugar','Orden del día','Documentación'], norma:'Estatuto de los Trabajadores (arts. 64–68, 89) y reglamento del comité', modelo:'general', acta:'Reunión de trabajo', segunda:''}
+];
+const REU = id => REUNIONES.find(r => r.id === id) || REUNIONES[3];
+const ORDEN_BASE = 'Lectura y aprobación, si procede, del acta de la sesión anterior.\nInforme de la Presidencia.\n[Asunto que se somete a acuerdo].\nRuegos y preguntas.';
+function newConv(tipo = 'comite-evento'){
+  const r = REU(tipo);
+  return {id:'', tipo, entidad:'', organo:r.organo, caracter:'Ordinaria', modalidad:'Presencial', convocante:'', cargo:'', fecha:'', hora:'', fecha2:'', hora2:'', lugar:'', enlace:'', orden:ORDEN_BASE, documentacion:'', destinatarios:'', rsvp:'', emision:today(), ciudad:'', secretario:'', presidente:'', notas:'', logo:''};
+}
+function plazoInfo(c){
+  const r = REU(c.tipo);
+  if (/urgente/i.test(c.caracter)) return {txt:'Sesión urgente: sin plazo mínimo; al empezar, el órgano debe aprobar la urgencia.', estado:'warn'};
+  if (/extraordinaria/i.test(c.caracter) && r.id === 'propietarios') return {txt:'Junta extraordinaria: con la antelación que sea posible para que llegue a todos (art. 16.3 LPH).', estado:'warn'};
+  const minimo = /extraordinaria/i.test(c.caracter) && r.id === 'consejo-escolar' ? 2 : r.dias;
+  if (!minimo || !c.fecha || !c.emision) return {txt:r.plazo, estado:''};
+  const a = new Date(c.emision + 'T00:00'), b = new Date(c.fecha + 'T00:00'); if (isNaN(a) || isNaN(b)) return {txt:r.plazo, estado:''};
+  // Días naturales: diferencia entre fechas. Días hábiles: los que hay entre la convocatoria y la sesión, sin contar ninguna de las dos ni sábados y domingos.
+  let d = Math.round((b - a) / 864e5);
+  if (r.habiles){ d = 0; for (let t = new Date(a); t.setDate(t.getDate() + 1), t < b;) if (t.getDay() !== 0 && t.getDay() !== 6) d++; }
+  const ok = d >= minimo;
+  return {txt:`Antelación: ${d} día${d === 1 ? '' : 's'}${r.habiles ? (d === 1 ? ' hábil' : ' hábiles') + ' (sin contar festivos)' : ''}. Mínimo: ${minimo}. ${ok ? 'Cumple el plazo.' : 'No llega al plazo mínimo.'}`, estado:ok ? 'ok' : 'bad'};
+}
+function convLines(c){
+  const r = REU(c.tipo);
+  const fe = c.fecha ? fdate(c.fecha) : '[fecha]', ho = c.hora || '[hora]', org = c.organo || r.organo, car = (c.caracter || 'Ordinaria').toLowerCase();
+  const dondeTxt = c.modalidad === 'Telemática' ? `por videoconferencia${c.enlace ? ' (' + c.enlace + ')' : ', con el enlace que se enviará'}` : c.modalidad === 'Híbrida' ? `en ${c.lugar || '[lugar]'} y por videoconferencia${c.enlace ? ' (' + c.enlace + ')' : ''}` : `en ${c.lugar || '[lugar]'}`;
+  const segunda = c.hora2 || c.fecha2 ? `, y, en su caso, en segunda convocatoria${c.fecha2 && c.fecha2 !== c.fecha ? ' el ' + fdate(c.fecha2) : ''}${c.hora2 ? ' a las ' + c.hora2 + ' horas' : ''}` : (r.segunda ? `, y, en su caso, en segunda convocatoria ${r.segunda}` : '');
+  const orden = (c.orden || '').split('\n').map(x => x.trim()).filter(Boolean).map((x, i) => ({text:`${i + 1}. ${x}`}));
+  const notas = (c.notas || '').split('\n').filter(Boolean).map(t => ({text:t}));
+  const g = {gap:true, text:''};
+  const cab = [{text:(c.entidad || '[Entidad]').toUpperCase(), b:true, align:'center'}, g, {text:'CONVOCATORIA', b:true, size:15, align:'center'}, {text:`${c.caracter || 'Ordinaria'} · ${org}`, align:'center', i:true}, g];
+  const doc = c.documentacion ? [{text:`Documentación: ${c.documentacion}`}] : [];
+  const pie = [g, {text:`${c.ciudad || '[ciudad]'}, ${fdate(c.emision) || '[fecha]'}`}, g, g];
+  const firmas = [...pie, {text:'EL/LA SECRETARIO/A' + (c.presidente ? '                              Vº Bº EL/LA PRESIDENTE/A' : ''), b:true}, g, {text:(c.secretario || '') + (c.presidente ? '                              ' + c.presidente : '')}];
+  let cuerpo;
+  if (r.modelo === 'sociedad'){
+    cuerpo = [{text:`Por acuerdo de ${c.convocante || r.convoca.toLowerCase()} de ${c.entidad || '[sociedad]'}, se convoca a los señores ${r.id === 'junta-sa' ? 'accionistas' : 'socios'} a la ${org} ${car}, que se celebrará ${dondeTxt}, el día ${fe}, a las ${ho} horas, en primera convocatoria${segunda}, con arreglo al siguiente`}, g, {text:'ORDEN DEL DÍA', b:true}, ...orden, g,
+      {text:`Derecho de información: a partir de esta convocatoria, cualquier ${r.id === 'junta-sa' ? 'accionista' : 'socio'} podrá obtener de la sociedad, de forma inmediata y gratuita, los documentos que se someten a la aprobación de la Junta.`}, ...doc,
+      {text:'Derecho de representación: podrá hacerse representar en la Junta en los términos previstos en la ley y en los estatutos.'}, ...notas,
+      ...pie, {text:c.cargo ? c.cargo.toUpperCase() : 'EL/LA SECRETARIO/A DEL CONSEJO DE ADMINISTRACIÓN', b:true}, g, {text:c.convocanteFirma || c.secretario || ''}];
+  } else if (r.modelo === 'pleno'){
+    cuerpo = [{text:`Por Decreto de la Alcaldía de fecha ${fdate(c.emision) || '[fecha]'}, se convoca a los señores y señoras concejales a la sesión ${car} del ${org}, que se celebrará ${dondeTxt}, el día ${fe}, a las ${ho} horas, en primera convocatoria${segunda}, con el siguiente`}, g, {text:'ORDEN DEL DÍA', b:true}, ...orden, g,
+      {text:`Los expedientes de los asuntos incluidos en el orden del día están a su disposición en la Secretaría General${c.documentacion ? ' y en ' + c.documentacion : ''}.`}, {text:'En caso de no poder asistir, deberá comunicarlo a la Alcaldía con la antelación suficiente.'}, ...notas,
+      ...pie, {text:'EL/LA ALCALDE/SA                              EL/LA SECRETARIO/A GENERAL', b:true}, g, {text:`${c.presidente || c.convocante || ''}                              ${c.secretario || ''}`}];
+  } else if (r.modelo === 'propietarios'){
+    cuerpo = [{text:`Por indicación de ${c.convocante || 'el/la Presidente/a de la Comunidad'}, se le convoca a la Junta General ${car} de Propietarios de ${c.entidad || '[comunidad]'}, que se celebrará ${dondeTxt}, el día ${fe}, a las ${ho} horas, en primera convocatoria${segunda}, con el siguiente`}, g, {text:'ORDEN DEL DÍA', b:true}, ...orden, g, ...doc,
+      {text:'Se advierte a los propietarios que no estén al corriente en el pago de las deudas vencidas con la comunidad que podrán participar en las deliberaciones, pero no votar, salvo que antes de la junta hayan pagado o consignado las cantidades debidas (art. 15.2 LPH).'},
+      {text:`Relación de propietarios que no están al corriente de pago: ${c.morosos || 'ninguno'}.`}, {text:'Si no puede asistir, puede delegar su representación por escrito en otra persona.'}, ...notas,
+      ...pie, {text:'EL/LA SECRETARIO/A-ADMINISTRADOR/A                              EL/LA PRESIDENTE/A', b:true}, g, {text:`${c.secretario || ''}                              ${c.presidente || ''}`}];
+  } else if (r.modelo === 'carta'){
+    cuerpo = [{text:`${c.ciudad || '[ciudad]'}, ${fdate(c.emision) || '[fecha]'}`, align:'right'}, g, {text:c.destinatarios ? c.destinatarios.split('\n')[0] + ':' : 'Estimado/a señor/a:'}, g,
+      {text:`${c.convocante || '[quien convoca]'}${c.cargo ? ', ' + c.cargo + ',' : ''} tiene el gusto de convocarle a una reunión de trabajo, que se celebrará ${dondeTxt}, el día ${fe}, a las ${ho} horas, para tratar los siguientes asuntos:`}, g, ...orden, g, ...doc,
+      {text:`Le agradeceremos que confirme su asistencia${c.rsvp ? ' a ' + c.rsvp : ''}, así como el nombre y cargo de las personas que le acompañen.`}, ...notas, g, {text:'Reciba un cordial saludo,'}, g, g, {text:c.convocante || '', b:true}, {text:c.cargo || ''}];
+    return {cab:[], cuerpo, asunto:`Convocatoria: ${org} · ${fe}`};
+  } else {
+    cuerpo = [{text:`${c.convocante || r.convoca}${c.cargo ? ', ' + c.cargo + ',' : ''} convoca a ${c.destinatarios ? 'los miembros que se relacionan al final' : 'sus miembros'} a la reunión ${car} de ${org}${c.entidad ? ' de ' + c.entidad : ''}, que se celebrará ${dondeTxt}, el día ${fe}, a las ${ho} horas, en primera convocatoria${segunda}, con el siguiente`}, g, {text:'ORDEN DEL DÍA', b:true}, ...orden, g, ...doc,
+      {text:`En caso de no poder asistir, se ruega comunicarlo${c.rsvp ? ' a ' + c.rsvp : ''} con antelación${/asamblea|junta/i.test(org) ? ' y, si se desea, delegar el voto por escrito según los estatutos' : ''}.`}, ...notas,
+      ...(c.destinatarios ? [g, {text:'Convocados:', b:true}, ...c.destinatarios.split('\n').filter(Boolean).map(x => ({text:'• ' + x}))] : []), ...firmas];
+  }
+  return {cab, cuerpo, asunto:`Convocatoria: ${org}${c.entidad ? ' · ' + c.entidad : ''} · ${fe}`};
+}
+const convAll = c => { const r = convLines(c); return [...r.cab, ...r.cuerpo]; };
+const convBlocks = c => convAll(c).map(l => l.gap ? {t:'gap', h:3} : {t:'p', text:l.text, b:l.b, i:l.i, size:l.size || 10.5, align:l.align || 'left'});
+function convListHTML(){
+  const cs = [...Store.data.convocatorias].sort((a, b) => (b.fecha || '').localeCompare(a.fecha || ''));
+  if (!cs.length) return '<div class="empty">Aún no hay convocatorias guardadas. Pulsa «Nueva convocatoria» o mira el ejemplo.</div>';
+  return cs.map(c => `<div class="list-item"><div><div class="t">${esc(c.organo)}${c.entidad ? ' · ' + esc(c.entidad) : ''}</div><div class="small muted">${esc(REU(c.tipo).ambito)} · ${esc(c.caracter)} · ${fdate(c.fecha) || 'sin fecha'}${c.hora ? ' · ' + esc(c.hora) + ' h' : ''}</div></div><button class="small" data-open-conv="${c.id}">Abrir</button></div>`).join('');
+}
+function renderConvocatorias(v){
+  if (!UI.conv){
+    const ambitos = [...new Set(REUNIONES.map(r => r.ambito))];
+    v.innerHTML = `<header class="row between"><div><div class="eyebrow">Organizar</div><h1>Convocatorias</h1><p class="lede">Convoca cualquier reunión, de una junta de accionistas a un pleno, una comunidad de vecinos o un consejo escolar. El programa avisa del plazo legal, redacta el texto y prepara el acta.</p></div><button class="primary" data-new-conv>Nueva convocatoria</button></header>
+      ${guideBar('convocatorias')}
+      <section class="card" id="conv-list">${convListHTML()}</section>
+      <section class="card"><h2>Tipos de reunión, plazos y requisitos</h2><p class="small muted">Plazos orientativos según la norma general; prevalecen los estatutos, reglamentos y la normativa autonómica de cada entidad.</p>
+        ${ambitos.map(a => `<h3 style="margin-top:14px">${esc(a)}</h3><div class="tbl-wrap"><table><thead><tr><th>Reunión</th><th>Convoca</th><th>Antelación</th><th>Cómo se envía</th><th>Norma</th><th></th></tr></thead><tbody>${REUNIONES.filter(r => r.ambito === a).map(r => `<tr><td><b>${esc(r.nombre)}</b><div class="small muted">${r.contenido.map(esc).join(' · ')}</div></td><td class="small">${esc(r.convoca)}</td><td class="small">${esc(r.plazo)}</td><td class="small">${esc(r.envio)}</td><td class="small muted">${esc(r.norma)}</td><td><button class="small" data-conv-tipo="${r.id}">Usar</button></td></tr>`).join('')}</tbody></table></div>`).join('')}</section>`;
+    v.onclick = e => {
+      if (e.target.closest('[data-new-conv]')){ UI.conv = newConv(); render(); }
+      const t = e.target.closest('[data-conv-tipo]'); if (t){ UI.conv = newConv(t.dataset.convTipo); render(); window.scrollTo(0, 0); }
+      const o = e.target.closest('[data-open-conv]'); if (o){ UI.conv = clone(Store.get('convocatorias', o.dataset.openConv)); render(); }
+    };
+    return;
+  }
+  const c = UI.conv;
+  const grupos = [...new Set(REUNIONES.map(r => r.ambito))].map(a => ({g:a, o:REUNIONES.filter(r => r.ambito === a)}));
+  v.innerHTML = `<header class="row between"><div><div class="eyebrow">Convocatoria · ${esc(REU(c.tipo).ambito)}</div><h1>${esc(c.organo || 'Nueva convocatoria')}</h1></div><div class="row"><button class="ghost" data-back>← Volver</button>${c.id ? '<button class="ghost danger" data-del-conv>Borrar</button>' : ''}<button class="primary" data-save-conv>Guardar</button></div></header>
+  ${exBanner(c)}
+  <div class="grid prec-grid" id="conv-ed">
+    <section class="card" style="align-content:start">
+      <label class="f">Tipo de reunión<select id="c-tipo" data-k="tipo">${grupos.map(gr => `<optgroup label="${esc(gr.g)}">${gr.o.map(r => `<option value="${r.id}" ${r.id === c.tipo ? 'selected' : ''}>${esc(r.nombre)}</option>`).join('')}</optgroup>`).join('')}</select></label>
+      <div class="hint" id="c-req"></div>
+      <div class="grid g2">${f('Entidad', 'entidad', c.entidad, 'text', 'placeholder="Ayuntamiento, empresa, comunidad, centro…"')}${f('Órgano que se reúne', 'organo', c.organo)}</div>
+      <div class="grid g2">${sel('Carácter', 'caracter', c.caracter, ['Ordinaria', 'Extraordinaria', 'Extraordinaria y urgente'])}${sel('Modalidad', 'modalidad', c.modalidad, ['Presencial', 'Telemática', 'Híbrida'])}</div>
+      <div class="grid g2">${f('Quién convoca', 'convocante', c.convocante, 'text', `placeholder="${esc(REU(c.tipo).convoca)}"`)}${f('Cargo de quien convoca', 'cargo', c.cargo)}</div>
+      <div class="grid g4">${f('Fecha', 'fecha', c.fecha, 'date')}${f('Hora (1.ª conv.)', 'hora', c.hora, 'time')}${f('Fecha 2.ª conv.', 'fecha2', c.fecha2, 'date')}${f('Hora 2.ª conv.', 'hora2', c.hora2, 'time')}</div>
+      <div class="grid g2">${f('Lugar', 'lugar', c.lugar)}${f('Enlace de videoconferencia', 'enlace', c.enlace)}</div>
+      ${ta('Orden del día (un punto por línea)', 'orden', c.orden)}
+      ${f('Documentación (dónde se puede consultar)', 'documentacion', c.documentacion, 'text', 'placeholder="se adjunta / disponible en la Secretaría / en la carpeta compartida…"')}
+      ${ta('Convocados (uno por línea, con su cargo)', 'destinatarios', c.destinatarios)}
+      ${c.tipo === 'propietarios' ? f('Propietarios que no están al corriente de pago', 'morosos', c.morosos || '', 'text', 'placeholder="Piso y nombre, o «ninguno»"') : ''}
+      <div class="grid g3">${f('Confirmar asistencia a', 'rsvp', c.rsvp)}${f('Fecha de la convocatoria', 'emision', c.emision, 'date')}${f('Ciudad', 'ciudad', c.ciudad)}</div>
+      <div class="grid g2">${f('Secretario/a (firma)', 'secretario', c.secretario)}${f('Presidente/a (visto bueno)', 'presidente', c.presidente)}</div>
+      ${ta('Otras indicaciones', 'notas', c.notas, 'Acceso, aparcamiento, quórum, voto delegado…')}
+      ${imgField('Logotipo o escudo de la entidad', 'logo', c.logo)}
+    </section>
+    <section><div class="row" style="margin-bottom:10px"><span class="pill" id="c-plazo"></span></div>
+      <div class="inv-card a4 l" id="c-prev" style="max-width:none"></div>
+      <div class="row" style="margin-top:12px;justify-content:center"><button class="primary" data-conv-pdf>PDF</button><button class="primary" data-conv-docx>Word</button><button data-conv-copy>Copiar texto</button><button data-conv-mail>Copiar como correo</button><button data-conv-acta>Preparar el acta de esta reunión →</button></div></section>
+  </div>`;
+  const prev = () => {
+    const r = REU(c.tipo), p = plazoInfo(c);
+    $('#c-req').innerHTML = `<b>${esc(r.nombre)}</b> · Convoca: ${esc(r.convoca)}<br>Antelación: ${esc(r.plazo)}<br>Envío: ${esc(r.envio)}<br>Debe incluir: ${r.contenido.map(esc).join(' · ')}<br><span class="muted">${esc(r.norma)}</span>`;
+    const pl = $('#c-plazo'); pl.className = 'pill ' + p.estado;
+    pl.textContent = p.estado ? p.txt : (r.dias ? 'Indica la fecha de la reunión para comprobar el plazo' : 'Plazo según estatutos o reglamento');
+    $('#c-prev').innerHTML = (c.logo ? `<img src="${c.logo}" alt="" class="inv-logo" style="margin:0 auto 14px">` : '') + convAll(c).map(l => l.gap ? '<div style="height:.6em"></div>' : `<div style="${l.b ? 'font-weight:700;' : ''}${l.i ? 'font-style:italic;' : ''}${l.size ? `font-size:${l.size / 10.5}em;` : ''}text-align:${l.align || 'left'};white-space:pre-wrap">${esc(l.text)}</div>`).join('');
+  };
+  prev();
+  bindEditor($('#conv-ed'), c, {onInput:prev, onChange:k => { if (k === 'tipo'){ const r = REU(c.tipo); c.organo = r.organo; renderConvocatorias(v); return; } prev(); }, onRows:() => renderConvocatorias(v)});
+  v.onclick = async e => {
+    if (e.target.closest('[data-back]')){ UI.conv = null; render(); return; }
+    if (e.target.closest('[data-save-conv]')){ if (await Store.save('convocatorias', c)){ toast('Convocatoria guardada'); render(); } return; }
+    if (e.target.closest('[data-del-conv]')){ confirmBox('¿Borrar esta convocatoria?', async () => { await Store.remove('convocatorias', c.id); UI.conv = null; render(); }); return; }
+    const name = slug('convocatoria-' + (c.organo || '') + '-' + (c.fecha || ''));
+    if (e.target.closest('[data-conv-pdf]')) exportDoc('pdf', name, convBlocks(c), {logo:c.logo, logoMax:20});
+    if (e.target.closest('[data-conv-docx]')) exportDoc('docx', name, convBlocks(c), {logo:c.logo});
+    if (e.target.closest('[data-conv-copy]')) copyText(convAll(c).map(l => l.gap ? '' : l.text).join('\n'), 'Convocatoria copiada');
+    if (e.target.closest('[data-conv-mail]')){ const r = convLines(c); copyText(`Asunto: ${r.asunto}\n\n` + r.cuerpo.map(l => l.gap ? '' : l.text).join('\n'), 'Correo copiado: pégalo en tu programa de correo'); }
+    if (e.target.closest('[data-conv-acta]')){
+      const r = REU(c.tipo);
+      UI.acta = Object.assign(newActa(), {tipo:r.acta, entidad:c.entidad, fecha:c.fecha || today(), horaInicio:c.hora, lugar:c.modalidad === 'Telemática' ? 'Por videoconferencia' : c.lugar, convocatoria:'Primera', presidente:c.presidente || c.convocante, secretario:c.secretario, asistentes:c.destinatarios, ordenDia:c.orden.replace(/\.$/gm, '')});
+      UI.actaTab = 'datos'; go('actas'); toast('Acta preparada con los datos de la convocatoria. Completa asistentes y acuerdos.');
+    }
+  };
+}
+
+/* ============================================================
    GUÍA Y EJEMPLOS: un ejemplo completo por apartado (no se guarda hasta pulsar Guardar)
    ============================================================ */
 const GUIA = {
@@ -1949,6 +2105,8 @@ const GUIA = {
     pasos:['Busca el tipo de acto (boda, congreso, maratón…).','Pulsa el tipo: se crea un evento nuevo con su tipo de protocolo.','La lista de control y las partidas de presupuesto ya vienen cargadas.']},
   packs:{t:'Packs y contratación', d:'Ejemplos de cada evento con todo incluido, que se adaptan al cliente y se contratan.',
     pasos:['Abre un pack con «Ver y contratar».','Indica asistentes, fecha y cliente.','En «Incluye», desmarca lo que el cliente no quiera y ajusta el descuento.','Marca complementos o añade otros con su precio.','Descarga la propuesta en PDF o Word para el cliente.','Pulsa «Contratar»: se guarda la solicitud y se crea el evento con su presupuesto.']},
+  convocatorias:{t:'Convocatorias', d:'Convoca reuniones de cualquier ámbito con el texto formal, el plazo legal y el acta ya preparada.',
+    pasos:['Pulsa «Nueva convocatoria» o «Usar» en la tabla de tipos de reunión.','Comprueba en el recuadro qué debe incluir y con cuánta antelación se envía.','Rellena entidad, carácter, fecha, hora, lugar o enlace y el orden del día.','Mira el aviso de plazo: verde si cumple, rojo si no llega.','Descárgala en PDF o Word, o cópiala como correo.','Tras la reunión, pulsa «Preparar el acta de esta reunión».']},
   actas:{t:'Actas y presupuestos', d:'El acta de cada reunión, con el presupuesto de lo que se propone calculado solo.',
     pasos:['Pulsa «Nueva acta» y rellena asistentes y orden del día.','En «Propuestas y acuerdos», añade cada propuesta con sus partidas de gasto.','Anota los acuerdos y el resultado de cada votación.','En «Presupuesto», revisa base, imprevistos, IVA y total; descárgalo en Word o PDF.','En «Acta redactada», genera el texto y descárgalo en Word o PDF con el logotipo.']},
   invitaciones:{t:'Invitaciones', d:'Qué invitación corresponde a cada acto y un redactor que la deja lista para imprimir.',
@@ -1962,7 +2120,7 @@ const GUIA = {
   evaluacion:{t:'Evaluación del acto', d:'Mide cómo ha ido el acto con indicadores y objetivos SMART.',
     pasos:['Pulsa «Nueva evaluación» o elige un evento guardado.','Anota asistentes y gasto, previstos y reales.','Puntúa de 1 a 5 cada área según las encuestas.','Para cada objetivo, puntúa los criterios SMART y anota meta y resultado.','Lee el índice global y descarga el informe.']}
 };
-const GUIA_ORDEN = ['catalogo','packs','eventos','actas','invitaciones','precedencia','tratamientos','noticias','evaluacion'];
+const GUIA_ORDEN = ['catalogo','packs','eventos','convocatorias','actas','invitaciones','precedencia','tratamientos','noticias','evaluacion'];
 function guideBar(view){
   const g = GUIA[view]; if (!g) return '';
   return `<div class="guide"><div class="guide-top"><div><b>¿Cómo se usa?</b> <span class="muted">${esc(g.d)}</span></div><div class="row" style="gap:6px"><button class="small" data-guia-pasos="${view}">Ver pasos</button><button class="small primary" data-ejemplo="${view}">Ver ejemplo</button></div></div>
@@ -2006,6 +2164,8 @@ const EJEMPLOS = {
   precedencia:() => { const ok = () => { Object.assign(P, {ambito:'baleares', mesa:'presidencial', modoAnf:'cede', personas:[
       {id:'ej1', nombre:'(Ej.) Tomeu Riera', cargo:'Batle/batlessa de Palma'},{id:'ej2', nombre:'(Ej.) Marta Vidal', cargo:'Presidente/a de las Illes Balears'},{id:'ej3', nombre:'(Ej.) Jordi Serra', cargo:'Ministros del Gobierno'},{id:'ej4', nombre:'(Ej.) Pere Font', cargo:'Presidente/a de consejo insular'},{id:'ej5', nombre:'(Ej.) Antoni Coll', cargo:'Rector/a de la Universitat de les Illes Balears'},{id:'ej6', nombre:'(Ej.) Aina Mas', cargo:'Conseller/a del Govern de les Illes Balears'},{id:'ej7', nombre:'(Ej.) Miquel Sastre', cargo:'Delegado/a del Gobierno en la Comunidad Autónoma'}], anfitrion:'ej1'}); savePrec(); go('precedencia'); toast('Ejemplo: el alcalde organiza y cede la presidencia a la presidenta del Govern.'); };
     if (P.personas.length && !P.personas.every(x => String(x.nombre).startsWith('(Ej'))) confirmBox('El ejemplo sustituirá la lista de personas que tienes ahora en Precedencias. ¿Continuar?', ok); else ok(); },
+  convocatorias:() => { UI.conv = Object.assign(newConv('comite-evento'), {_ejemplo:true, entidad:'(Ejemplo) Ayuntamiento · Premios de Turismo 2026', organo:'Comité Organizador de los Premios de Turismo', caracter:'Ordinaria', modalidad:'Híbrida', convocante:'(Ej.) Concejal de Turismo', cargo:'presidente del Comité', fecha:'2026-11-05', hora:'17:00', lugar:'Sala de juntas del Ayuntamiento', enlace:'reunion.ejemplo.es/comite', emision:'2026-10-29', ciudad:'Palma', secretario:'(Ej.) Técnica de protocolo', presidente:'(Ej.) Concejal de Turismo', rsvp:'protocolo@ejemplo.es',
+      orden:'Lectura y aprobación, si procede, del acta de la sesión anterior.\nPropuestas para la gala del 11 de diciembre: cóctel, retransmisión y photocall.\nPlan de comunicación.\nRuegos y preguntas.', documentacion:'se adjuntan los presupuestos de las tres propuestas', destinatarios:'Concejal de Turismo (presidente)\nTécnica de protocolo (secretaria)\nResponsable de comunicación\nResponsable de producción\nRepresentante de la asociación hotelera\nInterventora municipal', notas:'Quien asista por videoconferencia debe conectarse 5 minutos antes.'}); go('convocatorias'); },
   tratamientos:() => { go('tratamientos'); const q = $('#tr-q'); q.value = 'rector'; q.dispatchEvent(new Event('input')); toast('Ejemplo: así se trata a un rector. Prueba a buscar «alcalde» u «obispo».'); },
   evaluacion:() => { UI.evaluacion = Object.assign(newEvaluacion(), {_ejemplo:true, nombre:'(Ejemplo) Gala de los Premios de Turismo 2025', fecha:'2025-12-12', asisPrev:300, asisReal:276, presPrev:13500, presReal:14120, encuestas:118, medios:14, redes:23500, incidencias:2, incidenciasTxt:'Fallo del micrófono inalámbrico durante 2 minutos; la entrega empezó 10 minutos tarde.',
     areas:AREAS.map((a, i) => ({area:a, nota:[4, 3, 5, 4, 4, 2, 4, 5][i]})),
@@ -2015,7 +2175,7 @@ const EJEMPLOS = {
 function renderGuia(v){
   v.innerHTML = `<header><div class="eyebrow">Inicio</div><h1>Guía y ejemplos</h1><p class="lede">Un recorrido por el programa con un ejemplo completo en cada apartado. Los ejemplos no se guardan: ábrelos, míralos y úsalos como plantilla.</p></header>
   <section class="card"><h2>El recorrido de un acto</h2>
-    <div class="flujo">${[['catalogo','1','Elegir el tipo','o un pack'],['packs','2','Contratar el pack','al gusto del cliente'],['eventos','3','Planificar','tareas, escaleta, presupuesto'],['actas','4','Reunir al comité','acta y presupuesto'],['invitaciones','5','Invitar','tipo y redacción'],['precedencia','6','Sentar a las autoridades','precedencias y mesa'],['evaluacion','7','Evaluar','indicadores y SMART']].map(([id, n, t, d], i, a) => `<button class="paso" data-ejemplo="${id}"><span class="paso-n">${n}</span><b>${t}</b><span class="small muted">${d}</span></button>${i < a.length - 1 ? '<span class="flecha" aria-hidden="true">→</span>' : ''}`).join('')}</div>
+    <div class="flujo">${[['catalogo','1','Elegir el tipo','o un pack'],['packs','2','Contratar el pack','al gusto del cliente'],['eventos','3','Planificar','tareas, escaleta, presupuesto'],['convocatorias','4','Convocar al comité','plazo y orden del día'],['actas','5','Levantar acta','acuerdos y presupuesto'],['invitaciones','6','Invitar','tipo y redacción'],['precedencia','7','Sentar a las autoridades','precedencias y mesa'],['evaluacion','8','Evaluar','indicadores y SMART']].map(([id, n, t, d], i, a) => `<button class="paso" data-ejemplo="${id}"><span class="paso-n">${n}</span><b>${t}</b><span class="small muted">${d}</span></button>${i < a.length - 1 ? '<span class="flecha" aria-hidden="true">→</span>' : ''}`).join('')}</div>
     <p class="small muted">Pulsa cualquier paso para abrir su ejemplo. Los tratamientos y el análisis de noticias sirven de consulta en cualquier momento.</p></section>
   <div class="trat-grid">${GUIA_ORDEN.map(id => { const g = GUIA[id]; return `<div class="trat"><div class="k">${esc(VIEWS.find(x => x.id === id)?.group || '')}</div><div class="tt">${esc(g.t)}</div><div class="small">${esc(g.d)}</div><ol class="small" style="margin:4px 0;padding-left:18px">${g.pasos.map(p => `<li>${esc(p)}</li>`).join('')}</ol><div class="row" style="margin-top:auto"><button class="small primary" data-ejemplo="${id}">Ver ejemplo</button><button class="small ghost" data-view-go="${id}">Ir al apartado</button></div></div>`; }).join('')}</div>`;
 }
