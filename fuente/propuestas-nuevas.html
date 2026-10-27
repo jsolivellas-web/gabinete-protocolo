@@ -1,0 +1,420 @@
+<title>Nuevas propuestas de interfaz</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap">
+<style>
+/* Página contenedora neutra; cada maqueta lleva su propia paleta fija porque es una muestra visual, no sigue el tema. */
+:root{--bg:#eef0f3;--fg:#1b1f27;--muted:#5d6472;--line:#d5d9e0;--card:#ffffff;--accent:#1b1f27}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#15181e;--fg:#e9ebef;--muted:#9aa1ad;--line:#2b3039;--card:#1d2129;--accent:#e9ebef;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#15181e;--fg:#e9ebef;--muted:#9aa1ad;--line:#2b3039;--card:#1d2129;--accent:#e9ebef;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:"Inter",system-ui,sans-serif;margin:0}
+.page{max-width:1240px;margin:0 auto;padding-block:28px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:18px}
+.page h1{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:2.1rem;margin:0;text-wrap:balance;letter-spacing:-.02em}
+.page .lede{color:var(--muted);max-width:72ch;margin:6px 0 0;line-height:1.55}
+.switch{display:flex;gap:8px;flex-wrap:wrap}
+.switch button{font:inherit;font-weight:600;border:1px solid var(--line);background:var(--card);color:var(--fg);padding:10px 14px;border-radius:12px;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;min-width:200px;flex:1}
+.switch button small{font-weight:400;color:var(--muted)}
+.switch button[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.switch button:focus-visible{outline:2px solid #3b82f6;outline-offset:2px}
+.frame{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--card);box-shadow:0 18px 50px rgba(0,0,0,.12)}
+.frame-bar{display:flex;align-items:center;gap:6px;padding:9px 12px;border-bottom:1px solid var(--line);font-size:.78rem;color:var(--muted)}
+.frame-bar i{width:10px;height:10px;border-radius:50%;background:var(--line);display:inline-block}
+.frame-bar span{margin-left:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.frame-body{container-type:inline-size}
+.notes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.note{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+.note h3{margin:0 0 6px;font-size:1rem}
+.note p{color:var(--muted);font-size:.88rem;line-height:1.5;margin:0}
+@media (max-width:800px){.notes{grid-template-columns:minmax(0,1fr)}}
+svg.ic{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.img svg,.img{display:block;width:100%;height:100%}
+.mock button{font:inherit;cursor:pointer}
+
+/* ========== G · BENTO SERENO (A + E) ========== */
+.mG{background:#f5f3ee;color:#24302f;font-family:"Manrope",sans-serif;padding:20px 24px 26px}
+.mG .top{display:flex;align-items:center;gap:18px;margin-bottom:18px;flex-wrap:wrap}
+.mG .logo{font-family:"Fraunces",serif;font-weight:600;font-size:1.3rem;color:#3f6266}
+.mG nav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;max-width:100%}
+.mG nav a{padding:8px 14px;border-radius:999px;font-weight:600;font-size:.85rem;color:#66706e;text-decoration:none;white-space:nowrap}
+.mG nav a.on{background:#3f6266;color:#fff}
+.mG .av{margin-left:auto;width:38px;height:38px;border-radius:50%;background:#e6dccb;color:#5c4a33;display:grid;place-items:center;font-weight:800;font-size:.84rem}
+.mG .bento{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(150px,auto);gap:14px;grid-template-areas:"hero hero next next" "hero hero task succ" "bud bud prov conv" "quick quick quick conv"}
+.mG .t{border-radius:26px;padding:20px;position:relative;overflow:hidden;min-width:0;background:#fff;border:1px solid #e8e3d9}
+.mG .num{font-family:"Fraunces",serif;font-weight:500;letter-spacing:-.02em;line-height:1}
+.mG .lbl{font-weight:600;font-size:.84rem;color:#66706e}
+.mG .hero{grid-area:hero;background:linear-gradient(150deg,#4b6e71 0%,#5f8483 60%,#7a9a96 100%);border:0;color:#fff;display:flex;flex-direction:column;justify-content:space-between;padding:28px 28px 54px}
+.mG .hero .eb{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;opacity:.75;font-weight:700}
+.mG .hero h2{margin:8px 0 0;font-family:"Fraunces",serif;font-weight:500;font-size:2.6rem;line-height:1.05;max-width:12ch}
+.mG .hero p{margin:12px 0 0;font-size:.93rem;opacity:.88;max-width:36ch;line-height:1.5}
+.mG .hero .b{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;position:relative;z-index:1}
+.mG .pill{border:0;border-radius:999px;padding:11px 18px;font-weight:700;font-size:.85rem;background:#f1e6d2;color:#3a3226}
+.mG .pill.o{background:#ffffff1f;color:#fff;box-shadow:inset 0 0 0 1px #ffffff55}
+.mG .wave{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:42px}
+.mG .next{grid-area:next;padding:0;border:0;color:#fff}
+.mG .next .img{position:absolute;inset:0;filter:saturate(.7)}
+.mG .next .ov{position:absolute;inset:0;background:linear-gradient(90deg,rgba(28,36,36,.72),rgba(28,36,36,.05) 75%);padding:20px;display:flex;flex-direction:column;justify-content:space-between}
+.mG .date{display:inline-block;background:#fff;color:#3f6266;border-radius:14px;padding:6px 12px;text-align:center;font-family:"Fraunces";font-size:1.5rem;font-weight:600;line-height:1;align-self:flex-start}
+.mG .date small{display:block;font-family:"Manrope";font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:#7a8583;margin-top:3px}
+.mG .next b{font-size:1.05rem;max-width:24ch;display:block}
+.mG .next span{font-size:.8rem;opacity:.85}
+.mG .next .bar{height:5px;border-radius:9px;background:#ffffff33;overflow:hidden;margin-top:8px;max-width:240px}
+.mG .next .bar i{display:block;height:100%;background:#f1e6d2}
+.mG .task{grid-area:task;background:#ece6da;border-color:#e2dbcc}
+.mG .task .num{font-size:3.8rem;color:#5c4a33}
+.mG .arrow{position:absolute;right:14px;bottom:14px;width:34px;height:34px;border-radius:50%;background:#fff;color:#5c4a33;display:grid;place-items:center}
+.mG .succ{grid-area:succ;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.mG .succ svg{width:84px;height:84px}
+.mG .bud{grid-area:bud;background:#e3ebe8;border-color:#d6e1dd;display:flex;flex-direction:column;justify-content:space-between;gap:12px}
+.mG .bud .num{font-size:2.4rem;color:#2f4f52}
+.mG .stack{display:flex;height:22px;border-radius:8px;overflow:hidden;gap:3px}
+.mG .stack i{display:block;height:100%}
+.mG .leg{display:flex;gap:12px;flex-wrap:wrap;font-size:.74rem;font-weight:600;color:#55605e;margin-top:8px}
+.mG .leg i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:5px;vertical-align:middle}
+.mG .prov{grid-area:prov}
+.mG .prov .num{font-size:2.8rem;color:#3f6266}
+.mG .avs{display:flex;margin-top:12px}
+.mG .avs span{width:30px;height:30px;border-radius:50%;border:3px solid #fff;margin-right:-8px;display:grid;place-items:center;font-size:.6rem;font-weight:800}
+.mG .conv{grid-area:conv;background:#efe9df;border-color:#e4dccd;display:flex;flex-direction:column;gap:10px}
+.mG .cal{background:#fff;border-radius:16px;text-align:center;padding:0 0 10px;width:88px;overflow:hidden;border:1px solid #e4dccd}
+.mG .cal small{display:block;background:#b48a6e;color:#fff;font-weight:800;font-size:.68rem;letter-spacing:.1em;padding:4px 0;margin-bottom:6px}
+.mG .cal .num{font-size:2.2rem;color:#5c4a33}
+.mG .conv b{font-size:.92rem}
+.mG .conv ol{margin:0;padding-left:18px;font-size:.8rem;line-height:1.55;color:#55605e}
+.mG .ok{display:inline-flex;align-items:center;gap:6px;font-size:.74rem;font-weight:700;background:#dfe9e3;color:#2f6b4f;border-radius:999px;padding:5px 11px;align-self:flex-start}
+.mG .quick{grid-area:quick;display:flex;align-items:center;gap:8px;flex-wrap:wrap;align-content:center}
+.mG .quick h3{width:100%;margin:0 0 4px;font-family:"Fraunces";font-weight:500;font-size:1.2rem}
+.mG .q{display:flex;align-items:center;gap:8px;padding:8px 14px 8px 8px;border-radius:999px;background:#f5f3ee;font-weight:600;font-size:.83rem;border:1px solid #ebe6dc;color:#24302f}
+.mG .q span{width:28px;height:28px;border-radius:50%;display:grid;place-items:center}
+.mG .q svg.ic{width:15px;height:15px}
+@container (max-width:760px){
+  .mG{padding:14px}
+  .mG .bento{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:minmax(140px,auto);grid-template-areas:"hero hero" "hero hero" "next next" "task succ" "bud bud" "prov conv" "quick quick"}
+  .mG .hero h2{font-size:2.1rem}
+}
+
+/* ========== D · CRISTAL LÍQUIDO ========== */
+.mD{position:relative;overflow:hidden;font-family:"Plus Jakarta Sans",sans-serif;color:#1d1b2a;background:#f3eee8;padding:18px 22px 110px;min-height:760px}
+.mD .aur{position:absolute;inset:0;background:radial-gradient(40% 50% at 12% 18%,#ff9f7a 0%,transparent 70%),radial-gradient(38% 46% at 88% 12%,#8fd3ff 0%,transparent 70%),radial-gradient(46% 56% at 72% 88%,#b7a0ff 0%,transparent 70%),radial-gradient(40% 42% at 22% 92%,#ffd877 0%,transparent 70%)}
+.mD > *:not(.aur){position:relative}
+.mD .g{background:rgba(255,255,255,.44);backdrop-filter:blur(22px) saturate(170%);-webkit-backdrop-filter:blur(22px) saturate(170%);border:1px solid rgba(255,255,255,.75);box-shadow:0 10px 40px rgba(60,40,90,.12),inset 0 1px 0 rgba(255,255,255,.9);border-radius:26px}
+.mD .top{display:flex;gap:12px;align-items:center;padding:8px 8px 8px 16px;border-radius:999px}
+.mD .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.05rem;white-space:nowrap}
+.mD .logo i{width:30px;height:30px;border-radius:50%;background:conic-gradient(from 200deg,#ff8a65,#ffd36e,#7cc6ff,#b19cff,#ff8a65);box-shadow:inset 0 0 0 3px #ffffffaa}
+.mD .search{flex:1;max-width:420px;margin-left:auto;display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:#ffffff80;color:#6a6580;font-size:.85rem;min-width:0}
+.mD .av{width:38px;height:38px;flex:none;border-radius:50%;background:linear-gradient(135deg,#ff8a65,#b19cff);color:#fff;display:grid;place-items:center;font-weight:800;font-size:.85rem}
+.mD .main{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:18px;margin-top:18px}
+.mD .feat{position:relative;border-radius:30px;overflow:hidden;min-height:350px;box-shadow:0 20px 50px rgba(40,20,70,.25)}
+.mD .feat .img{position:absolute;inset:0}
+.mD .feat .img svg{object-fit:cover}
+.mD .feat .tag{position:absolute;left:16px;top:16px;padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.3);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.5);color:#fff;font-size:.78rem;font-weight:700}
+.mD .ov{position:absolute;left:14px;right:14px;bottom:14px;display:flex;gap:16px;align-items:center;padding:16px 18px;border-radius:22px;background:rgba(20,16,40,.38);backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);border:1px solid rgba(255,255,255,.25);color:#fff;flex-wrap:wrap}
+.mD .ov h2{margin:0;font-size:1.35rem;font-weight:800;line-height:1.15}
+.mD .ov p{margin:4px 0 0;font-size:.84rem;opacity:.85}
+.mD .ov .cd{margin-left:auto;text-align:center;line-height:1}
+.mD .ov .cd b{font-size:2.4rem;font-weight:800;display:block}
+.mD .ov .cd small{font-size:.72rem;opacity:.85;text-transform:uppercase;letter-spacing:.08em}
+.mD .ring{width:62px;height:62px;flex:none}
+.mD .col{display:flex;flex-direction:column;gap:14px}
+.mD .hi{padding:20px 22px}
+.mD .hi h3{margin:0;font-size:1.5rem;font-weight:800;letter-spacing:-.01em}
+.mD .hi p{margin:6px 0 14px;color:#4b4660;font-size:.88rem;line-height:1.5}
+.mD .btn{border:0;border-radius:999px;padding:11px 18px;font-weight:700;font-size:.86rem;background:#1d1b2a;color:#fff}
+.mD .btn.l{background:#ffffffa0;color:#1d1b2a;border:1px solid #ffffff}
+.mD .kp{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.mD .kp .g{padding:14px 16px;border-radius:22px}
+.mD .kp b{display:block;font-size:1.7rem;font-weight:800}
+.mD .kp span{font-size:.78rem;color:#4b4660}
+.mD .kp em{display:inline-block;margin-top:6px;font-style:normal;font-size:.7rem;font-weight:700;padding:3px 8px;border-radius:999px}
+.mD h4{margin:22px 4px 10px;font-size:1rem;font-weight:800}
+.mD .row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.mD .pc{padding:8px 8px 12px;border-radius:24px}
+.mD .pc .img{height:116px;border-radius:18px;overflow:hidden}
+.mD .pc b{display:block;margin:10px 6px 2px;font-size:.88rem}
+.mD .pc span{display:block;margin:0 6px;font-size:.75rem;color:#5b5670}
+.mD .dock{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);display:flex;gap:4px;padding:8px;border-radius:26px;max-width:calc(100% - 32px);overflow-x:auto;scrollbar-width:none}
+.mD .dock a{display:flex;align-items:center;gap:8px;height:46px;min-width:46px;justify-content:center;padding:0 12px;border-radius:18px;color:#3d3852;text-decoration:none;font-weight:700;font-size:.84rem;white-space:nowrap}
+.mD .dock a.on{background:#fff;box-shadow:0 4px 14px rgba(60,40,90,.15);color:#1d1b2a}
+.mD .dock svg.ic{width:21px;height:21px}
+@container (max-width:760px){
+  .mD{padding:14px 14px 100px}
+  .mD .main{grid-template-columns:minmax(0,1fr)}
+  .mD .row{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mD .search{display:none}.mD .logo{margin-right:auto}
+  .mD .feat{min-height:380px}
+}
+
+/* ========== E · BENTO EXPRESIVO ========== */
+.mE{background:#f6f2ea;color:#15131c;font-family:"Inter",sans-serif;padding:20px 24px 26px}
+.mE .top{display:flex;align-items:center;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+.mE .logo{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:1.6rem;letter-spacing:-.03em}
+.mE .logo span{color:#6d4aff}
+.mE nav{display:flex;gap:4px;background:#fff;padding:5px;border-radius:999px;overflow-x:auto;scrollbar-width:none;max-width:100%}
+.mE nav a{padding:8px 14px;border-radius:999px;font-weight:600;font-size:.84rem;color:#4a4656;text-decoration:none;white-space:nowrap}
+.mE nav a.on{background:#15131c;color:#fff}
+.mE .av{margin-left:auto;width:40px;height:40px;border-radius:14px;background:#d4f55c;display:grid;place-items:center;font-weight:800}
+.mE .bento{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(150px,auto);gap:14px;grid-template-areas:"hero hero next next" "hero hero task succ" "bud bud prov conv" "quick quick quick conv"}
+.mE .t{border-radius:30px;padding:20px;position:relative;overflow:hidden;min-width:0}
+.mE .big{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;letter-spacing:-.04em;line-height:.9}
+.mE .hero{grid-area:hero;background:#6d4aff;color:#fff;display:flex;flex-direction:column;justify-content:space-between;padding:26px}
+.mE .hero h2{margin:0;font-size:3.1rem;max-width:9ch}
+.mE .hero p{margin:0;font-size:.95rem;opacity:.9;max-width:34ch;line-height:1.45}
+.mE .hero .b{display:flex;gap:8px;flex-wrap:wrap;position:relative;z-index:1}
+.mE .pill{border:0;border-radius:999px;padding:12px 18px;font-weight:700;font-size:.86rem;background:#d4f55c;color:#15131c}
+.mE .pill.o{background:transparent;color:#fff;box-shadow:inset 0 0 0 2px #ffffff80}
+.mE .star{position:absolute;right:-30px;top:-30px;width:190px;height:190px;animation:gira 30s linear infinite}
+@keyframes gira{to{transform:rotate(360deg)}}
+.mE .next{grid-area:next;padding:0;color:#fff}
+.mE .next .img{position:absolute;inset:0}
+.mE .next .ov{position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,8,20,.75),rgba(10,8,20,.1) 70%);padding:20px;display:flex;flex-direction:column;justify-content:space-between}
+.mE .next .dt{font-size:2.6rem}
+.mE .next .dt small{display:block;font-family:"Inter";font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.85;margin-top:4px}
+.mE .next b{font-size:1.05rem;max-width:22ch}
+.mE .chip{display:inline-block;padding:5px 11px;border-radius:999px;font-size:.74rem;font-weight:700}
+.mE .task{grid-area:task;background:#d4f55c}
+.mE .task .big{font-size:4.6rem}
+.mE .lbl{font-weight:600;font-size:.86rem}
+.mE .arrow{position:absolute;right:14px;bottom:14px;width:38px;height:38px;border-radius:50%;background:#15131c;color:#d4f55c;display:grid;place-items:center}
+.mE .succ{grid-area:succ;background:#15131c;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.mE .succ svg{width:88px;height:88px}
+.mE .bud{grid-area:bud;background:#ff6a4d;color:#15131c;display:flex;flex-direction:column;justify-content:space-between}
+.mE .bud .big{font-size:2.8rem}
+.mE .stack{display:flex;height:26px;border-radius:10px;overflow:hidden;gap:3px}
+.mE .stack i{display:block;height:100%}
+.mE .leg{display:flex;gap:12px;flex-wrap:wrap;font-size:.74rem;font-weight:600}
+.mE .leg i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:5px;vertical-align:middle}
+.mE .prov{grid-area:prov;background:#a9dcff}
+.mE .prov .big{font-size:3.2rem}
+.mE .avs{display:flex;position:absolute;left:20px;bottom:18px}
+.mE .avs span{width:32px;height:32px;border-radius:50%;border:3px solid #a9dcff;margin-right:-9px;display:grid;place-items:center;font-size:.62rem;font-weight:800;color:#fff}
+.mE .conv{grid-area:conv;background:#ffc6e2;display:flex;flex-direction:column;gap:10px}
+.mE .cal{background:#fff;border-radius:20px;text-align:center;padding:10px 0 12px;width:96px}
+.mE .cal small{display:block;background:#ff6a4d;color:#fff;font-weight:800;font-size:.72rem;letter-spacing:.1em;margin:-10px 0 6px;padding:5px 0;border-radius:20px 20px 0 0}
+.mE .cal .big{font-size:2.6rem}
+.mE .conv ol{margin:0;padding-left:18px;font-size:.8rem;line-height:1.55}
+.mE .ok{display:inline-flex;align-items:center;gap:6px;font-size:.76rem;font-weight:700;background:#15131c;color:#fff;border-radius:999px;padding:5px 11px;align-self:flex-start}
+.mE .quick{grid-area:quick;background:#fff;display:flex;align-items:center;gap:10px;flex-wrap:wrap;align-content:center}
+.mE .quick h3{width:100%;margin:0 0 2px;font-family:"Bricolage Grotesque";font-size:1.15rem}
+.mE .q{display:flex;align-items:center;gap:8px;padding:9px 14px 9px 9px;border-radius:999px;background:#f3efe8;font-weight:600;font-size:.84rem;border:0}
+.mE .q span{width:30px;height:30px;border-radius:50%;display:grid;place-items:center}
+.mE .q svg.ic{width:16px;height:16px}
+@container (max-width:760px){
+  .mE{padding:14px}
+  .mE .bento{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:minmax(140px,auto);grid-template-areas:"hero hero" "hero hero" "next next" "task succ" "bud bud" "prov conv" "quick quick"}
+  .mE .hero h2{font-size:2.5rem}
+}
+@media (prefers-reduced-motion: reduce){.mE .star{animation:none}}
+
+/* ========== F · ESCAPARATE NOCTURNO ========== */
+.mF{background:#0c0b11;color:#f4f2f7;font-family:"Inter",sans-serif;padding-bottom:30px}
+.mF .heroF{position:relative;height:460px;overflow:hidden}
+.mF .heroF .img{position:absolute;inset:0;transform:scale(1.04)}
+.mF .heroF::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0c0b11 0%,#0c0b11d9 30%,#0c0b1100 72%),linear-gradient(0deg,#0c0b11 0%,#0c0b1100 40%)}
+.mF .bar{position:absolute;z-index:2;left:0;right:0;top:0;display:flex;align-items:center;gap:22px;padding:18px 28px}
+.mF .logo{font-family:"Syne",sans-serif;font-weight:800;letter-spacing:.14em;font-size:1rem}
+.mF .bar nav{display:flex;gap:18px;overflow-x:auto;scrollbar-width:none}
+.mF .bar nav a{color:#ffffffa6;text-decoration:none;font-size:.86rem;font-weight:500;white-space:nowrap}
+.mF .bar nav a.on{color:#fff;font-weight:700}
+.mF .bar .r{margin-left:auto;display:flex;align-items:center;gap:12px}
+.mF .av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#ffc857,#ff4d8d);display:grid;place-items:center;font-weight:800;font-size:.78rem;color:#0c0b11}
+.mF .hc{position:absolute;z-index:2;left:28px;bottom:34px;max-width:560px;display:flex;flex-direction:column;gap:14px}
+.mF .eb{font-size:.74rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#ffc857}
+.mF h2{margin:0;font-family:"Syne",sans-serif;font-weight:800;font-size:3.2rem;line-height:1;letter-spacing:-.02em}
+.mF .meta{color:#ffffffb3;font-size:.92rem}
+.mF .cds{display:flex;gap:10px;flex-wrap:wrap}
+.mF .cds div{padding:10px 14px;border-radius:14px;background:#ffffff14;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid #ffffff22;min-width:86px}
+.mF .cds b{display:block;font-family:"Syne";font-size:1.5rem}
+.mF .cds small{color:#ffffffa6;font-size:.72rem}
+.mF .bs{display:flex;gap:10px;flex-wrap:wrap}
+.mF .w{border:0;border-radius:12px;padding:12px 20px;font-weight:700;background:#fff;color:#0c0b11}
+.mF .gl{border:1px solid #ffffff40;border-radius:12px;padding:12px 18px;font-weight:600;background:#ffffff14;color:#fff}
+.mF .thumbs{position:absolute;z-index:2;right:28px;bottom:34px;display:flex;gap:10px}
+.mF .thumbs div{width:120px;height:76px;border-radius:12px;overflow:hidden;border:2px solid #ffffff30}
+.mF .thumbs div.on{border-color:#ffc857}
+.mF section{padding:6px 28px 0}
+.mF h3{font-family:"Syne",sans-serif;font-size:1.2rem;margin:22px 0 12px;display:flex;justify-content:space-between;align-items:baseline}
+.mF h3 small{font-family:"Inter";font-size:.8rem;color:#ffffff80;font-weight:500}
+.mF .scroll{display:flex;gap:14px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+.mF .poster{flex:0 0 190px;aspect-ratio:3/4;border-radius:18px;overflow:hidden;position:relative}
+.mF .poster .img{position:absolute;inset:0}
+.mF .poster::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#0c0b11f0 0%,#0c0b1100 55%)}
+.mF .poster .st{position:absolute;z-index:1;left:10px;top:10px;font-size:.68rem;font-weight:700;padding:4px 9px;border-radius:999px;background:#0c0b11b0;backdrop-filter:blur(8px)}
+.mF .poster .tx{position:absolute;z-index:1;left:12px;right:12px;bottom:12px}
+.mF .poster b{display:block;font-size:.92rem;line-height:1.2}
+.mF .poster span{font-size:.74rem;color:#ffffffa6}
+.mF .pk{flex:0 0 280px;border-radius:18px;background:#17151f;border:1px solid #ffffff12;overflow:hidden}
+.mF .pk .img{height:140px}
+.mF .pk div.t{padding:12px 14px}
+.mF .pk b{display:block}
+.mF .pk span{font-size:.8rem;color:#ffffff99}
+.mF .pk em{font-style:normal;float:right;color:#ffc857;font-weight:700;font-size:.86rem}
+.mF .pv{flex:0 0 112px;text-align:center}
+.mF .pv .c{width:84px;height:84px;margin:0 auto 8px;border-radius:50%;padding:3px;background:linear-gradient(135deg,#ffc857,#ff4d8d,#7b5cff)}
+.mF .pv .c span{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;background:#1d1a27;border:3px solid #0c0b11;font-family:"Syne";font-weight:800;font-size:1.1rem}
+.mF .pv b{display:block;font-size:.8rem;line-height:1.25}
+.mF .pv small{color:#ffc857;font-size:.74rem;font-weight:700}
+@container (max-width:760px){
+  .mF .heroF{height:560px}
+  .mF .bar{padding:14px 16px;gap:14px}.mF .bar nav{display:none}
+  .mF .hc{left:16px;right:16px;bottom:24px}
+  .mF h2{font-size:2.3rem}
+  .mF .thumbs{display:none}
+  .mF section{padding:4px 16px 0}
+  .mF .heroF::after{background:linear-gradient(0deg,#0c0b11 0%,#0c0b11cc 45%,#0c0b1133 100%)}
+}
+</style>
+
+<div class="page">
+  <header>
+    <h1>Propuestas de interfaz</h1>
+    <p class="lede">Maquetas del Panel con tus datos de ejemplo, inspiradas en las tendencias de 2026: el «cristal líquido» de Apple, las cuadrículas tipo bento de colores intensos de Material 3 Expressive y los escaparates oscuros con la imagen como protagonista. La <b>G</b> es la fusión que pediste de la A (Mediterránea) y la E (Bento), con colores neutros y suaves. Son solo muestras: el programa no cambia hasta que elijas una.</p>
+  </header>
+  <div class="switch" role="group" aria-label="Elegir propuesta">
+    <button data-m="G" aria-pressed="true">G · Bento sereno<small>Fusión de la A y la E, en tonos neutros</small></button>
+    <button data-m="D" aria-pressed="false">D · Cristal líquido<small>Paneles de vidrio sobre un fondo de atardecer</small></button>
+    <button data-m="E" aria-pressed="false">E · Bento expresivo<small>Bloques de colores vivos y números grandes</small></button>
+    <button data-m="F" aria-pressed="false">F · Escaparate nocturno<small>Oscuro, de cine, con el acto como cartel</small></button>
+  </div>
+  <div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span id="url">gabinete-protocolo.vercel.app</span></div><div class="frame-body" id="stage"></div></div>
+  <div class="notes" id="notes"></div>
+</div>
+
+<script>
+const I = {
+  home:'<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+  cal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+  box:'<path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/>',
+  doc:'<path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/>',
+  mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
+  users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14.5a5 5 0 0 1 5.5 5"/>',
+  star:'<path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9z"/>',
+  chart:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+  search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>',
+  flag:'<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>',
+  arrow:'<path d="M7 17L17 7M9 7h8v8"/>',
+  news:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/>',
+  bell:'<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/>'
+};
+const ic = k => `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${I[k]}</svg>`;
+// Las mismas ilustraciones de eventos que usa el programa
+const SCENES = {
+  boda:() => { let f = ''; for (let a = 180; a <= 360; a += 15){ const r = a * Math.PI / 180; f += `<circle cx="${200 + 92 * Math.cos(r)}" cy="${118 + 92 * Math.sin(r)}" r="9" fill="${['#e8a0a8','#ffffff','#f2c6b4'][(a / 15) % 3]}"/>`; }
+    return `<rect width="400" height="240" fill="#f4e9e6"/><rect y="196" width="400" height="44" fill="#e6d3cc"/><path d="M182 196 L150 240 H250 L218 196 Z" fill="#fff" opacity=".75"/><path d="M108 200 V118 A92 92 0 0 1 292 118 V200" fill="none" stroke="#7d9a7a" stroke-width="9"/>${f}<circle cx="187" cy="128" r="19" fill="none" stroke="#c9a24a" stroke-width="6"/><circle cx="213" cy="128" r="19" fill="none" stroke="#dcbc66" stroke-width="6"/>`; },
+  fiesta:() => `<rect width="400" height="240" fill="#fdf1d8"/>${[[70,70,'#e85d75'],[112,52,'#4f9ed8'],[300,58,'#f2b134'],[338,84,'#6cc08b']].map(([x,y,c]) => `<line x1="${x}" y1="${y + 30}" x2="${x + 6}" y2="${y + 110}" stroke="#9a8a70"/><ellipse cx="${x}" cy="${y}" rx="22" ry="29" fill="${c}"/>`).join('')}
+    <rect x="140" y="150" width="120" height="56" rx="6" fill="#f6c1cf"/><rect x="160" y="112" width="80" height="40" rx="6" fill="#fbe3ea"/>${[176,200,224].map(x => `<rect x="${x - 2}" y="96" width="4" height="16" fill="#7a6ad8"/><ellipse cx="${x}" cy="92" rx="3" ry="5" fill="#f2b134"/>`).join('')}
+    <rect y="206" width="400" height="34" fill="#f3dfb7"/>${[[40,30,'#e85d75'],[160,24,'#4f9ed8'],[250,36,'#6cc08b'],[370,26,'#f2b134'],[220,70,'#e85d75']].map(([x,y,c]) => `<rect x="${x}" y="${y}" width="8" height="4" fill="${c}" transform="rotate(30 ${x} ${y})"/>`).join('')}`,
+  gala:() => `<rect width="400" height="240" fill="#1d2340"/><rect y="168" width="400" height="72" fill="#262d52"/><line x1="200" y1="0" x2="200" y2="34" stroke="#d7b468" stroke-width="2"/><ellipse cx="200" cy="46" rx="44" ry="12" fill="#d7b468"/>${[-36,-18,0,18,36].map(d => `<circle cx="${200 + d}" cy="${62 + Math.abs(d) / 6}" r="4" fill="#f5e3b0"/>`).join('')}
+    ${[[90,186],[200,204],[310,186]].map(([x,y]) => `<ellipse cx="${x}" cy="${y}" rx="58" ry="17" fill="#f5f1e8"/>${[-40,-20,0,20,40].map(d => `<circle cx="${x + d}" cy="${y - 20}" r="5" fill="#d7b468"/>`).join('')}<line x1="${x - 6}" y1="${y - 8}" x2="${x - 6}" y2="${y + 2}" stroke="#bfc6e0"/><line x1="${x + 8}" y1="${y - 8}" x2="${x + 8}" y2="${y + 2}" stroke="#bfc6e0"/>`).join('')}`,
+  premios:() => `<rect width="400" height="240" fill="#221a2c"/><polygon points="110,0 60,200 170,200" fill="#fff" opacity=".08"/><polygon points="290,0 230,200 340,200" fill="#fff" opacity=".08"/><rect y="186" width="400" height="54" fill="#3a2a45"/><rect x="120" y="178" width="160" height="10" fill="#8e1f2f"/>
+    <path d="M172 78 h56 v22 a28 28 0 0 1 -56 0 z" fill="#d7b468"/><path d="M172 84 h-12 a12 12 0 0 0 12 18 M228 84 h12 a12 12 0 0 1 -12 18" fill="none" stroke="#d7b468" stroke-width="4"/><rect x="194" y="126" width="12" height="22" fill="#d7b468"/><rect x="178" y="148" width="44" height="12" fill="#b08d3a"/><polygon points="200,40 205,54 220,54 208,62 212,76 200,68 188,76 192,62 180,54 195,54" fill="#f5e3b0"/>`,
+  congreso:() => `<rect width="400" height="240" fill="#e9eef5"/><rect x="110" y="26" width="180" height="92" rx="4" fill="#ffffff" stroke="#9aa8bd" stroke-width="2"/>${[48,62,76,90].map((y, i) => `<rect x="130" y="${y}" width="${120 - i * 18}" height="6" rx="3" fill="#c9d3e3"/>`).join('')}<polygon points="312,96 344,96 338,140 318,140" fill="#2e4568"/><rect x="0" y="140" width="400" height="100" fill="#dfe6f0"/>
+    ${[0,1,2].map(r => [...Array(10)].map((_, c) => `<rect x="${32 + c * 34}" y="${156 + r * 26}" width="26" height="16" rx="4" fill="#5a6f92"/>`).join('')).join('')}`,
+  empresa:() => `<rect width="400" height="240" fill="#e8f0ee"/><rect x="60" y="24" width="280" height="108" rx="4" fill="#17323a"/>${[40,62,50,80,70,92].map((h, i) => `<rect x="${92 + i * 38}" y="${118 - h}" width="22" height="${h}" fill="#4fd1b5"/>`).join('')}<polyline points="96,96 140,84 178,90 214,62 252,70 290,44" fill="none" stroke="#f2b134" stroke-width="3"/>
+    <rect x="300" y="132" width="34" height="50" fill="#2f4a46"/><rect y="182" width="400" height="58" fill="#d4e2de"/>${[50,100,150,200,250,300,350].map(x => `<circle cx="${x}" cy="200" r="11" fill="#2f4a46"/><rect x="${x - 15}" y="211" width="30" height="29" rx="10" fill="#2f4a46"/>`).join('')}`,
+  feria:() => `<rect width="400" height="240" fill="#f2eee7"/><rect y="186" width="400" height="54" fill="#d9d1c3"/>${[[20,'#8e1f2f'],[150,'#1e2d4d'],[280,'#2f7a4f']].map(([x,c]) => `<rect x="${x}" y="70" width="104" height="116" fill="#ffffff" stroke="#c9bfae"/><rect x="${x}" y="56" width="104" height="18" fill="${c}"/>${[0,1,2,3,4,5,6].map(i => `<rect x="${x + i * 15}" y="74" width="8" height="10" fill="${c}" opacity="${i % 2 ? .4 : .9}"/>`).join('')}<rect x="${x + 22}" y="140" width="60" height="46" fill="${c}" opacity=".85"/><rect x="${x + 28}" y="98" width="48" height="28" fill="#e8e2d6"/>`).join('')}`,
+  viaje:() => `<rect width="400" height="240" fill="#d9ecf6"/><circle cx="320" cy="56" r="26" fill="#f7c948"/><polygon points="0,170 80,80 160,170" fill="#8fb3a5"/><polygon points="110,170 210,60 310,170" fill="#6f9488"/><polygon points="250,170 330,100 400,170" fill="#8fb3a5"/><rect y="170" width="400" height="70" fill="#9aa39a"/><rect y="200" width="400" height="6" fill="#f5f1e8"/>
+    <rect x="104" y="124" width="190" height="64" rx="10" fill="#e2554a"/>${[0,1,2,3,4].map(i => `<rect x="${116 + i * 34}" y="134" width="26" height="22" rx="3" fill="#cfe8f5"/>`).join('')}<rect x="268" y="134" width="18" height="40" rx="3" fill="#cfe8f5"/><circle cx="142" cy="190" r="13" fill="#333"/><circle cx="258" cy="190" r="13" fill="#333"/>`,
+  deporte:() => `<rect width="400" height="240" fill="#e2efe3"/><rect y="150" width="400" height="90" fill="#c8553d"/>${[166,184,202,220].map(y => `<rect y="${y}" width="400" height="2" fill="#fff" opacity=".8"/>`).join('')}<rect x="300" y="60" width="5" height="92" fill="#555"/><rect x="384" y="60" width="5" height="92" fill="#555"/><rect x="300" y="60" width="89" height="24" fill="#1e2d4d"/><text x="344" y="77" fill="#fff" font-family="sans-serif" font-size="13" font-weight="700" text-anchor="middle">META</text>
+    <rect x="70" y="92" width="50" height="58" fill="#d7b468"/><rect x="20" y="112" width="50" height="38" fill="#c0c6d0"/><rect x="120" y="122" width="50" height="28" fill="#c9875a"/>${[[95,120,'1'],[45,136,'2'],[145,142,'3']].map(([x,y,t]) => `<text x="${x}" y="${y}" fill="#fff" font-family="sans-serif" font-size="18" font-weight="700" text-anchor="middle">${t}</text>`).join('')}`,
+  institucional:() => `<rect width="400" height="240" fill="#eef0f5"/><rect y="196" width="400" height="44" fill="#d9dde6"/><rect x="170" y="196" width="60" height="44" fill="#8e1f2f"/>${[60,100,300,340].map(x => `<rect x="${x}" y="40" width="3" height="156" fill="#7a7f8c"/>`).join('')}
+    <rect x="63" y="44" width="34" height="24" fill="#c60b1e"/><rect x="63" y="50" width="34" height="12" fill="#ffc400"/><rect x="103" y="44" width="34" height="24" fill="#f4e04d"/>${[0,1,2,3].map(i => `<rect x="103" y="${46 + i * 6}" width="34" height="3" fill="#d2232a"/>`).join('')}<rect x="303" y="44" width="34" height="24" fill="#003399"/><circle cx="320" cy="56" r="7" fill="none" stroke="#ffcc00" stroke-width="2" stroke-dasharray="1.5 2"/><rect x="343" y="44" width="34" height="24" fill="#ffffff" stroke="#ccc"/><rect x="343" y="44" width="34" height="8" fill="#2e7d4f"/>
+    <polygon points="176,110 224,110 218,196 182,196" fill="#5b3d2a"/><circle cx="200" cy="140" r="12" fill="#d7b468"/>`,
+  cultural:() => `<rect width="400" height="240" fill="#f5f2ec"/><rect y="184" width="400" height="56" fill="#ddd5c6"/><rect x="30" y="50" width="96" height="110" fill="#fff" stroke="#8a7a60" stroke-width="5"/><circle cx="78" cy="98" r="26" fill="#e07a5f"/><rect x="48" y="124" width="60" height="20" fill="#3d405b"/>
+    <rect x="152" y="36" width="96" height="124" fill="#fff" stroke="#8a7a60" stroke-width="5"/><polygon points="166,146 200,60 234,146" fill="#81b29a"/><rect x="274" y="50" width="96" height="110" fill="#fff" stroke="#8a7a60" stroke-width="5"/>${[0,1,2,3].map(i => `<rect x="${286 + i * 20}" y="64" width="10" height="82" fill="${['#f2cc8f','#3d405b','#e07a5f','#81b29a'][i]}"/>`).join('')}<rect x="150" y="196" width="100" height="10" fill="#6b5a44"/><rect x="160" y="206" width="6" height="18" fill="#6b5a44"/><rect x="234" y="206" width="6" height="18" fill="#6b5a44"/>`,
+  concierto:() => `<rect width="400" height="240" fill="#14121f"/><polygon points="80,0 40,150 130,150" fill="#e85d75" opacity=".22"/><polygon points="200,0 160,150 240,150" fill="#4f9ed8" opacity=".22"/><polygon points="320,0 270,150 360,150" fill="#f2b134" opacity=".22"/><rect x="40" y="150" width="320" height="22" fill="#2b2740"/><rect x="40" y="96" width="30" height="54" fill="#0b0a12" stroke="#3b3656"/><rect x="330" y="96" width="30" height="54" fill="#0b0a12" stroke="#3b3656"/>
+    <rect y="172" width="400" height="68" fill="#0b0a12"/>${[...Array(16)].map((_, i) => `<circle cx="${12 + i * 25}" cy="${200 + (i % 3) * 6}" r="11" fill="#000"/>`).join('')}${[60,150,240,330].map(x => `<line x1="${x}" y1="196" x2="${x - 8}" y2="168" stroke="#000" stroke-width="5" stroke-linecap="round"/>`).join('')}`
+};
+const sc = k => `<div class="img"><svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${(SCENES[k] || SCENES.fiesta)()}</svg></div>`;
+const ring = (p, c, track, txt, tc) => `<svg viewBox="0 0 42 42"><circle cx="21" cy="21" r="16" fill="none" stroke="${track}" stroke-width="5"/><circle cx="21" cy="21" r="16" fill="none" stroke="${c}" stroke-width="5" stroke-linecap="round" stroke-dasharray="${p * 1.005} 100.5" transform="rotate(-90 21 21)"/><text x="21" y="23.5" text-anchor="middle" font-size="8" font-weight="800" fill="${tc}" font-family="inherit">${txt}</text></svg>`;
+
+const EVS = [
+  {n:'Gala de los Premios de Turismo', d:'11', m:'dic', lugar:'Auditorio municipal', av:62, sc:'gala', est:'Planificación'},
+  {n:'Boda de Laura y Marc', d:'12', m:'jun', lugar:'Finca en Santa Maria', av:35, sc:'boda', est:'Confirmado'},
+  {n:'Viaje de estudios 4.º ESO', d:'12', m:'abr', lugar:'Andalucía', av:20, sc:'viaje', est:'Idea'},
+  {n:'Entrega de trofeos del torneo', d:'24', m:'ene', lugar:'Polideportivo', av:48, sc:'deporte', est:'Planificación'},
+  {n:'Congreso de Turismo Sostenible', d:'5', m:'mar', lugar:'Palau de Congressos', av:15, sc:'congreso', est:'Idea'},
+  {n:'Concierto de Sant Joan', d:'23', m:'jun', lugar:'Parc de la Mar', av:8, sc:'concierto', est:'Idea'}
+];
+const PK = [['Boda Premium','boda','25.500 €','150 invitados'],['Cena de gala','gala','21.500 €','200 invitados'],['Congreso y jornadas','congreso','18.750 €','250 asistentes'],['Viaje de estudios','viaje','17.100 €','40 alumnos'],['Entrega de premios','premios','9.600 €','300 asistentes'],['Concierto','concierto','7.000 €','500 asistentes']];
+const PV = [['M&M','M&M Experiences','5,0'],['FC','Fosh Catering','4,9'],['FE','Floraevent','4,9'],['SM','Son Marroig','4,8'],['AV','Audiovisuales Baleares','4,8'],['FT','Foto Tramuntana','4,7']];
+const NAV = ['Panel','Eventos','Packs','Proveedores','Convocatorias','Actas','Protocolo','Evaluación'];
+
+const M = {
+G:{titulo:'Bento sereno', html:() => `<div class="mock mG">
+  <div class="top"><div class="logo">Gabinete de Protocolo</div><nav>${NAV.map((x, i) => `<a href="#" class="${i ? '' : 'on'}">${x}</a>`).join('')}</nav><div class="av">JS</div></div>
+  <div class="bento">
+    <div class="t hero"><div><div class="eb">Panel de control</div><h2>Buenos días, Juan.</h2><p>Tienes 3 actos en marcha y 8 tareas por cerrar. El comité de los premios se reúne el 5 de noviembre.</p></div>
+      <div class="b"><button class="pill">+ Nuevo evento</button><button class="pill o">Contratar un pack</button></div>
+      <svg class="wave" viewBox="0 0 1200 42" preserveAspectRatio="none" aria-hidden="true"><path d="M0 26 C200 0 400 42 600 22 S1000 6 1200 24 V42 H0z" fill="#ffffff14"/><path d="M0 34 C240 14 460 42 700 30 S1040 18 1200 32 V42 H0z" fill="#ffffff1f"/></svg></div>
+    <div class="t next">${sc('gala')}<div class="ov"><div class="date">11<small>dic</small></div><div><b>${EVS[0].n}</b><span>${EVS[0].lugar} · en 45 días · 62 % preparado</span><div class="bar"><i style="width:62%"></i></div></div></div></div>
+    <div class="t task"><div class="num">8</div><div class="lbl">tareas pendientes</div><span class="arrow">${ic('arrow')}</span></div>
+    <div class="t succ">${ring(87, '#5f8483', '#ebe7df', '87%', '#24302f')}<div class="lbl">éxito medio</div></div>
+    <div class="t bud"><div><div class="lbl">Presupuesto de la gala</div><div class="num">13.490 €</div></div>
+      <div><div class="stack">${[[49,'#4b6e71'],[21,'#8fb0aa'],[11,'#c9b48f'],[19,'#d9cfbf']].map(([p, c]) => `<i style="width:${p}%;background:${c}"></i>`).join('')}</div>
+      <div class="leg">${[['Cóctel','#4b6e71'],['Sonido e imagen','#8fb0aa'],['Trofeos','#c9b48f'],['Resto','#d9cfbf']].map(([l, c]) => `<span><i style="background:${c}"></i>${l}</span>`).join('')}</div></div></div>
+    <div class="t prov"><div class="num">42</div><div class="lbl">proveedores en Mallorca</div><div class="avs">${[['#dfe9e6','#3f6266','MM'],['#efe4d3','#6b5236','FC'],['#e6e3ef','#4f4a73','FE'],['#e3ebe0','#3f6a45','SM']].map(([bg, c, t]) => `<span style="background:${bg};color:${c}">${t}</span>`).join('')}</div></div>
+    <div class="t conv"><div class="lbl">Próxima reunión</div><div class="cal"><small>NOV</small><div class="num">5</div></div><b>Comité de los Premios de Turismo</b><span class="ok">✓ Plazo legal cumplido</span><ol><li>Lectura del acta anterior</li><li>Fallo del jurado</li><li>Escaleta de la gala</li><li>Ruegos y preguntas</li></ol></div>
+    <div class="t quick"><h3>Accesos rápidos</h3>${[['flag','Precedencias y mesas','#dfe9e6','#3f6266'],['mail','Invitaciones','#efe4d3','#6b5236'],['doc','Actas y presupuestos','#e6e3ef','#4f4a73'],['star','Tratamientos','#efe4d3','#6b5236'],['news','Analizar noticia','#dfe9e6','#3f6266'],['chart','Evaluar un acto','#e3ebe0','#3f6a45']].map(([i, l, bg, c]) => `<button class="q"><span style="background:${bg};color:${c}">${ic(i)}</span>${l}</button>`).join('')}</div>
+  </div>
+</div>`,
+  notas:[['Para quién','Si te gustaba la idea de la A (cálida, con imágenes y titulares con serifas) pero con la organización de la E, y con un aspecto más sobrio y profesional.'],['Qué toma de cada una','De la A: menú arriba, tipografía con serifas, el saludo sobre un degradado verde mar con ola, la fecha destacada y la barra de avance. De la E: la cuadrícula de bloques de distintos tamaños, los números grandes, el presupuesto, la próxima reunión y los accesos rápidos.'],['Colores','Blanco roto, arena, piedra y salvia, con un verde mar apagado como único color principal y un toque terracota suave. Sin colores chillones ni animaciones.']]},
+D:{titulo:'Cristal líquido', html:() => `<div class="mock mD"><div class="aur"></div>
+  <div class="top g"><div class="logo"><i></i>Gabinete de Protocolo</div><div class="search">${ic('search')} Buscar evento, proveedor, cargo…</div><div class="av">JS</div></div>
+  <div class="main">
+    <div class="feat">${sc('gala')}<span class="tag">Próximo acto · Galas y premios</span>
+      <div class="ov"><div class="ring">${ring(62, '#ffd877', '#ffffff33', '62 %', '#fff')}</div><div><h2>${EVS[0].n}</h2><p>11 de diciembre · ${EVS[0].lugar} · 8 tareas pendientes</p></div><div class="cd"><b>45</b><small>días</small></div></div></div>
+    <div class="col">
+      <div class="g hi"><h3>Buenos días, Juan</h3><p>Tienes 3 actos en marcha. El comité de los premios se reúne el 5 de noviembre y la convocatoria ya está enviada.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn">+ Nuevo evento</button><button class="btn l">Contratar un pack</button></div></div>
+      <div class="kp">${[['3','actos en marcha','+1 este mes','#ff9f7a33','#b34a1f'],['8','tareas pendientes','4 esta semana','#ffd87744','#8a5d00'],['42','proveedores','en Mallorca','#8fd3ff44','#1d5f8a'],['87 %','éxito medio','último acto','#b7a0ff44','#5b3fa0']].map(([b, s, e, bg, c]) => `<div class="g"><b>${b}</b><span>${s}</span><br><em style="background:${bg};color:${c}">${e}</em></div>`).join('')}</div>
+    </div>
+  </div>
+  <h4>Tus actos</h4>
+  <div class="row">${EVS.slice(1, 5).map(e => `<div class="g pc">${sc(e.sc)}<b>${e.n}</b><span>${e.d} ${e.m} · ${e.est}</span></div>`).join('')}</div>
+  <nav class="dock g">${[['home','Panel',1],['cal','Eventos'],['box','Packs'],['users','Proveedores'],['mail','Convocatorias'],['doc','Actas'],['flag','Protocolo'],['chart','Evaluación']].map(([k, l, on]) => `<a href="#" class="${on ? 'on' : ''}" title="${l}">${ic(k)}${on ? l : ''}</a>`).join('')}</nav>
+</div>`,
+  notas:[['Para quién','Si quieres que el programa se vea como una app de Apple actual: elegante, luminoso y tranquilo, con mucha profundidad pero poco ruido.'],['Qué cambia','Fondo de atardecer mediterráneo con paneles de vidrio esmerilado. El próximo acto ocupa media pantalla, con su imagen, la cuenta atrás y el avance. El menú pasa a una barra flotante abajo, como en el móvil.'],['Inspiración','El «Liquid Glass» de Apple (iOS 26) y el glassmorphism 2.0: el vidrio solo en barras y tarjetas cortas, para que el texto se lea bien.']]},
+E:{titulo:'Bento expresivo', html:() => `<div class="mock mE">
+  <div class="top"><div class="logo">gabinete<span>.</span></div><nav>${NAV.map((x, i) => `<a href="#" class="${i ? '' : 'on'}">${x}</a>`).join('')}</nav><div class="av">JS</div></div>
+  <div class="bento">
+    <div class="t hero"><svg class="star" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 0 L61 30 L93 20 L72 46 L100 64 L67 68 L70 100 L50 76 L30 100 L33 68 L0 64 L28 46 L7 20 L39 30 Z" fill="#d4f55c"/></svg>
+      <h2 class="big">Buenos días, Juan.</h2><p>3 actos en marcha y 8 tareas por cerrar. La gala de turismo es la siguiente.</p>
+      <div class="b"><button class="pill">+ Nuevo evento</button><button class="pill o">Contratar un pack</button></div></div>
+    <div class="t next">${sc('gala')}<div class="ov"><div class="big dt">11 dic<small>Próximo acto</small></div><div><b>${EVS[0].n}</b><br><span class="chip" style="background:#ff6a4d;color:#15131c;margin-top:8px">en 45 días · 62 % listo</span></div></div></div>
+    <div class="t task"><div class="big">8</div><div class="lbl">tareas pendientes</div><span class="arrow">${ic('arrow')}</span></div>
+    <div class="t succ">${ring(87, '#d4f55c', '#ffffff22', '87%', '#fff')}<div class="lbl">éxito medio</div></div>
+    <div class="t bud"><div><div class="lbl">Presupuesto de la gala</div><div class="big">13.490 €</div></div>
+      <div><div class="stack">${[[49,'#15131c'],[21,'#ffffff'],[11,'#d4f55c'],[19,'#ffc6e2']].map(([p, c]) => `<i style="width:${p}%;background:${c}"></i>`).join('')}</div>
+      <div class="leg" style="margin-top:8px">${[['Cóctel','#15131c'],['Sonido e imagen','#ffffff'],['Trofeos','#d4f55c'],['Resto','#ffc6e2']].map(([l, c]) => `<span><i style="background:${c}"></i>${l}</span>`).join('')}</div></div></div>
+    <div class="t prov"><div class="big">42</div><div class="lbl">proveedores en Mallorca</div><div class="avs">${[['#6d4aff','MM'],['#ff6a4d','FC'],['#15131c','FE'],['#2b9c6b','SM']].map(([c, t]) => `<span style="background:${c}">${t}</span>`).join('')}</div></div>
+    <div class="t conv"><div class="lbl">Próxima reunión</div><div class="cal"><small>NOV</small><div class="big">5</div></div><b>Comité de los Premios de Turismo</b><span class="ok">✓ Plazo legal cumplido</span><ol><li>Lectura del acta anterior</li><li>Fallo del jurado</li><li>Escaleta de la gala</li><li>Ruegos y preguntas</li></ol></div>
+    <div class="t quick"><h3>¿Qué quieres hacer?</h3>${[['flag','Precedencias','#6d4aff'],['mail','Invitaciones','#ff6a4d'],['doc','Acta con presupuesto','#15131c'],['star','Tratamientos','#2b9c6b'],['news','Analizar noticia','#1d6fd8'],['chart','Evaluar un acto','#c2185b']].map(([i, l, c]) => `<button class="q"><span style="background:${c};color:#fff">${ic(i)}</span>${l}</button>`).join('')}</div>
+  </div>
+</div>`,
+  notas:[['Para quién','Si buscas algo moderno, alegre y con personalidad: se entiende de un vistazo y destaca mucho al enseñarlo a clientes o en redes.'],['Qué cambia','El Panel se convierte en una cuadrícula de bloques de distintos tamaños y colores intensos: lo importante es más grande. Números enormes, formas redondeadas y una estrella decorativa que gira despacio.'],['Inspiración','Las cuadrículas bento de las presentaciones de Apple y el estilo Material 3 Expressive de Google: color audaz, formas grandes y tipografía expresiva.']]},
+F:{titulo:'Escaparate nocturno', html:() => `<div class="mock mF">
+  <div class="heroF">${sc('gala')}
+    <div class="bar"><div class="logo">GABINETE</div><nav>${NAV.map((x, i) => `<a href="#" class="${i ? '' : 'on'}">${x}</a>`).join('')}</nav><div class="r">${ic('search')}${ic('bell')}<div class="av">JS</div></div></div>
+    <div class="hc"><div class="eb">Próximo acto · Galas y premios</div><h2>${EVS[0].n}</h2><div class="meta">11 de diciembre · ${EVS[0].lugar} · 240 invitados</div>
+      <div class="cds">${[['45','días'],['8','tareas'],['62 %','preparado'],['13.490 €','presupuesto']].map(([b, s]) => `<div><b>${b}</b><small>${s}</small></div>`).join('')}</div>
+      <div class="bs"><button class="w">Abrir evento</button><button class="gl">Ver plano de mesas</button></div></div>
+    <div class="thumbs">${['gala','boda','viaje'].map((k, i) => `<div class="${i ? '' : 'on'}">${sc(k)}</div>`).join('')}</div>
+  </div>
+  <section><h3>Tus actos <small>6 en marcha</small></h3><div class="scroll">${EVS.map(e => `<div class="poster">${sc(e.sc)}<span class="st">${e.est}</span><div class="tx"><b>${e.n}</b><span>${e.d} ${e.m} · ${e.lugar}</span></div></div>`).join('')}</div></section>
+  <section><h3>Packs para contratar <small>todo incluido, a tu gusto</small></h3><div class="scroll">${PK.map(([n, k, p, q]) => `<div class="pk">${sc(k)}<div class="t"><em>${p}</em><b>${n}</b><span>${q} · sin IVA</span></div></div>`).join('')}</div></section>
+  <section><h3>Proveedores destacados en Mallorca <small>mejor valorados</small></h3><div class="scroll">${PV.map(([i, n, v]) => `<div class="pv"><div class="c"><span>${i}</span></div><b>${n}</b><small>★ ${v}</small></div>`).join('')}</div></section>
+</div>`,
+  notas:[['Para quién','Si quieres impacto: cada acto se presenta como un estreno. Ideal para galas, bodas y eventos de imagen, y muy cómodo de noche.'],['Qué cambia','Portada a pantalla completa con el próximo acto como cartel, cuenta atrás y botones directos. Debajo, filas que se deslizan con tus actos, los packs y los proveedores, como en una plataforma de cine.'],['Inspiración','Plataformas como Netflix, Apple TV o Airbnb Experiencias: la imagen manda, el texto acompaña y todo se descubre deslizando.']]}
+};
+const stage = document.getElementById('stage'), notes = document.getElementById('notes'), url = document.getElementById('url');
+function show(k){
+  stage.innerHTML = M[k].html();
+  notes.innerHTML = M[k].notas.map(([t, p]) => `<div class="note"><h3>${t}</h3><p>${p}</p></div>`).join('');
+  url.textContent = `gabinete-protocolo.vercel.app · Propuesta ${k} · ${M[k].titulo}`;
+  document.querySelectorAll('[data-m]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.m === k)));
+  try { localStorage.setItem('propuesta2', k); } catch {}
+}
+document.querySelector('.switch').addEventListener('click', e => { const b = e.target.closest('[data-m]'); if (b) show(b.dataset.m); });
+show('G');
+</script>
