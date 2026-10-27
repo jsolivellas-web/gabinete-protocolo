@@ -17,14 +17,15 @@
   --f-display:"Fraunces", Georgia, "Times New Roman", serif;
   --f-body:"Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
   --f-mono:"IBM Plex Mono", ui-monospace, Consolas, monospace;
+  color-scheme:light;
   --r:14px; --shadow:0 1px 2px rgba(36,48,47,.04), 0 6px 20px rgba(36,48,47,.05);
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+@media (prefers-color-scheme: dark){:root[data-theme="oscuro-auto"]{
   --paper:#131816; --sheet:#1a211f; --ink:#e4e9e6; --ink-2:#a0aca9; --line:#29322f; --line-2:#36413e;
   --accent:#8fb7b2; --accent-soft:#223a37; --gold:#d4b48a; --gold-soft:#342b20; --sun:#d9c9a8;
   --navy:#2c4547; --navy-ink:#e4e9e6; --sea-2:#3a5a5a; --sea-3:#4f7370; --terra:#c49a7f; --sand:#27261f; --sage:#1d2a27;
   --ok:#7cc29a; --ok-soft:#1b3127; --warn:#e0ad5f; --warn-soft:#382c16; --bad:#ec8a80; --bad-soft:#3a1f1c; --shadow:none; color-scheme:dark}}
-:root[data-theme="dark"]{
+:root[data-theme="oscuro"]{
   --paper:#131816; --sheet:#1a211f; --ink:#e4e9e6; --ink-2:#a0aca9; --line:#29322f; --line-2:#36413e;
   --accent:#8fb7b2; --accent-soft:#223a37; --gold:#d4b48a; --gold-soft:#342b20; --sun:#d9c9a8;
   --navy:#2c4547; --navy-ink:#e4e9e6; --sea-2:#3a5a5a; --sea-3:#4f7370; --terra:#c49a7f; --sand:#27261f; --sage:#1d2a27;
@@ -39,18 +40,25 @@ body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-siz
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
 .app{min-height:100%;display:flex;flex-direction:column}
 .topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--sheet) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding-block:12px 10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.topbar-in{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:8px}
+.topbar-in{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:8px 22px;flex-wrap:wrap}
 .brand-row{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
 .brand{font-family:var(--f-display);font-size:1.3rem;font-weight:600;line-height:1.15;color:var(--accent);margin:0}
 .brand-sub{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
-.nav-list{display:flex;flex-wrap:wrap;gap:4px 2px;align-items:center}
-.nav-list a{color:var(--ink-2);text-decoration:none;padding:6px 12px;border-radius:999px;font-size:.84rem;font-weight:600;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.nav-list{display:flex;flex:1;min-width:0;flex-wrap:nowrap;gap:2px;align-items:center;overflow-x:auto;scrollbar-width:none}
+.nav-list a[data-logout]{margin-left:auto;font-weight:500}
+.subnav{flex-basis:100%;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-left:2px}
+.subnav:empty{display:none}
+.subnav a{padding:5px 12px;border-radius:999px;font-size:.8rem;font-weight:600;color:var(--ink-2);text-decoration:none;white-space:nowrap}
+.subnav a:hover{color:var(--accent)}
+.subnav a.on{background:var(--accent-soft);color:var(--accent)}
+.nav-list a{color:var(--ink-2);text-decoration:none;padding:7px 14px;border-radius:999px;font-size:.84rem;font-weight:600;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
 .nav-list a:hover{background:var(--accent-soft);color:var(--accent)}
 .nav-list a.on{background:var(--accent);color:#fff}
-:root[data-theme="dark"] .nav-list a.on{color:#13201e}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .nav-list a.on{color:#13201e}}
+:root[data-theme="oscuro"] .nav-list a.on{color:#13201e}
+@media (prefers-color-scheme: dark){:root[data-theme="oscuro-auto"] .nav-list a.on{color:#13201e}}
 .nav-list .count{font-family:var(--f-mono);font-size:.7rem;opacity:.75}
-.nav-group{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);opacity:.7;margin:0 4px 0 12px;font-weight:700}
+.nav-group,.brand-sub,.nav-list .count{display:none!important}
+.nav-group-x{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);opacity:.7;margin:0 4px 0 12px;font-weight:700}
 .nav-group:first-child{margin-left:0}
 .storage{font-size:.75rem;color:var(--ink-2);padding:12px 14px;border:1px solid var(--line);border-radius:var(--r);background:var(--sheet);max-width:1180px;margin:0 auto}
 main{flex:1;padding-block:28px 36px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));min-width:0}
@@ -76,8 +84,8 @@ input:focus,select:focus,textarea:focus,button:focus-visible,a:focus-visible{out
 button,.btn{font:inherit;font-size:.86rem;font-weight:500;border:1px solid var(--line-2);background:var(--sheet);color:var(--ink);padding:8px 16px;border-radius:999px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
 button:hover{border-color:var(--ink-2)}
 button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
-:root[data-theme="dark"] button.primary{color:#13201e}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) button.primary{color:#13201e}}
+:root[data-theme="oscuro"] button.primary{color:#13201e}
+@media (prefers-color-scheme: dark){:root[data-theme="oscuro-auto"] button.primary{color:#13201e}}
 button.ghost{border-color:transparent;background:transparent;color:var(--ink-2)}
 button.ghost:hover{color:var(--ink);background:var(--paper)}
 button.danger{color:var(--bad)}
@@ -129,8 +137,8 @@ td.num,th.num{text-align:right;font-family:var(--f-mono);font-variant-numeric:ta
 .seat-svg .flag{stroke:var(--ink-2);stroke-width:1}
 .bar{height:10px;background:var(--paper);border-radius:999px;overflow:hidden;border:1px solid var(--line)}
 .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--sea-2),var(--sea-3))}
-:root[data-theme="dark"] .bar > i{background:var(--gold)}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .bar > i{background:var(--gold)}}
+:root[data-theme="oscuro"] .bar > i{background:var(--gold)}
+@media (prefers-color-scheme: dark){:root[data-theme="oscuro-auto"] .bar > i{background:var(--gold)}}
 .bar.ok > i{background:var(--ok)}.bar.warn > i{background:var(--warn)}.bar.bad > i{background:var(--bad)}
 .bar-row{display:grid;grid-template-columns:minmax(0,190px) minmax(0,1fr) 46px;gap:10px;align-items:center;font-size:.86rem}
 .scheme{border-left:3px solid var(--accent);padding-left:16px}
@@ -269,7 +277,7 @@ button.bx:hover{border-color:var(--accent)}
 .verdict{font-family:var(--f-display);font-size:2.6rem;font-weight:700;line-height:1}
 @media (max-width:900px){
   .brand{font-size:1.1rem}.brand-sub,.nav-group{display:none}
-  .nav-list{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-inline:-4px}
+  .nav-list{flex-basis:100%;margin-inline:-4px}
   .nav-list .count{display:none}
   .g3,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
@@ -290,8 +298,9 @@ button.bx:hover{border-color:var(--accent)}
 
 <div class="app">
   <header class="topbar"><div class="topbar-in">
-    <div class="brand-row"><div class="brand">Gabinete de Protocolo</div><div class="brand-sub">Eventos · Actas · Precedencias</div></div>
+    <div class="brand">Gabinete de Protocolo</div>
     <nav class="nav-list" id="nav" aria-label="Apartados"></nav>
+    <nav class="subnav" id="subnav" aria-label="Subapartados"></nav>
   </div></header>
   <main><div class="wrap" id="view"></div></main>
   <footer style="padding:0 max(16px,env(safe-area-inset-right,0px)) calc(28px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))"><div class="storage" id="storage-note">Comprobando dónde se guardan los datos…</div></footer>
@@ -647,16 +656,21 @@ const VIEWS = [
   {id:'evaluacion', label:'Evaluación del acto', group:'Medir', count:() => Store.data.evaluaciones.length}
 ];
 const UI = { view:'panel', evento:null, acta:null, evaluacion:null, actaTab:'datos', evTab:'datos' };
+// Menú principal: los apartados de Eventos y de Protocolo se agrupan y muestran una segunda fila
+const MENU = [['panel','Panel'],['eventos','Eventos',['eventos','catalogo','invitaciones']],['packs','Packs'],['proveedores','Proveedores'],['convocatorias','Convocatorias'],['actas','Actas'],['protocolo','Protocolo',['noticias','precedencia','tratamientos']],['evaluacion','Evaluación'],['guia','Guía']];
 function renderNav(){
-  let g = ''; let h = '';
-  VIEWS.forEach(v => {
-    if (v.group !== g){ g = v.group; h += `<div class="nav-group">${esc(g)}</div>`; }
-    h += `<a href="#${v.id}" data-view="${v.id}" class="${UI.view === v.id ? 'on' : ''}">${esc(v.label)}${v.count ? `<span class="count">${v.count()}</span>` : ''}</a>`;
+  let h = '';
+  const grupo = MENU.find(m => m[2] && m[2].includes(UI.view));
+  MENU.forEach(([id, label, subs]) => {
+    const on = subs ? subs.includes(UI.view) : UI.view === id;
+    h += `<a href="#${subs ? subs[0] : id}" data-view="${subs ? subs[0] : id}" class="${on ? 'on' : ''}">${esc(label)}</a>`;
   });
+  $('#subnav').innerHTML = grupo ? grupo[2].map(id => { const v = VIEWS.find(x => x.id === id); return `<a href="#${id}" data-view="${id}" class="${UI.view === id ? 'on' : ''}">${esc(v.label)}${v.count ? ` · ${v.count()}` : ''}</a>`; }).join('') : '';
   if (SB_USER) h += `<div class="nav-group">Cuenta</div><a href="#" data-logout title="${esc(SB_USER.email)}">Cerrar sesión</a>`;
   $('#nav').innerHTML = h;
 }
 function go(view){ UI.view = view; try { history.replaceState(null, '', '#' + view); } catch {} render(); window.scrollTo(0, 0); }
+$('#subnav').addEventListener('click', e => { const a = e.target.closest('[data-view]'); if (a){ e.preventDefault(); go(a.dataset.view); } });
 $('#nav').addEventListener('click', e => { if (e.target.closest('[data-logout]')){ e.preventDefault(); SB.auth.signOut().finally(() => location.replace('login.html')); return; } const a = e.target.closest('[data-view]'); if (a){ e.preventDefault(); go(a.dataset.view); } });
 function render(){
   renderNav();
@@ -697,7 +711,8 @@ function renderPanel(v){
   const evals = Store.data.evaluaciones.map(calcEval).filter(r => r.indice > 0);
   const media = evals.length ? evals.reduce((s, r) => s + r.indice, 0) / evals.length : 0;
   const hora = new Date().getHours();
-  const saludo = hora < 14 ? 'Buenos días' : hora < 21 ? 'Buenas tardes' : 'Buenas noches';
+  let nombre = ''; try { const md = SB_USER?.user_metadata || {}; nombre = String(md.full_name || md.name || '').trim().split(/\s+/)[0] || ''; } catch {}
+  const saludo = (hora < 14 ? 'Buenos días' : hora < 21 ? 'Buenas tardes' : 'Buenas noches') + (nombre ? ', ' + esc(nombre) : '');
   const dias = f => Math.round((new Date(f + 'T00:00') - new Date(now + 'T00:00')) / 864e5);
   const cuando = f => { const d = dias(f); return d === 0 ? 'hoy' : d === 1 ? 'mañana' : `en ${d} días`; };
   const mes = f => new Date(f + 'T00:00').toLocaleDateString('es-ES', {month:'short'}).replace('.', '');
