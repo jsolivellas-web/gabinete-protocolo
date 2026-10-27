@@ -6,29 +6,29 @@
 <title>Gabinete de Protocolo</title>
 <link rel="icon" href="icono.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,500;0,600;0,700;1,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 /* Layout: barra lateral fija tipo "carpeta de expediente" + área de trabajo; en móvil la navegación pasa a una tira horizontal. */
 :root{
-  --paper:#f5f6f8; --sheet:#ffffff; --ink:#18233a; --ink-2:#4a5570; --line:#dde1e9; --line-2:#c6ccd8;
-  --accent:#8e1f2f; --accent-soft:#f6e7ea; --gold:#a8822e; --gold-soft:#f5eedd;
-  --navy:#1e2d4d; --navy-ink:#eef1f7;
+  --paper:#f7f6f2; --sheet:#ffffff; --ink:#16343a; --ink-2:#4f6b71; --line:#e6e2d8; --line-2:#d3cdbf;
+  --accent:#0b5560; --accent-soft:#e3f3f2; --gold:#9a6b06; --gold-soft:#fdf1d8; --sun:#e8b44a;
+  --navy:#0b5560; --navy-ink:#ffffff; --sea-2:#13808b; --sea-3:#3fb3b3;
   --ok:#2f7a4f; --ok-soft:#e3f2e9; --warn:#a86a12; --warn-soft:#fbf0dc; --bad:#b03030; --bad-soft:#f9e3e3;
-  --f-display:"Spectral", Georgia, "Times New Roman", serif;
-  --f-body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-display:"Fraunces", Georgia, "Times New Roman", serif;
+  --f-body:"Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
   --f-mono:"IBM Plex Mono", ui-monospace, Consolas, monospace;
-  --r:6px;
+  --r:14px; --shadow:0 1px 2px rgba(22,52,58,.05), 0 8px 24px rgba(22,52,58,.06);
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --paper:#11151d; --sheet:#181d28; --ink:#e7eaf1; --ink-2:#a3abbe; --line:#2a3142; --line-2:#3a4357;
-  --accent:#e0707f; --accent-soft:#3a1d24; --gold:#d7b468; --gold-soft:#332a17;
-  --navy:#0c1220; --navy-ink:#dfe5f2;
-  --ok:#6cc792; --ok-soft:#173326; --warn:#e5ab52; --warn-soft:#3a2b13; --bad:#ef8080; --bad-soft:#3d1c1c; color-scheme:dark}}
+  --paper:#0e1b1e; --sheet:#152629; --ink:#e4efee; --ink-2:#9db5b8; --line:#23393d; --line-2:#31494e;
+  --accent:#5cc6c6; --accent-soft:#163a3d; --gold:#e8b44a; --gold-soft:#3a2f17; --sun:#e8b44a;
+  --navy:#0a2f35; --navy-ink:#e4efee; --sea-2:#0f5e66; --sea-3:#1f8a8f;
+  --ok:#6cc792; --ok-soft:#173326; --warn:#e5ab52; --warn-soft:#3a2b13; --bad:#ef8080; --bad-soft:#3d1c1c; --shadow:none; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --paper:#11151d; --sheet:#181d28; --ink:#e7eaf1; --ink-2:#a3abbe; --line:#2a3142; --line-2:#3a4357;
-  --accent:#e0707f; --accent-soft:#3a1d24; --gold:#d7b468; --gold-soft:#332a17;
-  --navy:#0c1220; --navy-ink:#dfe5f2;
-  --ok:#6cc792; --ok-soft:#173326; --warn:#e5ab52; --warn-soft:#3a2b13; --bad:#ef8080; --bad-soft:#3d1c1c; color-scheme:dark}
+  --paper:#0e1b1e; --sheet:#152629; --ink:#e4efee; --ink-2:#9db5b8; --line:#23393d; --line-2:#31494e;
+  --accent:#5cc6c6; --accent-soft:#163a3d; --gold:#e8b44a; --gold-soft:#3a2f17; --sun:#e8b44a;
+  --navy:#0a2f35; --navy-ink:#e4efee; --sea-2:#0f5e66; --sea-3:#1f8a8f;
+  --ok:#6cc792; --ok-soft:#173326; --warn:#e5ab52; --warn-soft:#3a2b13; --bad:#ef8080; --bad-soft:#3d1c1c; --shadow:none; color-scheme:dark}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 .prec-grid{grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:start}
@@ -36,27 +36,32 @@
 html,body{height:100%;margin:0}
 img{max-width:100%}
 body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--navy)}
-.app{display:grid;grid-template-columns:240px minmax(0,1fr);min-height:100%}
-nav.side{background:var(--navy);color:var(--navy-ink);padding-block:22px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:16px;position:sticky;top:env(safe-area-inset-top,0px);height:100vh;overflow:auto}
-.brand{font-family:var(--f-display);font-size:1.35rem;font-weight:600;line-height:1.15;margin:0 0 4px}
-.brand-sub{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;opacity:.65;margin-bottom:22px}
-.nav-list{display:flex;flex-direction:column;gap:2px}
-.nav-list a{color:inherit;text-decoration:none;padding:8px 10px;border-radius:var(--r);font-size:.92rem;display:flex;justify-content:space-between;align-items:center;gap:8px;opacity:.85}
-.nav-list a:hover{background:rgba(255,255,255,.07);opacity:1}
-.nav-list a.on{background:rgba(255,255,255,.12);opacity:1;box-shadow:inset 3px 0 0 var(--gold)}
-.nav-list .count{font-family:var(--f-mono);font-size:.75rem;opacity:.7}
-.nav-group{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;opacity:.5;margin:16px 10px 4px}
-.storage{margin-top:22px;font-size:.75rem;opacity:.75;padding:10px;border:1px solid rgba(255,255,255,.15);border-radius:var(--r)}
-main{padding-block:28px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));min-width:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.app{min-height:100%;display:flex;flex-direction:column}
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--sheet) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding-block:12px 10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.topbar-in{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:8px}
+.brand-row{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.brand{font-family:var(--f-display);font-size:1.3rem;font-weight:700;line-height:1.15;color:var(--accent);margin:0}
+.brand-sub{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.nav-list{display:flex;flex-wrap:wrap;gap:4px 2px;align-items:center}
+.nav-list a{color:var(--ink-2);text-decoration:none;padding:6px 12px;border-radius:999px;font-size:.84rem;font-weight:600;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.nav-list a:hover{background:var(--accent-soft);color:var(--accent)}
+.nav-list a.on{background:var(--accent);color:#fff}
+:root[data-theme="dark"] .nav-list a.on{color:#0b2226}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .nav-list a.on{color:#0b2226}}
+.nav-list .count{font-family:var(--f-mono);font-size:.7rem;opacity:.75}
+.nav-group{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);opacity:.7;margin:0 4px 0 12px;font-weight:700}
+.nav-group:first-child{margin-left:0}
+.storage{font-size:.75rem;color:var(--ink-2);padding:12px 14px;border:1px solid var(--line);border-radius:var(--r);background:var(--sheet);max-width:1180px;margin:0 auto}
+main{flex:1;padding-block:28px 36px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));min-width:0}
 .wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;font-weight:600;line-height:1.2}
-h1{font-size:2rem}
+h1{font-size:2.2rem;font-weight:500;letter-spacing:-.01em}
 h2{font-size:1.35rem}
 h3{font-size:1.08rem}
 .lede{color:var(--ink-2);max-width:68ch;margin:6px 0 0}
 .eyebrow{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600}
-.card{background:var(--sheet);border:1px solid var(--line);border-radius:var(--r);padding:20px;min-width:0}
+.card{background:var(--sheet);border:1px solid var(--line);border-radius:var(--r);padding:20px;min-width:0;box-shadow:var(--shadow)}
 .card > * + *{margin-top:14px}
 .grid{display:grid;gap:16px}
 .g2{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -65,18 +70,18 @@ h3{font-size:1.08rem}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .between{justify-content:space-between}
 label.f{display:flex;flex-direction:column;gap:4px;font-size:.78rem;color:var(--ink-2);font-weight:500;min-width:0}
-input,select,textarea{font:inherit;font-size:.92rem;color:var(--ink);background:var(--sheet);border:1px solid var(--line-2);border-radius:5px;padding:7px 9px;width:100%;min-width:0}
+input,select,textarea{font:inherit;font-size:.92rem;color:var(--ink);background:var(--sheet);border:1px solid var(--line-2);border-radius:10px;padding:8px 10px;width:100%;min-width:0}
 textarea{min-height:80px;resize:vertical}
 input:focus,select:focus,textarea:focus,button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
-button,.btn{font:inherit;font-size:.86rem;font-weight:500;border:1px solid var(--line-2);background:var(--sheet);color:var(--ink);padding:7px 13px;border-radius:5px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+button,.btn{font:inherit;font-size:.86rem;font-weight:500;border:1px solid var(--line-2);background:var(--sheet);color:var(--ink);padding:8px 16px;border-radius:999px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
 button:hover{border-color:var(--ink-2)}
 button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
-:root[data-theme="dark"] button.primary{color:#1a0d10}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) button.primary{color:#1a0d10}}
+:root[data-theme="dark"] button.primary{color:#0b2226}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) button.primary{color:#0b2226}}
 button.ghost{border-color:transparent;background:transparent;color:var(--ink-2)}
 button.ghost:hover{color:var(--ink);background:var(--paper)}
 button.danger{color:var(--bad)}
-button.small{padding:4px 9px;font-size:.78rem}
+button.small{padding:5px 12px;font-size:.78rem}
 button:disabled{opacity:.5;cursor:default}
 .ai-only{display:none!important}
 .has-ai .ai-only{display:inline-flex!important}
@@ -99,7 +104,7 @@ tr:last-child td{border-bottom:none}
 td input,td select{padding:5px 7px;font-size:.86rem;min-width:90px}
 td.num,th.num{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums}
 .kpi{display:flex;flex-direction:column;gap:2px}
-.kpi .v{font-family:var(--f-display);font-size:1.9rem;font-weight:600;line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi .v{font-family:var(--f-display);font-size:2.1rem;font-weight:500;line-height:1.1;font-variant-numeric:tabular-nums}
 .kpi .l{font-size:.75rem;color:var(--ink-2);text-transform:uppercase;letter-spacing:.07em}
 .list-item{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
 .list-item:last-child{border-bottom:none}
@@ -123,7 +128,7 @@ td.num,th.num{text-align:right;font-family:var(--f-mono);font-variant-numeric:ta
 .seat-svg .cap{fill:var(--ink-2);font:600 10px var(--f-body);letter-spacing:.1em;text-anchor:middle;text-transform:uppercase}
 .seat-svg .flag{stroke:var(--ink-2);stroke-width:1}
 .bar{height:10px;background:var(--paper);border-radius:999px;overflow:hidden;border:1px solid var(--line)}
-.bar > i{display:block;height:100%;background:var(--navy)}
+.bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--sea-2),var(--sea-3))}
 :root[data-theme="dark"] .bar > i{background:var(--gold)}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .bar > i{background:var(--gold)}}
 .bar.ok > i{background:var(--ok)}.bar.warn > i{background:var(--warn)}.bar.bad > i{background:var(--bad)}
@@ -181,23 +186,56 @@ label.btn{cursor:pointer}
 .incl-row.off .incl-t{text-decoration:line-through;color:var(--ink-2)}
 .incl-desc{display:flex;align-items:center;gap:6px;color:var(--ink-2)}
 .incl-desc input{width:100px}
-.guide{border:1px solid var(--line);border-left:3px solid var(--gold);background:var(--sheet);border-radius:var(--r);padding:12px 14px}
+.guide{border:1px solid var(--line);border-left:4px solid var(--sun);background:var(--sheet);border-radius:var(--r);padding:12px 14px}
 .guide-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font-size:.9rem}
 .guide-top > div:first-child{min-width:0;flex:1}
 .guide-pasos{margin:10px 0 0;padding-left:20px;font-size:.88rem;display:flex;flex-direction:column;gap:3px}
-.ex-banner{background:var(--gold-soft);color:var(--ink);border:1px solid var(--gold);border-radius:var(--r);padding:10px 14px;font-size:.88rem}
+.ex-banner{background:var(--gold-soft);color:var(--ink);border:1px solid var(--sun);border-radius:var(--r);padding:10px 14px;font-size:.88rem}
 .flujo{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px}
 .paso{flex:1 1 140px;flex-direction:column;align-items:flex-start;white-space:normal;text-align:left;padding:12px;gap:4px;min-width:0}
 .paso-n{font-family:var(--f-mono);font-weight:600;color:var(--sheet);background:var(--accent);border-radius:999px;width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;font-size:.8rem}
 .flecha{align-self:center;color:var(--ink-2);font-size:1.2rem}
 @media (max-width:700px){.flecha{display:none}}
+.prov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.prov-card{background:var(--sheet);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.prov-card h3{font-size:1.05rem}
+.prov-contact{display:flex;flex-direction:column;gap:2px;overflow-wrap:anywhere}
+.stars{color:var(--gold);letter-spacing:1px}
+.sel{user-select:all}
+.prov-sug{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.hero{position:relative;overflow:hidden;border-radius:24px;padding:34px 38px 56px;color:#fff;background:linear-gradient(120deg,var(--navy) 0%,var(--sea-2) 55%,var(--sea-3) 100%)}
+.hero::after{content:"";position:absolute;right:-60px;bottom:-120px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,#ffffff2e 0%,transparent 65%);pointer-events:none}
+.hero .eyebrow{color:#ffffffcc}
+.hero h1{color:#fff;max-width:20ch;line-height:1.1;margin-top:4px}
+.hero p{margin:10px 0 18px;opacity:.92;max-width:58ch}
+.hero .btns{display:flex;gap:10px;flex-wrap:wrap;position:relative;z-index:1}
+.hero button{border:1px solid #ffffff66;background:#ffffff26;color:#fff}
+.hero button.sun{background:var(--sun);border-color:var(--sun);color:#16343a}
+.hero .wave{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:46px;display:block}
+.hero .wave path{fill:var(--paper)}
+.panel-sec{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:20px;align-items:start}
+.ev-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;margin-top:12px}
+.ev-card{background:var(--sheet);border:1px solid var(--line);border-radius:18px;overflow:hidden;cursor:pointer;text-align:left;padding:0;display:flex;flex-direction:column;align-items:stretch;white-space:normal;font-weight:400;box-shadow:var(--shadow)}
+.ev-card:hover{border-color:var(--accent)}
+.ev-card .img{height:118px;position:relative;overflow:hidden}
+.ev-card .img svg,.ev-card .img img{width:100%;height:100%;display:block;object-fit:cover}
+.ev-card .date{position:absolute;left:10px;top:10px;background:#fff;border-radius:12px;padding:4px 10px;text-align:center;font-weight:700;color:#0b5560;line-height:1.1;font-size:1.05rem}
+.ev-card .date small{display:block;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:#5d7a80}
+.ev-card .body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:6px}
+.ev-card h3{font-family:var(--f-body);font-size:.95rem;font-weight:700}
+.ev-card .bar{height:6px;border:0}
+.tiles{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+.tile{display:flex;gap:12px;align-items:center;text-align:left;white-space:normal;padding:12px 14px;border-radius:16px;background:var(--sheet);border:1px solid var(--line);font-weight:400;width:100%}
+.tile:hover{border-color:var(--accent)}
+.tile .ico{width:40px;height:40px;flex:0 0 40px;border-radius:12px;display:grid;place-items:center}
+.tile .ico svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tile b{display:block;font-size:.9rem}
+.tile span{font-size:.78rem;color:var(--ink-2)}
+@media (max-width:900px){.panel-sec{grid-template-columns:minmax(0,1fr)}.hero{padding:26px 22px 52px}}
 .verdict{font-family:var(--f-display);font-size:2.6rem;font-weight:700;line-height:1}
 @media (max-width:900px){
-  .app{grid-template-columns:minmax(0,1fr)}
-  nav.side{position:sticky;height:auto;padding-block:10px;padding-right:max(16px,env(safe-area-inset-right,0px));z-index:5}
-  .brand{font-size:1.1rem}.brand-sub,.storage,.nav-group{display:none}
-  .nav-list{flex-direction:row;overflow-x:auto;gap:4px;margin-top:6px}
-  .nav-list a{white-space:nowrap}
+  .brand{font-size:1.1rem}.brand-sub,.nav-group{display:none}
+  .nav-list{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-inline:-4px}
   .nav-list .count{display:none}
   .g3,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
@@ -217,13 +255,12 @@ label.btn{cursor:pointer}
 <body>
 
 <div class="app">
-  <nav class="side" aria-label="Apartados">
-    <div class="brand">Gabinete de Protocolo</div>
-    <div class="brand-sub">Eventos · Actas · Precedencias</div>
-    <div class="nav-list" id="nav"></div>
-    <div class="storage" id="storage-note">Comprobando dónde se guardan los datos…</div>
-  </nav>
+  <header class="topbar"><div class="topbar-in">
+    <div class="brand-row"><div class="brand">Gabinete de Protocolo</div><div class="brand-sub">Eventos · Actas · Precedencias</div></div>
+    <nav class="nav-list" id="nav" aria-label="Apartados"></nav>
+  </div></header>
   <main><div class="wrap" id="view"></div></main>
+  <footer style="padding:0 max(16px,env(safe-area-inset-right,0px)) calc(28px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))"><div class="storage" id="storage-note">Comprobando dónde se guardan los datos…</div></footer>
 </div>
 
 <script>
@@ -285,9 +322,9 @@ function aiError(e){
 /* ============================================================
    ALMACÉN: base de datos compartida del artefacto o, si no está, este navegador
    ============================================================ */
-const COLS = ['eventos', 'actas', 'evaluaciones', 'contrataciones', 'fotos', 'convocatorias'];
+const COLS = ['eventos', 'actas', 'evaluaciones', 'contrataciones', 'fotos', 'convocatorias', 'proveedores'];
 const Store = {
-  mode:'local', db:null, data:{eventos:[], actas:[], evaluaciones:[], contrataciones:[], fotos:[], convocatorias:[]},
+  mode:'local', db:null, data:{eventos:[], actas:[], evaluaciones:[], contrataciones:[], fotos:[], convocatorias:[], proveedores:[]},
   loadLocal(){ COLS.forEach(c => this.data[c] = lsGet('gp_' + c, [])); },
   noteMode(){
     if (this.mode === 'cloud'){ $('#storage-note').innerHTML = `<b>Guardado en tu cuenta.</b> ${esc(SB_USER.email)}<br>Tus datos están en la nube y los verás desde cualquier ordenador.`; return; }
@@ -566,6 +603,7 @@ const VIEWS = [
   {id:'eventos', label:'Eventos', group:'Organizar', count:() => Store.data.eventos.length},
   {id:'catalogo', label:'Tipos de evento', group:'Organizar'},
   {id:'packs', label:'Packs y contratación', group:'Organizar', count:() => Store.data.contrataciones.length},
+  {id:'proveedores', label:'Proveedores Mallorca', group:'Organizar'},
   {id:'convocatorias', label:'Convocatorias', group:'Organizar', count:() => Store.data.convocatorias.length},
   {id:'actas', label:'Actas y presupuestos', group:'Organizar', count:() => Store.data.actas.length},
   {id:'invitaciones', label:'Invitaciones', group:'Organizar'},
@@ -590,13 +628,14 @@ function render(){
   renderNav();
   const v = $('#view'); v.onclick = null;
   v.onchange = null;
-  ({panel:renderPanel, guia:renderGuia, eventos:renderEventos, catalogo:renderCatalogo, packs:renderPacks, convocatorias:renderConvocatorias, invitaciones:renderInvitaciones, actas:renderActas, noticias:renderNoticias, precedencia:renderPrecedencia, tratamientos:renderTratamientos, evaluacion:renderEvaluacion}[UI.view] || renderPanel)(v);
+  ({panel:renderPanel, guia:renderGuia, eventos:renderEventos, catalogo:renderCatalogo, packs:renderPacks, proveedores:renderProveedores, convocatorias:renderConvocatorias, invitaciones:renderInvitaciones, actas:renderActas, noticias:renderNoticias, precedencia:renderPrecedencia, tratamientos:renderTratamientos, evaluacion:renderEvaluacion}[UI.view] || renderPanel)(v);
 }
 function refreshLists(){
   renderNav();
   if (UI.view === 'panel') renderPanel($('#view'));
   const map = {eventos:['#ev-list', evListHTML], actas:['#acta-list', actaListHTML], convocatorias:['#conv-list', convListHTML], evaluacion:['#eval-list', evalListHTML]};
   const m = map[UI.view]; if (m && $(m[0])) $(m[0]).innerHTML = m[1]();
+  if (UI.view === 'proveedores' && $('#prov-out')) $('#prov-out').innerHTML = provVistaHTML();
   if (UI.view === 'packs' && $('#pack-grid')){ $('#pack-grid').innerHTML = packGridHTML($('#pack-q')?.value || ''); $('#contr-list').innerHTML = contrListHTML(); }
 }
 
@@ -605,34 +644,56 @@ function refreshLists(){
    ============================================================ */
 const ESTADOS = ['Idea','Planificación','Confirmado','En curso','Celebrado','Cancelado'];
 const estadoPill = s => `<span class="pill ${({Confirmado:'ok','En curso':'gold',Celebrado:'acc',Cancelado:'bad',Planificación:'warn'})[s] || ''}">${esc(s || 'Idea')}</span>`;
+const ESCENA_CAT = {oficial:'institucional', empresarial:'empresa', deportivo:'deporte', academico:'viaje', social:'fiesta', cultural:'cultural', gala:'gala', general:'fiesta'};
+const escenaDe = tipo => (PACKS.find(p => p.tipo === tipo) || {}).escena || ESCENA_CAT[typeInfo(tipo).cat] || 'fiesta';
+const ICO = {
+  flag:'<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>', mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
+  users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14.5a5 5 0 0 1 5.5 5"/>',
+  chart:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>', cal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+  doc:'<path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/>', box:'<path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/>',
+  search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>', star:'<path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9z"/>'
+};
+const ico = k => `<svg viewBox="0 0 24 24" aria-hidden="true">${ICO[k]}</svg>`;
 function renderPanel(v){
   const evs = Store.data.eventos;
   const now = today(); const in30 = new Date(Date.now() + 30 * 864e5).toISOString().slice(0, 10);
-  const prox = evs.filter(e => e.fecha && e.fecha >= now).sort((a, b) => a.fecha.localeCompare(b.fecha));
+  const prox = evs.filter(e => e.fecha && e.fecha >= now && e.estado !== 'Cancelado').sort((a, b) => a.fecha.localeCompare(b.fecha));
   const prox30 = prox.filter(e => e.fecha <= in30).length;
   const pend = evs.reduce((s, e) => s + (e.checklist || []).filter(c => !c.ok).length, 0);
   const evals = Store.data.evaluaciones.map(calcEval).filter(r => r.indice > 0);
   const media = evals.length ? evals.reduce((s, r) => s + r.indice, 0) / evals.length : 0;
+  const hora = new Date().getHours();
+  const saludo = hora < 14 ? 'Buenos días' : hora < 21 ? 'Buenas tardes' : 'Buenas noches';
+  const dias = f => Math.round((new Date(f + 'T00:00') - new Date(now + 'T00:00')) / 864e5);
+  const sig = prox[0];
+  const conv = Store.data.convocatorias.filter(c => c.fecha && c.fecha >= now).sort((a, b) => a.fecha.localeCompare(b.fecha))[0];
+  const resumen = [
+    sig ? `«${esc(sig.nombre || 'Sin título')}» es ${dias(sig.fecha) === 0 ? 'hoy' : dias(sig.fecha) === 1 ? 'mañana' : `en ${dias(sig.fecha)} días`}${(sig.checklist || []).some(c => !c.ok) ? ` y ${(n => n === 1 ? 'le queda 1 tarea' : `le quedan ${n} tareas`)((sig.checklist || []).filter(c => !c.ok).length)}` : ''}.` : 'Empieza por un pack o crea un evento desde cero.',
+    conv ? `${esc(conv.organo || 'La reunión')} se reúne el ${fdate(conv.fecha)}.` : ''
+  ].join(' ');
+  const mes = f => new Date(f + 'T00:00').toLocaleDateString('es-ES', {month:'short'}).replace('.', '');
   v.innerHTML = `
-  <header><div class="eyebrow">Panel de control</div><h1>Todo el gabinete, en una mesa</h1>
-  <p class="lede">Organiza cualquier acto, del viaje de estudios a la visita oficial: actas con presupuesto, precedencias, colocación en mesa, tratamientos y evaluación SMART.</p></header>
-  <div class="guide"><div class="guide-top"><div><b>¿Primera vez?</b> <span class="muted">Abre la guía: hay un ejemplo completo en cada apartado para ver cómo se rellena.</span></div><button class="small primary" data-view-go="guia">Guía y ejemplos</button></div></div>
+  <section class="hero"><div class="eyebrow">Panel de control</div>
+    <h1>${saludo}. ${prox.length ? `Tienes ${prox.length} ${prox.length === 1 ? 'acto' : 'actos'} en marcha.` : 'Todo el gabinete, en una mesa.'}</h1>
+    <p>${resumen}</p>
+    <div class="btns"><button class="sun" data-act="new-ev">+ Nuevo evento</button><button data-view-go="packs">Contratar un pack</button><button data-view-go="guia">Guía y ejemplos</button></div>
+    <svg class="wave" viewBox="0 0 1200 46" preserveAspectRatio="none" aria-hidden="true"><path d="M0 30 C200 0 400 46 600 24 S1000 6 1200 26 V46 H0z"/></svg></section>
   <div class="grid g4">
-    <div class="card kpi"><span class="l">Eventos</span><span class="v">${evs.length}</span><span class="small muted">${prox.length} por celebrar</span></div>
-    <div class="card kpi"><span class="l">Próximos 30 días</span><span class="v">${prox30}</span><span class="small muted">desde hoy</span></div>
-    <div class="card kpi"><span class="l">Tareas pendientes</span><span class="v">${pend}</span><span class="small muted">en las listas de control</span></div>
-    <div class="card kpi"><span class="l">Índice medio de éxito</span><span class="v">${evals.length ? pct(media) : '—'}</span><span class="small muted">${evals.length} actos evaluados</span></div>
+    <div class="card kpi"><span class="v">${prox.length}</span><span class="small muted">actos por celebrar · ${prox30} en 30 días</span></div>
+    <div class="card kpi"><span class="v">${pend}</span><span class="small muted">tareas pendientes</span></div>
+    <div class="card kpi"><span class="v">${provTodos().length}</span><span class="small muted">proveedores en Mallorca</span></div>
+    <div class="card kpi"><span class="v">${evals.length ? pct(media) : '—'}</span><span class="small muted">éxito medio · ${evals.length} evaluados</span></div>
   </div>
-  <div class="grid g2">
-    <section class="card"><div class="row between"><h2>Próximos actos</h2><button class="primary" data-act="new-ev">Nuevo evento</button></div>
-      ${prox.length ? prox.slice(0, 6).map(e => `<div class="list-item"><div><div class="t">${esc(e.nombre || 'Sin título')}</div><div class="small muted">${esc(e.tipo || '')} · ${fdate(e.fecha)}${e.lugar ? ' · ' + esc(e.lugar) : ''}</div></div><div class="row">${estadoPill(e.estado)}<button class="small" data-open-ev="${e.id}">Abrir</button></div></div>`).join('')
-      : `<div class="empty">Aún no hay actos con fecha futura.<br>Crea el primero con «Nuevo evento» o elige un tipo en el catálogo.</div>`}
+  <div class="panel-sec">
+    <section><div class="row between"><h2>Próximos actos</h2><button class="small" data-view-go="eventos">Ver todos</button></div>
+      ${prox.length ? `<div class="ev-cards">${prox.slice(0, 6).map(e => { const ch = e.checklist || []; const av = ch.length ? Math.round(ch.filter(c => c.ok).length / ch.length * 100) : 0;
+        return `<button class="ev-card" data-open-ev="${e.id}"><div class="img">${sceneSVG(escenaDe(e.tipo))}<div class="date">${+e.fecha.slice(8, 10)}<small>${mes(e.fecha)}</small></div></div>
+        <div class="body"><h3>${esc(e.nombre || 'Sin título')}</h3><span class="small muted">${esc(e.lugar || e.tipo || '')} · ${esc(e.estado || 'Idea')}</span><div class="bar" title="Lista de control: ${av}%"><i style="width:${av}%"></i></div></div></button>`; }).join('')}</div>`
+      : `<div class="empty" style="margin-top:12px">Aún no hay actos con fecha futura.<br>Crea el primero con «Nuevo evento» o elige un pack.</div>`}
     </section>
-    <section class="card"><h2>Accesos rápidos</h2>
-      <div class="grid g2">
-        ${[['packs','Contratar un pack','Ejemplos por tipo de evento con complementos'],['invitaciones','Preparar invitaciones','El tipo adecuado para cada acto, en PDF o Word'],['convocatorias','Convocar una reunión','Con el plazo legal de cada tipo de órgano'],['actas','Redactar un acta','Con presupuesto en Word o PDF'],['noticias','Analizar una noticia','Tipo de protocolo y orden de autoridades'],['precedencia','Ordenar autoridades','Mesa presidencial, redonda o de banquete'],['tratamientos','Consultar tratamientos','Monarquía, política, Iglesia, celebridades'],['evaluacion','Evaluar un acto','Indicadores y objetivos SMART'],['catalogo','Ver tipos de evento',ALL_TYPES.length + ' tipos con su lista de control']].map(([id, t, d]) => `<button style="flex-direction:column;align-items:flex-start;white-space:normal;text-align:left;padding:12px" data-view-go="${id}"><b>${t}</b><span class="small muted">${d}</span></button>`).join('')}
-      </div>
-    </section>
+    <section><h2>Accesos rápidos</h2><div class="tiles">
+      ${[['precedencia','flag','Precedencias y mesas','Ordena y sienta autoridades','#e3f3f2','#0b5560'],['invitaciones','mail','Invitaciones','Tarjetón, saluda, boda…','#fdf1d8','#8a5d00'],['proveedores','users','Proveedores Mallorca',provTodos().length + ' empresas valoradas','#eaf0fb','#2c5aa0'],['convocatorias','cal','Convocar una reunión','Con el plazo legal de cada órgano','#efeafb','#5b3fa0'],['actas','doc','Actas y presupuestos','En Word o PDF','#e9f4ec','#2f7a4f'],['noticias','search','Analizar una noticia','Tipo de protocolo y autoridades','#fbeee6','#a0502c'],['tratamientos','star','Tratamientos','Monarquía, política, celebridades','#fdf1d8','#8a5d00'],['evaluacion','chart','Evaluar un acto','Indicadores y SMART','#f6e9ee','#9b2c55'],['catalogo','box','Tipos de evento',ALL_TYPES.length + ' con su lista de control','#e3f3f2','#0b5560']].map(([id, i, t, d, bg, c]) => `<button class="tile" data-view-go="${id}"><span class="ico" style="background:${bg};color:${c}">${ico(i)}</span><span><b>${t}</b><span>${d}</span></span></button>`).join('')}
+    </div></section>
   </div>`;
 }
 document.addEventListener('click', e => {
@@ -736,6 +797,7 @@ function renderEventos(v){
     if (e.target.closest('[data-dl-json]')) download(slug(d.nombre) + '.json', JSON.stringify(d, null, 2));
     if (e.target.closest('[data-ai-plan]')) aiPlanEvento(d, paint);
     if (e.target.closest('[data-to-prec]')){ precFromInvitados(d); go('precedencia'); }
+    const sg = e.target.closest('[data-sug-add]'); if (sg){ const p = provTodos().find(x => x.id === sg.dataset.sugAdd); if (p){ d.proveedores.push(provFila(p)); paint(); toast(`${p.n} añadido. Pulsa Guardar para conservarlo.`); } }
     if (e.target.closest('[data-to-eval]')){ UI.evaluacion = newEvaluacion(d); go('evaluacion'); }
     if (e.target.closest('[data-to-inv]')){ const ti = typeInfo(d.tipo); UI.inv = Object.assign(UI.inv || {trat:'', dest:'', cargo:'', ciudad:'', rsvpFecha:'', notas:''}, {eventoId:d.id, motivo:d.nombre, fecha:d.fecha, hora:d.hora, lugar:[d.lugar, d.direccion].filter(Boolean).join(', '), anfitrion:d.anfitrion, vest:d.vestimenta, rsvp:d.contacto, logo:d.logo || '', tipo:/boda/i.test(d.tipo) ? 'boda' : (INV_CAT[ti.cat] || INV_CAT.general)[0]}); go('invitaciones'); }
     if (e.target.closest('[data-ev-pdf]')) exportDoc('pdf', slug(d.nombre), evBlocks(d), {logo:d.logo});
@@ -777,7 +839,7 @@ function evTabHTML(d, tab){
   if (tab === 'tareas') return `<h3>Tareas y responsables</h3>${tableHTML('tareas', COLS_TAREAS, d.tareas)}`;
   if (tab === 'escaleta') return `<h3>Escaleta (minuto a minuto)</h3><p class="small muted">Recuerda: en actos oficiales interviene primero quien tiene menor rango y cierra quien preside.</p>${tableHTML('escaleta', COLS_ESCALETA, d.escaleta)}`;
   if (tab === 'invitados') return `<h3>Invitados y autoridades</h3>${tableHTML('invitados', COLS_INV, d.invitados)}<div class="row"><button data-to-prec>Enviar a Precedencias y mesas →</button></div>`;
-  if (tab === 'prov') return `<h3>Proveedores</h3>${tableHTML('proveedores', COLS_PROV, d.proveedores)}`;
+  if (tab === 'prov') return `<h3>Proveedores</h3>${tableHTML('proveedores', COLS_PROV, d.proveedores)}${d.tipo ? provSugHTML(d.tipo, d.proveedores.map(x => x.proveedor)) : '<p class="small muted">Elige el tipo de evento en «Datos» para ver proveedores de Mallorca recomendados.</p>'}`;
   if (tab === 'pres') return `<h3>Presupuesto del evento</h3>${tableHTML('partidas', COLS_PART, d.partidas)}<div id="pres-sum">${presSumHTML(d)}</div>`;
   if (tab === 'compartir') return `<h3>Compartir la información</h3>
     <p class="small muted">${Store.mode === 'db' ? 'Este evento está guardado en el artefacto: cualquiera con quien compartas el enlace lo verá actualizado.' : 'Los datos están solo en este navegador. Copia el resumen o descarga los archivos para enviarlos.'}</p>
@@ -1797,7 +1859,8 @@ function renderPacks(v){
       <p class="small muted" style="margin:0">Desmarca lo que el cliente no quiera: se descuenta del precio (puedes cambiar el importe). También puedes reescribir cada servicio a su gusto.</p>
       <div id="pk-incl"></div>
       <h3>Complementos</h3><div id="pk-extras">${p.extras.map((e, i) => `<label class="check"><input type="checkbox" id="pk-ex-${i}" data-ex="${i}" ${cfg.extras[i] ? 'checked' : ''}><span style="flex:1">${esc(e[0])}</span><span class="mono small">${eur(e[1])}${e[2] === 'persona' ? ' / ' + esc(p.unidad.split(' ')[0].replace(/s$/, '')) : ''}</span></label>`).join('')}</div>
-      <h3>Añadir otros complementos</h3><div id="pk-custom"></div><button class="small" data-add-custom>+ Añadir complemento</button></section>
+      <h3>Añadir otros complementos</h3><div id="pk-custom"></div><button class="small" data-add-custom>+ Añadir complemento</button>
+      ${provSugHTML(p.tipo, [], false)}</section>
     <section class="card"><h2>Tu contratación</h2>
       <div class="grid g2">${f('Nombre del evento', 'nombre', cfg.nombre, 'text', `placeholder="${esc(p.nombre)}"`)}${f('Fecha', 'fecha', cfg.fecha, 'date')}${f(p.unidad.charAt(0).toUpperCase() + p.unidad.slice(1), 'n', cfg.n, 'number', 'min="1"')}${f('Cliente / organizador', 'cliente', cfg.cliente)}${f('Contacto', 'contacto', cfg.contacto)}</div>
       ${ta('Observaciones', 'notas', cfg.notas)}
@@ -2096,6 +2159,157 @@ function renderConvocatorias(v){
 }
 
 /* ============================================================
+   PROVEEDORES EN MALLORCA (fuente: Proveedores_Eventos_Mallorca_Mejorado.xlsx, datos de octubre de 2026)
+   amb: ámbitos del Excel · srv: tipo de servicio · top: «recomendado general» (hoja Proveedores Generales)
+   ============================================================ */
+const PROV_AMB = {OFI:'Oficiales e institucionales', CORP:'Corporativos y empresariales', DEP:'Deportivos', ACA:'Académicos y educativos', SOC:'Sociales y familiares', CUL:'Culturales', GAL:'Galas y premios', REL:'Religiosos', SOL:'Solidarios y ocio'};
+const PROV_AMB_EVENTOS = {OFI:'Toma de posesión, visita oficial, recepción, firma de convenio, inauguración, actos conmemorativos, plenos', CORP:'Congresos, convenciones, juntas, lanzamientos, team building, cenas de empresa, networking, incentivos', DEP:'Competiciones, torneos, carreras, entrega de trofeos, galas del deporte, campus', ACA:'Viajes de estudios, excursiones, graduaciones, congresos científicos, colonias', SOC:'Bodas, pedidas, despedidas, bautizos, comuniones, cumpleaños, aniversarios, baby shower', CUL:'Exposiciones, conciertos, festivales, presentaciones de libro, teatro, catas de vino, visitas guiadas', GAL:'Cenas de gala, entregas de premios, galas benéficas, cócteles, bailes de gala', REL:'Misas solemnes, procesiones, romerías, celebraciones', SOL:'Carreras solidarias, mercadillos, fiestas populares, rutas gastronómicas, gymkanas, viajes de grupo'};
+// Servicios que el Excel indica como necesarios en cada ámbito, en su orden
+const PROV_AMB_SRV = {OFI:['Organización integral','Recintos','Catering','Audiovisual y técnica','Decoración y flores'], CORP:['Organización integral','Recintos','Catering','Team building y ocio'], DEP:['Organización integral','Recintos','Transporte','Catering'], ACA:['Viajes y alojamiento','Transporte','Museos y cultura'], SOC:['Organización integral','Decoración y flores','Catering','Fotografía','Música y DJ'], CUL:['Recintos','Bodegas y catas','Organización integral','Museos y cultura','Audiovisual y técnica'], GAL:['Recintos','Organización integral','Catering','Decoración y flores'], REL:['Organización integral','Transporte','Catering'], SOL:['Organización integral','Transporte','Catering','Bodegas y catas']};
+const PROV = [
+  {id:'crea', n:'CREA Group Events', srv:['Organización integral'], amb:['OFI','CUL','GAL'], tel:'+34 609 21 09 29', web:'creagroupevents.com', dir:'Opera en Mallorca (sede en Barcelona y Madrid)', nota:'Alta experiencia MICE. Especialistas en eventos corporativos e institucionales de alto nivel; coordinan teatro, cata, catering y audiovisuales.'},
+  {id:'palau', n:'Palau de Congressos de Palma', srv:['Recintos'], amb:['OFI','CORP','DEP','GAL'], tel:'971 62 69 10', mail:'sales.pcp@melia.com', dir:'Carrer de Felicià Fuster, 2, Palma', val:4.2, res:'2185', top:'Venue principal', nota:'Mayor centro de convenciones de Baleares. Ideal para actos oficiales, congresos, galas y entregas de premios.'},
+  {id:'fosh', n:'Fosh Catering Mallorca', srv:['Catering'], amb:['OFI','DEP','SOC','GAL'], tel:'871 11 62 94', dir:"C/ d'Asival, 7, Palma", val:4.9, res:'68', top:'Catering', nota:'Catering premium para actos institucionales, de empresa, bodas, fiestas privadas y cenas de gala.'},
+  {id:'velvet', n:'Velvet Productions', srv:['Audiovisual y técnica'], amb:['OFI'], tel:'618 93 51 48', dir:'C/ Gremi de Passamaners, 8a, Nave 22, Palma', val:4.8, res:'32', top:'Audiovisual', nota:'Producción audiovisual para actos formales.'},
+  {id:'floraevent', n:'Floraevent', srv:['Decoración y flores'], amb:['OFI','SOC','GAL'], tel:'699 01 15 77', dir:'Camí de Son Garbí, 188, Algaida', val:4.9, res:'28', top:'Decoración floral', nota:'Decoración floral para actos institucionales, bodas, celebraciones y galas.'},
+  {id:'mm', n:'M&M Experiences', srv:['Organización integral','Team building y ocio'], amb:['CORP','DEP','SOC','CUL','GAL','SOL'], tel:'608 92 64 48', mail:'info@mmexperiences.es', dir:"Carrer d'Andalusia, 16, Palma", val:5.0, res:'127+', top:'Organización de eventos', nota:'Versátil para casi todos los tipos: corporativos, team building, incentivos, catas, bodas, galas, eventos deportivos, gymkanas y rutas.'},
+  {id:'mallorkevents', n:'Mallorkevents (Oh! Palma)', srv:['Organización integral'], amb:['CORP','SOC','REL'], tel:'971 72 00 59', mail:'info@ohpalma.com', dir:'Calle Miquel Capllonch, 6, local 11, Palma', top:'Organización de eventos', nota:'Más de 20 años. Eventos de empresa, estructuras, espectáculos, bodas, despedidas y fiestas infantiles; logística, carpas, sonido y transporte.'},
+  {id:'mc', n:'MC Eventplanner', srv:['Organización integral'], amb:['CORP','SOC'], tel:'601 37 72 75', dir:'Carrer de Jordi Villalonga i Velasco, 7, Palma', val:4.8, res:'116', nota:'Planificación personalizada para empresa, bodas de destino y eventos familiares.'},
+  {id:'lavan', n:'La Van Mallorca', srv:['Catering'], amb:['CORP','DEP','REL','SOL'], tel:'660 38 96 92', dir:'Pça. de Miquel Dolç, 10, Palma', val:4.9, res:'77', top:'Catering', nota:'Catering y servicios para eventos variados, cenas de gala deportiva, comidas posteriores y eventos solidarios (consultar food trucks).'},
+  {id:'totapunt', n:'Tot a Punt Events & Catering', srv:['Catering'], amb:['CORP','REL','SOL'], tel:'971 84 52 87', dir:'Via Palma, 54, Manacor', val:4.7, res:'197', nota:'Cubre toda la isla; buena opción para eventos fuera de Palma.'},
+  {id:'lasal', n:'La Sal Catering', srv:['Catering'], amb:['SOC'], dir:'Palma', nota:'Menús para bodas y fiestas privadas. Sin contacto en el Excel: verificar.'},
+  {id:'bolita', n:'Bolita Events', srv:['Team building y ocio','Organización integral'], amb:['CORP'], dir:'Carrer del Mascarell, 1, Palma', nota:'Eventos corporativos, retiros, catamaranes, yincanas.'},
+  {id:'rafabus', n:'Transports Rafel Servera (Rafabus)', srv:['Transporte'], amb:['DEP','REL','SOL'], tel:'629 74 92 79', dir:'Camí de les Pedreres, 47, Palma', val:4.8, res:'62', top:'Transporte de grupos', nota:'Autobuses para equipos, participantes, procesiones y viajes de grupo.'},
+  {id:'busmallorca', n:'Bus Mallorca', srv:['Transporte'], amb:['SOL'], dir:'Mallorca', val:4.5, nota:'Transporte para carreras y viajes de grupo. Sin contacto en el Excel: verificar.'},
+  {id:'marques', n:'Autocares Marquès', srv:['Transporte'], amb:['ACA','REL'], tel:'971 43 04 43', dir:'Carrer Gremi de Boneters, 47, Palma', val:4.7, res:'23', nota:'Ideal para grupos escolares; también procesiones y grupos.'},
+  {id:'parthenon', n:'Viajes Parthenon', srv:['Viajes y alojamiento'], amb:['ACA'], tel:'637 67 13 61', dir:"C. del Cardenal Rossell, 44, Coll d'en Rabassa", val:4.8, res:'78', top:'Agencia de viajes para grupos', nota:'Agencia local para grupos y viajes de estudios.'},
+  {id:'mondeviatges', n:'Món de Viatges', srv:['Viajes y alojamiento'], amb:['ACA'], tel:'971 24 47 00', dir:'Torcuato Luca de Tena, 7, Palma', val:4.4, res:'21', nota:'Planificación de viajes en grupo.'},
+  {id:'miviaje', n:'Mi Viaje De Estudios', srv:['Viajes y alojamiento'], amb:['ACA'], dir:'El Arenal, Palma', nota:'Especializados en viajes de estudios (verificar contacto actual).'},
+  {id:'baluard', n:"Es Baluard Museu d'Art Contemporani", srv:['Museos y cultura'], amb:['ACA','CUL'], tel:'971 90 82 00', dir:'Plaça de la Porta de Santa Catalina, 10, Palma', val:4.2, res:'4446', nota:'Visitas guiadas para grupos y espacios para exposiciones.'},
+  {id:'march', n:'Fundació Joan March', srv:['Museos y cultura'], amb:['ACA'], tel:'971 71 04 28', dir:'Carrer de Sant Miquel, 11, Palma', val:4.7, res:'1585', nota:'Excelente para visitas educativas.'},
+  {id:'miro', n:'Fundació Miró Mallorca', srv:['Museos y cultura'], amb:['ACA','CUL'], tel:'971 70 14 20', dir:'C/ de Saridakis, 29, Palma', val:4.4, res:'3245', nota:'Visitas culturales y espacios para exposiciones.'},
+  {id:'floresmallorca', n:'Flores de Mallorca', srv:['Decoración y flores'], amb:['SOC'], dir:'Palma', val:4.8, res:'634', nota:'Decoración para bodas y celebraciones. Teléfono no indicado en el Excel.'},
+  {id:'bombillas', n:'Bombillas y Flores', srv:['Decoración y flores'], amb:['GAL'], dir:"Pont d'Inca", val:4.6, nota:'Decoración elegante para galas. Teléfono no indicado en el Excel.'},
+  {id:'teatromar', n:'Teatro del Mar', srv:['Recintos'], amb:['CUL'], tel:'971 24 84 00', dir:'Carrer de Llucmajor, 90, Palma', val:4.5, res:'334', nota:'Ideal para conciertos, teatro y eventos culturales.'},
+  {id:'sans', n:'Teatre Sans', srv:['Recintos'], amb:['CUL'], tel:'971 72 71 66', dir:'Carrer de Can Sanç, 5, Palma', val:4.7, res:'327', nota:'Sala para obras de teatro y presentaciones.'},
+  {id:'maciabatle', n:'Celler Macià Batle', srv:['Bodegas y catas'], amb:['CUL','SOL'], tel:'971 14 00 14', dir:'Camí Coanegra, s/n, Santa Maria del Camí', val:4.7, res:'578', top:'Bodegas y catas', nota:'Catas y visitas en bodega mallorquina; rutas y catas solidarias o de ocio.'},
+  {id:'olivermoragues', n:'Bodegas Oliver Moragues', srv:['Bodegas y catas'], amb:['CUL','SOL'], tel:'601 85 14 51', dir:'Camí darrere ses Vinyes, Algaida', val:5.0, res:'577', nota:'Excelente para catas y eventos enoturísticos.'},
+  {id:'lume', n:'LUME Audiovisual Services', srv:['Audiovisual y técnica'], amb:['CUL'], tel:'679 91 35 09', dir:'Carrer de Joan Munar, 18, Palma', val:5.0, res:'14', nota:'Sonido y luces para eventos culturales.'},
+  {id:'mcb', n:'Mallorca Convention Bureau', srv:['Recursos MICE'], amb:['OFI','CORP','GAL'], tel:'971 09 29 19', mail:'info@mallorcacb.com', web:'mallorcaconventionbureau.com', dir:'C/ Ter, 27, 3.º oficina 5, 07009 Palma', nota:'Asesoramiento gratuito y conexión con más de 120 proveedores MICE, normativas y autoridades. Primer contacto para actos oficiales y grandes congresos.'},
+  {id:'mallorcaleads', n:'MallorcaLeads', srv:['Recursos MICE'], amb:['CORP'], tel:'607 81 59 43', mail:'hello@mallorcaleads.com', web:'mallorcaleads.com', dir:'Carrer de Bonaire, 16, Palma', val:5.0, res:'58', nota:'Directorio y consultoría gratuita de proveedores MICE.'},
+  {id:'aico', n:'AICO Event Production', srv:['Audiovisual y técnica'], amb:['OFI','CORP','GAL','CUL'], tel:'971 739 250', mail:'info@aico.es', dir:'Carrer Can Valero, 12 (Pol. Can Valero), Palma', nota:'Más de 30 años. Audiovisuales, iluminación, sonido, traducción, carpas beduinas y escenografía; ideal para eventos grandes.'},
+  {id:'plasencia', n:'Eva Plasencia Fotógrafa', srv:['Fotografía'], amb:['SOC','GAL','CORP'], tel:'609 74 72 64', dir:'Camí de Jesús, 113, Palma', val:5.0, res:'108', nota:'Fotografía profesional para eventos y bodas.'},
+  {id:'stefanelli', n:'Cesar Stefanelli', srv:['Fotografía'], amb:['SOC'], tel:'625 46 71 19', dir:'Carrer de Ramon Picó i Campamar, 8, Palma', val:5.0, res:'76', nota:'Fotografía de bodas.'},
+  {id:'cube', n:'Cube Music', srv:['Música y DJ'], amb:['SOC','CORP','GAL'], tel:'655 56 00 06', dir:'Avinguda del Comte de Sallent, 10, Palma', val:4.9, res:'50', nota:'DJ premium para yates, bodas y corporativos, con sonido e iluminación.'},
+  {id:'camembert', n:'CAM · DJ Camembert', srv:['Música y DJ'], amb:['SOC','CORP'], tel:'722 14 23 28', dir:'Carrer de Francesc Martí i Mora, Palma', val:5.0, res:'101', nota:'DJ para bodas, fiestas privadas y corporativos (francés, inglés y español).'},
+  {id:'panela', n:'Panela! Live Music Productions', srv:['Música y DJ'], amb:['SOC','GAL'], dir:'Carrer del Quatre de Novembre, 5, Palma', val:4.9, res:'30', nota:'Bandas y música en directo para bodas y eventos.'},
+  {id:'pinup', n:'Pinup Azafatas', srv:['Azafatas'], amb:['CORP','OFI','GAL'], tel:'653 23 38 36', dir:"Carrer d'Andorra, Palma", val:4.6, res:'5', nota:'Agencia de azafatas para eventos.'},
+  {id:'hexel', n:'Hexel Congresses & Events Hostesses', srv:['Azafatas'], amb:['CORP','OFI'], tel:'971 22 29 00', dir:"Carrer d'Andrea Doria, 47, Palma", val:4.3, res:'28', nota:'Especializados en congresos y eventos.'},
+  {id:'safeguard', n:'Safeguard Seguridad', srv:['Seguridad'], amb:['OFI','CORP','DEP','CUL','GAL'], tel:'628 46 80 94', mail:'central@safeguardseguridad.com', dir:'Bartolomeu Calafell, 23, 07600', nota:'Más de 30 años. Seguridad para hoteles, eventos y establecimientos.'},
+  {id:'blisegur', n:'Blisegur', srv:['Seguridad'], amb:['OFI','CORP','DEP','CUL','GAL'], dir:'Servicio en toda la isla', nota:'Vigilancia para eventos y hoteles con vigilantes certificados. Sin contacto en el Excel.'},
+  {id:'balearic', n:'Balearic Elements DMC', srv:['DMC e incentivos'], amb:['CORP','SOC'], dir:'Can Pastilla, Palma', nota:'DMC con licencia oficial, especializada en MICE, incentivos, team building y bodas.'},
+  {id:'lifex', n:'LifeXperiences', srv:['DMC e incentivos'], amb:['CORP'], tel:'971 10 09 08', mail:'info@lifexperiences.com', dir:'Francesc Vidal Sureda, 71, Palma', nota:'DMC líder en MICE, incentivos, team building y yates.'}
+];
+const PROV_NOTAS = ['Datos de fuentes públicas (Google Maps, webs de empresas y directorios) recogidos en octubre de 2026. Verifica siempre el contacto actual.','Valoraciones y número de reseñas de Google: pueden variar.','Algunos correos no son públicos: contacta por teléfono o por su web.','Para actos oficiales, diplomáticos o grandes congresos, empieza por el Mallorca Convention Bureau.','Comprueba disponibilidad, precios y capacidad, y pide siempre presupuestos comparativos.','Viajes de estudios: las agencias locales gestionan hoteles, autobuses, museos y actividades; el material educativo, con el centro.','Cata de vinos en teatro o sala: combina recinto, bodega, catering, audiovisuales y organización.','Alojamiento de grupos: consultar hoteles de Palma (Meliá, etc.) a través de una agencia o del Convention Bureau.'];
+const PROV_SRV = [...new Set(PROV.flatMap(p => p.srv))].sort((a, b) => a.localeCompare(b, 'es'));
+const GRUPO_AMB = {'Oficiales e institucionales':'OFI', 'Políticos y diplomáticos':'OFI', 'Corporativos y empresariales':'CORP', 'Deportivos':'DEP', 'Académicos y educativos':'ACA', 'Sociales y familiares':'SOC', 'Culturales':'CUL', 'Galas y premios':'GAL', 'Religiosos':'REL', 'Solidarios y ocio':'SOL'};
+const ambDeTipo = tipo => GRUPO_AMB[typeInfo(tipo).grupo] || null;
+const provTodos = () => [...PROV, ...Store.data.proveedores.map(p => ({...p, propio:true}))];
+const provContacto = p => [p.tel, p.mail, p.web].filter(Boolean).join(' · ');
+const stars = v => v ? `<span class="stars" aria-label="${v} de 5">${'★'.repeat(Math.round(v))}${'☆'.repeat(5 - Math.round(v))}</span> <b class="mono">${Number(v).toFixed(1)}</b>` : '<span class="small muted">Sin valoración</span>';
+function provSugerencias(tipo, max = 6){
+  const a = ambDeTipo(tipo); if (!a) return [];
+  const orden = PROV_AMB_SRV[a] || [];
+  return provTodos().filter(p => (p.amb || []).includes(a)).sort((x, y) => Math.min(...x.srv.map(s => orden.indexOf(s) < 0 ? 99 : orden.indexOf(s))) - Math.min(...y.srv.map(s => orden.indexOf(s) < 0 ? 99 : orden.indexOf(s))) || (y.val || 0) - (x.val || 0)).slice(0, max);
+}
+const provFila = p => ({proveedor:p.n, servicio:p.srv.join(', '), contacto:provContacto(p), coste:'', estado:'Pedir presupuesto'});
+function provCard(p){
+  return `<article class="prov-card"><div class="row between" style="align-items:flex-start;flex-wrap:nowrap"><div style="min-width:0"><h3>${esc(p.n)}</h3><div class="chips" style="margin-top:4px">${p.srv.map(s => `<span class="pill acc">${esc(s)}</span>`).join('')}${p.top ? `<span class="pill gold" title="Recomendado general en tu Excel">Recomendado</span>` : ''}${p.propio ? '<span class="pill ok">Tuyo</span>' : ''}</div></div></div>
+    <div class="small">${stars(p.val)}${p.res ? ` <span class="muted">(${esc(p.res)} reseñas)</span>` : ''}</div>
+    <div class="small muted">${esc(p.dir || '')}</div>
+    <div class="small">${esc(p.nota || '')}</div>
+    <div class="prov-contact small">${p.tel ? `<span>☎ <span class="mono sel">${esc(p.tel)}</span></span>` : ''}${p.mail ? `<span>✉ <span class="sel">${esc(p.mail)}</span></span>` : ''}${p.web ? `<a href="https://${esc(p.web)}" target="_blank" rel="noopener">${esc(p.web)}</a>` : ''}${!p.tel && !p.mail && !p.web ? '<span class="muted">Contacto no disponible: verificar</span>' : ''}</div>
+    <div class="chips">${(p.amb || []).map(a => `<span class="chip" style="cursor:default">${esc(PROV_AMB[a])}</span>`).join('')}</div>
+    <div class="row" style="margin-top:auto;gap:6px">${provContacto(p) ? `<button class="small" data-prov-copy="${esc(p.id)}">Copiar contacto</button>` : ''}<button class="small primary" data-prov-add="${esc(p.id)}">Añadir a un evento</button>${p.propio ? `<button class="small ghost" data-prov-edit="${esc(p.id)}">Editar</button>` : ''}</div></article>`;
+}
+UI.prov = {q:'', amb:'', srv:'', min:false, orden:'val', vista:'dir'};
+function provFiltrados(){
+  const f = UI.prov, n = s => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''), q = n(f.q);
+  let ps = provTodos().filter(p => (!f.amb || (p.amb || []).includes(f.amb)) && (!f.srv || p.srv.includes(f.srv)) && (!f.min || (p.val || 0) >= 4.5) && (!q || n([p.n, p.srv.join(' '), p.dir, p.nota].join(' ')).includes(q)));
+  const resN = r => parseInt(String(r || '0').replace(/\D/g, '')) || 0;
+  ps.sort(f.orden === 'nombre' ? (a, b) => a.n.localeCompare(b.n, 'es') : f.orden === 'res' ? (a, b) => resN(b.res) - resN(a.res) : (a, b) => (b.val || 0) - (a.val || 0) || resN(b.res) - resN(a.res));
+  return ps;
+}
+function provVistaHTML(){
+  const f = UI.prov;
+  if (f.vista === 'evento') return Object.keys(PROV_AMB).filter(a => !f.amb || a === f.amb).map(a => `<section class="card"><div class="eyebrow">${esc(PROV_AMB[a])}</div><p class="small muted" style="margin:4px 0 0">${esc(PROV_AMB_EVENTOS[a])}</p>
+    <div class="tbl-wrap" style="margin-top:10px"><table><thead><tr><th>Servicio necesario</th><th>Empresas</th></tr></thead><tbody>${(PROV_AMB_SRV[a] || []).map(s => { const ps = provTodos().filter(p => (p.amb || []).includes(a) && p.srv.includes(s)).sort((x, y) => (y.val || 0) - (x.val || 0)); return `<tr><td><b>${esc(s)}</b></td><td>${ps.map(p => `<div class="row between" style="flex-wrap:nowrap;padding:3px 0"><span>${esc(p.n)} ${p.val ? `<span class="small muted">· ${p.val.toFixed(1)}★</span>` : ''}</span><span class="small mono sel">${esc(p.tel || '')}</span></div>`).join('') || '<span class="muted small">—</span>'}</td></tr>`; }).join('')}</tbody></table></div></section>`).join('');
+  if (f.vista === 'top') return `<section class="card"><h2>Recomendados generales</h2><p class="small muted">La selección de la hoja «Proveedores Generales» de tu Excel: un proveedor de confianza por servicio.</p><div class="tbl-wrap"><table><thead><tr><th>Servicio</th><th>Empresa</th><th>Teléfono</th><th>Correo</th><th>Valoración</th></tr></thead><tbody>${PROV.filter(p => p.top).map(p => `<tr><td>${esc(p.top)}</td><td><b>${esc(p.n)}</b><div class="small muted">${esc(p.dir)}</div></td><td class="mono small sel">${esc(p.tel || '—')}</td><td class="small sel">${esc(p.mail || '—')}</td><td class="small">${p.val ? p.val.toFixed(1) + '★ (' + esc(p.res || '') + ')' : '—'}</td></tr>`).join('')}</tbody></table></div></section>`;
+  const ps = provFiltrados();
+  return `<p class="small muted">${ps.length} proveedores</p><div class="prov-grid">${ps.map(provCard).join('') || '<div class="empty">Ningún proveedor coincide con los filtros.</div>'}</div>`;
+}
+function renderProveedores(v){
+  const f = UI.prov;
+  v.innerHTML = `<header class="row between"><div><div class="eyebrow">Organizar</div><h1>Proveedores en Mallorca</h1><p class="lede">${PROV.length} empresas de tu listado, por tipo de evento y servicio: recintos, catering, audiovisuales, transporte, fotografía, música, azafatas, seguridad y más. Añádelas a un evento con un clic.</p></div><button class="primary" data-prov-new>Añadir proveedor propio</button></header>
+  ${guideBar('proveedores')}
+  <details class="hint"><summary style="cursor:pointer"><b>Notas importantes del listado</b></summary><ul style="margin:8px 0 0;padding-left:18px">${PROV_NOTAS.map(n => `<li>${esc(n)}</li>`).join('')}</ul></details>
+  <div class="tabs" id="prov-tabs">${[['dir','Directorio'],['evento','Por tipo de evento'],['top','Recomendados generales']].map(([k, l]) => `<button data-pv="${k}" class="${f.vista === k ? 'on' : ''}">${l}</button>`).join('')}</div>
+  <div class="row" id="prov-filtros">
+    <input id="pv-q" placeholder="Buscar empresa, servicio o zona" value="${esc(f.q)}" style="flex:2;min-width:180px">
+    <select id="pv-amb" style="flex:1;min-width:160px"><option value="">Todos los ámbitos</option>${Object.entries(PROV_AMB).map(([k, l]) => `<option value="${k}" ${k === f.amb ? 'selected' : ''}>${esc(l)}</option>`).join('')}</select>
+    <select id="pv-srv" style="flex:1;min-width:160px"><option value="">Todos los servicios</option>${PROV_SRV.map(s => `<option ${s === f.srv ? 'selected' : ''}>${esc(s)}</option>`).join('')}</select>
+    <select id="pv-orden" style="flex:1;min-width:140px">${[['val','Mejor valorados'],['res','Más reseñas'],['nombre','Por nombre']].map(([k, l]) => `<option value="${k}" ${k === f.orden ? 'selected' : ''}>${l}</option>`).join('')}</select>
+    <label class="check" style="padding:0"><input type="checkbox" id="pv-min" ${f.min ? 'checked' : ''}><span>Solo 4,5★ o más</span></label>
+    <button class="small" data-prov-csv>Exportar (.csv)</button>
+  </div>
+  <div id="prov-out">${provVistaHTML()}</div>`;
+  const repaint = () => { $('#prov-out').innerHTML = provVistaHTML(); };
+  $('#pv-q').oninput = e => { f.q = e.target.value; repaint(); };
+  $('#pv-amb').onchange = e => { f.amb = e.target.value; repaint(); };
+  $('#pv-srv').onchange = e => { f.srv = e.target.value; repaint(); };
+  $('#pv-orden').onchange = e => { f.orden = e.target.value; repaint(); };
+  $('#pv-min').onchange = e => { f.min = e.target.checked; repaint(); };
+  $('#prov-tabs').onclick = e => { const b = e.target.closest('[data-pv]'); if (b){ f.vista = b.dataset.pv; $$('#prov-tabs button').forEach(x => x.classList.toggle('on', x === b)); repaint(); } };
+  v.onclick = e => {
+    const c = e.target.closest('[data-prov-copy]'); if (c){ const p = provTodos().find(x => x.id === c.dataset.provCopy); copyText(`${p.n}\n${p.srv.join(', ')}\n${provContacto(p)}\n${p.dir || ''}`, 'Contacto copiado'); }
+    const a = e.target.closest('[data-prov-add]'); if (a) provAddDialog(provTodos().find(x => x.id === a.dataset.provAdd));
+    if (e.target.closest('[data-prov-new]')) provEditDialog();
+    const ed = e.target.closest('[data-prov-edit]'); if (ed) provEditDialog(Store.get('proveedores', ed.dataset.provEdit));
+    if (e.target.closest('[data-prov-csv]')){ const cols = [{key:'n',label:'Empresa'},{key:'s',label:'Servicio'},{key:'a',label:'Ámbitos'},{key:'tel',label:'Teléfono'},{key:'mail',label:'Email'},{key:'web',label:'Web'},{key:'dir',label:'Ubicación'},{key:'val',label:'Valoración'},{key:'res',label:'Reseñas'},{key:'nota',label:'Notas'}];
+      download('proveedores-mallorca.csv', toCSV(cols, provFiltrados().map(p => ({...p, s:p.srv.join(', '), a:(p.amb || []).map(x => PROV_AMB[x]).join(', ')})))); }
+  };
+}
+function provAddDialog(p){
+  const evs = [...Store.data.eventos].sort((a, b) => (b.fecha || '').localeCompare(a.fecha || ''));
+  if (!evs.length){ toast('Primero crea o guarda un evento.'); return; }
+  modal('Añadir a un evento', `<p><b>${esc(p.n)}</b> · ${esc(p.srv.join(', '))}</p><label class="f">Evento<select id="pa-ev">${evs.map(e => `<option value="${e.id}">${esc(e.nombre)}${e.fecha ? ' · ' + fdate(e.fecha) : ''}</option>`).join('')}</select></label><div class="row"><button class="primary" id="pa-ok">Añadir a sus proveedores</button><button data-close>Cancelar</button></div>`, m => {
+    $('#pa-ok', m).onclick = async () => { const ev = clone(Store.get('eventos', $('#pa-ev', m).value)); ev.proveedores = ev.proveedores || []; if (ev.proveedores.some(x => x.proveedor === p.n)){ toast('Ya estaba en ese evento.'); m.remove(); return; } ev.proveedores.push(provFila(p)); if (await Store.save('eventos', ev)){ toast(`Añadido a «${ev.nombre}» con estado «Pedir presupuesto»`); m.remove(); } };
+  });
+}
+function provEditDialog(p){
+  const d = p ? clone(p) : {id:'', n:'', srv:[], amb:[], tel:'', mail:'', web:'', dir:'', val:'', res:'', nota:''};
+  modal(p ? 'Editar proveedor' : 'Añadir proveedor propio', `<div class="grid g2">
+      <label class="f">Empresa<input id="pe-n" value="${esc(d.n)}"></label><label class="f">Servicio<select id="pe-srv">${PROV_SRV.map(s => `<option ${d.srv[0] === s ? 'selected' : ''}>${esc(s)}</option>`).join('')}</select></label>
+      <label class="f">Teléfono<input id="pe-tel" value="${esc(d.tel || '')}"></label><label class="f">Email<input id="pe-mail" value="${esc(d.mail || '')}"></label>
+      <label class="f">Web<input id="pe-web" value="${esc(d.web || '')}" placeholder="empresa.com"></label><label class="f">Ubicación<input id="pe-dir" value="${esc(d.dir || '')}"></label>
+      <label class="f">Valoración (0 a 5)<input id="pe-val" type="number" step="0.1" min="0" max="5" value="${esc(d.val || '')}"></label><label class="f">Notas<input id="pe-nota" value="${esc(d.nota || '')}"></label></div>
+    <div class="f-lbl">Ámbitos</div><div class="chips">${Object.entries(PROV_AMB).map(([k, l]) => `<label class="check" style="padding:0 8px 0 0"><input type="checkbox" value="${k}" class="pe-amb" ${d.amb.includes(k) ? 'checked' : ''}><span>${esc(l)}</span></label>`).join('')}</div>
+    <div class="row"><button class="primary" id="pe-ok">Guardar</button>${p ? '<button class="ghost danger" id="pe-del">Borrar</button>' : ''}<button data-close>Cancelar</button></div>`, m => {
+    $('#pe-ok', m).onclick = async () => {
+      const o = {id:d.id, n:$('#pe-n', m).value.trim(), srv:[$('#pe-srv', m).value], amb:$$('.pe-amb', m).filter(x => x.checked).map(x => x.value), tel:$('#pe-tel', m).value.trim(), mail:$('#pe-mail', m).value.trim(), web:$('#pe-web', m).value.trim().replace(/^https?:\/\//, ''), dir:$('#pe-dir', m).value.trim(), val:num($('#pe-val', m).value) || '', nota:$('#pe-nota', m).value.trim()};
+      if (!o.n){ toast('Escribe el nombre de la empresa.'); return; }
+      if (await Store.save('proveedores', o)){ toast('Proveedor guardado'); m.remove(); render(); }
+    };
+    $('#pe-del', m)?.addEventListener('click', async () => { await Store.remove('proveedores', d.id); m.remove(); render(); });
+  });
+}
+function provSugHTML(tipo, ya = [], botones = true){
+  const ps = provSugerencias(tipo).filter(p => !ya.includes(p.n));
+  if (!ps.length) return '';
+  return `<div class="hint" style="margin-top:12px"><b>Proveedores en Mallorca para ${esc(PROV_AMB[ambDeTipo(tipo)])}</b><div class="prov-sug">${ps.map(p => `<div class="row between" style="flex-wrap:nowrap;gap:8px"><span class="small"><b>${esc(p.n)}</b> · ${esc(p.srv.join(', '))}${p.val ? ` · ${p.val.toFixed(1)}★` : ''}<br><span class="muted mono">${esc(provContacto(p) || 'contacto no disponible')}</span></span>${botones ? `<button class="small" data-sug-add="${esc(p.id)}">Añadir</button>` : ''}</div>`).join('')}</div><div class="small" style="margin-top:6px"><a href="#proveedores" data-view-go="proveedores">Ver todo el directorio →</a></div></div>`;
+}
+
+/* ============================================================
    GUÍA Y EJEMPLOS: un ejemplo completo por apartado (no se guarda hasta pulsar Guardar)
    ============================================================ */
 const GUIA = {
@@ -2105,6 +2319,8 @@ const GUIA = {
     pasos:['Busca el tipo de acto (boda, congreso, maratón…).','Pulsa el tipo: se crea un evento nuevo con su tipo de protocolo.','La lista de control y las partidas de presupuesto ya vienen cargadas.']},
   packs:{t:'Packs y contratación', d:'Ejemplos de cada evento con todo incluido, que se adaptan al cliente y se contratan.',
     pasos:['Abre un pack con «Ver y contratar».','Indica asistentes, fecha y cliente.','En «Incluye», desmarca lo que el cliente no quiera y ajusta el descuento.','Marca complementos o añade otros con su precio.','Descarga la propuesta en PDF o Word para el cliente.','Pulsa «Contratar»: se guarda la solicitud y se crea el evento con su presupuesto.']},
+  proveedores:{t:'Proveedores Mallorca', d:'Directorio de empresas de Mallorca por tipo de evento y servicio, con contacto y valoración.',
+    pasos:['Filtra por ámbito del evento y por servicio, o busca por nombre o zona.','Ordena por valoración o por número de reseñas.','En «Por tipo de evento» verás qué servicios necesita cada acto y quién los ofrece.','Pulsa «Añadir a un evento»: entra en sus proveedores con estado «Pedir presupuesto».','Añade tus propios proveedores; quedan guardados en tu cuenta.']},
   convocatorias:{t:'Convocatorias', d:'Convoca reuniones de cualquier ámbito con el texto formal, el plazo legal y el acta ya preparada.',
     pasos:['Pulsa «Nueva convocatoria» o «Usar» en la tabla de tipos de reunión.','Comprueba en el recuadro qué debe incluir y con cuánta antelación se envía.','Rellena entidad, carácter, fecha, hora, lugar o enlace y el orden del día.','Mira el aviso de plazo: verde si cumple, rojo si no llega.','Descárgala en PDF o Word, o cópiala como correo.','Tras la reunión, pulsa «Preparar el acta de esta reunión».']},
   actas:{t:'Actas y presupuestos', d:'El acta de cada reunión, con el presupuesto de lo que se propone calculado solo.',
@@ -2120,7 +2336,7 @@ const GUIA = {
   evaluacion:{t:'Evaluación del acto', d:'Mide cómo ha ido el acto con indicadores y objetivos SMART.',
     pasos:['Pulsa «Nueva evaluación» o elige un evento guardado.','Anota asistentes y gasto, previstos y reales.','Puntúa de 1 a 5 cada área según las encuestas.','Para cada objetivo, puntúa los criterios SMART y anota meta y resultado.','Lee el índice global y descarga el informe.']}
 };
-const GUIA_ORDEN = ['catalogo','packs','eventos','convocatorias','actas','invitaciones','precedencia','tratamientos','noticias','evaluacion'];
+const GUIA_ORDEN = ['catalogo','packs','proveedores','eventos','convocatorias','actas','invitaciones','precedencia','tratamientos','noticias','evaluacion'];
 function guideBar(view){
   const g = GUIA[view]; if (!g) return '';
   return `<div class="guide"><div class="guide-top"><div><b>¿Cómo se usa?</b> <span class="muted">${esc(g.d)}</span></div><div class="row" style="gap:6px"><button class="small" data-guia-pasos="${view}">Ver pasos</button><button class="small primary" data-ejemplo="${view}">Ver ejemplo</button></div></div>
@@ -2164,6 +2380,7 @@ const EJEMPLOS = {
   precedencia:() => { const ok = () => { Object.assign(P, {ambito:'baleares', mesa:'presidencial', modoAnf:'cede', personas:[
       {id:'ej1', nombre:'(Ej.) Tomeu Riera', cargo:'Batle/batlessa de Palma'},{id:'ej2', nombre:'(Ej.) Marta Vidal', cargo:'Presidente/a de las Illes Balears'},{id:'ej3', nombre:'(Ej.) Jordi Serra', cargo:'Ministros del Gobierno'},{id:'ej4', nombre:'(Ej.) Pere Font', cargo:'Presidente/a de consejo insular'},{id:'ej5', nombre:'(Ej.) Antoni Coll', cargo:'Rector/a de la Universitat de les Illes Balears'},{id:'ej6', nombre:'(Ej.) Aina Mas', cargo:'Conseller/a del Govern de les Illes Balears'},{id:'ej7', nombre:'(Ej.) Miquel Sastre', cargo:'Delegado/a del Gobierno en la Comunidad Autónoma'}], anfitrion:'ej1'}); savePrec(); go('precedencia'); toast('Ejemplo: el alcalde organiza y cede la presidencia a la presidenta del Govern.'); };
     if (P.personas.length && !P.personas.every(x => String(x.nombre).startsWith('(Ej'))) confirmBox('El ejemplo sustituirá la lista de personas que tienes ahora en Precedencias. ¿Continuar?', ok); else ok(); },
+  proveedores:() => { UI.prov = {q:'', amb:'SOC', srv:'', min:true, orden:'val', vista:'dir'}; go('proveedores'); toast('Ejemplo: proveedores para una boda en Mallorca con 4,5★ o más. Prueba la pestaña «Por tipo de evento».'); },
   convocatorias:() => { UI.conv = Object.assign(newConv('comite-evento'), {_ejemplo:true, entidad:'(Ejemplo) Ayuntamiento · Premios de Turismo 2026', organo:'Comité Organizador de los Premios de Turismo', caracter:'Ordinaria', modalidad:'Híbrida', convocante:'(Ej.) Concejal de Turismo', cargo:'presidente del Comité', fecha:'2026-11-05', hora:'17:00', lugar:'Sala de juntas del Ayuntamiento', enlace:'reunion.ejemplo.es/comite', emision:'2026-10-29', ciudad:'Palma', secretario:'(Ej.) Técnica de protocolo', presidente:'(Ej.) Concejal de Turismo', rsvp:'protocolo@ejemplo.es',
       orden:'Lectura y aprobación, si procede, del acta de la sesión anterior.\nPropuestas para la gala del 11 de diciembre: cóctel, retransmisión y photocall.\nPlan de comunicación.\nRuegos y preguntas.', documentacion:'se adjuntan los presupuestos de las tres propuestas', destinatarios:'Concejal de Turismo (presidente)\nTécnica de protocolo (secretaria)\nResponsable de comunicación\nResponsable de producción\nRepresentante de la asociación hotelera\nInterventora municipal', notas:'Quien asista por videoconferencia debe conectarse 5 minutos antes.'}); go('convocatorias'); },
   tratamientos:() => { go('tratamientos'); const q = $('#tr-q'); q.value = 'rector'; q.dispatchEvent(new Event('input')); toast('Ejemplo: así se trata a un rector. Prueba a buscar «alcalde» u «obispo».'); },
