@@ -1,0 +1,244 @@
+<title>Propuestas de interfaz</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap">
+<style>
+/* Página contenedora: neutra, para que destaquen las tres propuestas. Cada maqueta lleva su propia paleta fija (son muestras visuales, no siguen el tema). */
+:root{--bg:#eef0f3;--fg:#1b1f27;--muted:#5d6472;--line:#d5d9e0;--card:#ffffff;--accent:#1b1f27}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#15181e;--fg:#e9ebef;--muted:#9aa1ad;--line:#2b3039;--card:#1d2129;--accent:#e9ebef;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#15181e;--fg:#e9ebef;--muted:#9aa1ad;--line:#2b3039;--card:#1d2129;--accent:#e9ebef;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:"Manrope",system-ui,sans-serif;margin:0}
+.page{max-width:1240px;margin:0 auto;padding-block:28px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:18px}
+.page h1{font-family:"Fraunces",Georgia,serif;font-size:2rem;margin:0;text-wrap:balance}
+.page .lede{color:var(--muted);max-width:70ch;margin:6px 0 0;line-height:1.55}
+.switch{display:flex;gap:8px;flex-wrap:wrap}
+.switch button{font:inherit;font-weight:600;border:1px solid var(--line);background:var(--card);color:var(--fg);padding:10px 14px;border-radius:10px;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;min-width:200px;flex:1}
+.switch button small{font-weight:400;color:var(--muted)}
+.switch button[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.switch button:focus-visible{outline:2px solid #3b82f6;outline-offset:2px}
+.frame{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card);box-shadow:0 18px 50px rgba(0,0,0,.12)}
+.frame-bar{display:flex;align-items:center;gap:6px;padding:9px 12px;border-bottom:1px solid var(--line);font-size:.78rem;color:var(--muted)}
+.frame-bar i{width:10px;height:10px;border-radius:50%;background:var(--line);display:inline-block}
+.frame-bar span{margin-left:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.frame-body{overflow-x:auto}
+.mock{min-width:1060px}
+.notes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.note{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+.note h3{margin:0 0 6px;font-size:1rem}
+.note p,.note li{color:var(--muted);font-size:.88rem;line-height:1.5}
+.note ul{margin:0;padding-left:18px}
+@media (max-width:800px){.notes{grid-template-columns:minmax(0,1fr)}}
+svg.ic{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* ========== A · MEDITERRÁNEA ========== */
+.mA{background:#f7f6f2;color:#16343a;font-family:"Manrope",sans-serif}
+.mA .top{display:flex;align-items:center;gap:28px;padding:16px 32px;background:#ffffffcc;border-bottom:1px solid #e6e2d8}
+.mA .logo{font-family:"Fraunces",serif;font-weight:700;font-size:1.25rem;color:#0b5560}
+.mA nav{display:flex;gap:4px}
+.mA nav a{padding:8px 14px;border-radius:999px;color:#41616a;font-weight:600;font-size:.88rem;text-decoration:none}
+.mA nav a.on{background:#0b5560;color:#fff}
+.mA .user{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:.85rem;color:#41616a}
+.mA .av{width:34px;height:34px;border-radius:50%;background:#e8b44a;color:#16343a;display:grid;place-items:center;font-weight:700}
+.mA .hero{margin:24px 32px 0;border-radius:24px;padding:34px 38px;color:#fff;position:relative;overflow:hidden;background:linear-gradient(120deg,#0b5560 0%,#13808b 55%,#3fb3b3 100%)}
+.mA .hero::after{content:"";position:absolute;right:-60px;bottom:-120px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,#ffffff2e 0%,transparent 65%)}
+.mA .hero h2{font-family:"Fraunces",serif;font-size:2.3rem;margin:0;font-weight:500;max-width:18ch;line-height:1.1}
+.mA .hero p{margin:10px 0 18px;opacity:.9;max-width:52ch}
+.mA .hero .btns{display:flex;gap:10px}
+.mA .btn{border:0;border-radius:999px;padding:11px 18px;font:inherit;font-weight:700;font-size:.88rem;cursor:pointer}
+.mA .btn.sun{background:#e8b44a;color:#16343a}
+.mA .btn.glass{background:#ffffff26;color:#fff;border:1px solid #ffffff55}
+.mA .wave{position:absolute;left:0;right:0;bottom:0;height:46px}
+.mA .row3{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:22px 32px 0}
+.mA .kpi{background:#fff;border-radius:18px;padding:18px;border:1px solid #ebe7de}
+.mA .kpi b{font-family:"Fraunces",serif;font-size:2rem;font-weight:500;display:block}
+.mA .kpi span{font-size:.8rem;color:#5d7a80}
+.mA .sec{margin:26px 32px 32px;display:grid;grid-template-columns:2fr 1fr;gap:20px}
+.mA h3{font-family:"Fraunces",serif;font-weight:500;font-size:1.35rem;margin:0 0 12px}
+.mA .evs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.mA .ev{background:#fff;border-radius:18px;overflow:hidden;border:1px solid #ebe7de}
+.mA .ev .img{height:118px;position:relative}
+.mA .ev .img svg{width:100%;height:100%;display:block}
+.mA .ev .date{position:absolute;left:10px;top:10px;background:#fff;border-radius:12px;padding:4px 10px;text-align:center;font-weight:700;color:#0b5560;line-height:1.1}
+.mA .ev .date small{display:block;font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;color:#5d7a80}
+.mA .ev .body{padding:12px 14px 14px}
+.mA .ev h4{margin:0;font-size:.95rem}
+.mA .ev p{margin:4px 0 8px;font-size:.78rem;color:#5d7a80}
+.mA .bar{height:6px;border-radius:9px;background:#eee9df;overflow:hidden}
+.mA .bar i{display:block;height:100%;background:linear-gradient(90deg,#13808b,#3fb3b3)}
+.mA .side{display:flex;flex-direction:column;gap:12px}
+.mA .tile{background:#fff;border:1px solid #ebe7de;border-radius:18px;padding:14px 16px;display:flex;gap:12px;align-items:center}
+.mA .tile .ico{width:40px;height:40px;border-radius:12px;display:grid;place-items:center}
+.mA .tile b{display:block;font-size:.9rem}
+.mA .tile span{font-size:.78rem;color:#5d7a80}
+
+/* ========== B · NOCHE ÍNDIGO ========== */
+.mB{background:radial-gradient(circle at 20% 0%,#2b2752 0%,#1c1936 50%,#141228 100%);color:#f2f3ff;font-family:"Outfit",sans-serif;display:grid;grid-template-columns:78px 1fr;min-height:700px}
+.mB .rail{background:#17142d;border-right:1px solid #ffffff10;display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 0}
+.mB .rail .lg{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#00f59b,#00d0ff 55%,#3b66ff);display:grid;place-items:center;color:#10122a;font-weight:800;margin-bottom:14px}
+.mB .rail a{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;color:#8f8bc0}
+.mB .rail a.on{background:#ffffff12;color:#fff;box-shadow:inset 3px 0 0 #00d0ff}
+.mB .rail svg.ic{width:21px;height:21px}
+.mB main{padding:24px 30px;display:flex;flex-direction:column;gap:20px}
+.mB .hd{display:flex;align-items:center;gap:14px}
+.mB .hd h2{margin:0;font-size:1.6rem;font-weight:600}
+.mB .hd p{margin:2px 0 0;color:#9d99c7;font-size:.88rem}
+.mB .search{margin-left:auto;background:#ffffff0d;border:1px solid #ffffff1a;border-radius:12px;padding:9px 14px;color:#9d99c7;font-size:.85rem;width:260px;display:flex;gap:8px;align-items:center}
+.mB .newbtn{border:0;border-radius:12px;padding:10px 16px;font:inherit;font-weight:700;background:linear-gradient(90deg,#00f59b,#00d0ff 52%,#3b66ff);color:#10122a}
+.mB .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.mB .k{position:relative;border-radius:18px;padding:16px 18px;background:#272449;border:1px solid #ffffff10;box-shadow:0 18px 40px #09071694;overflow:hidden}
+.mB .k::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,#00f59b,#00d0ff,#3b66ff)}
+.mB .k span{color:#9d99c7;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em}
+.mB .k b{display:block;font-size:2rem;font-weight:600;margin-top:4px}
+.mB .k em{font-style:normal;font-size:.78rem;color:#00f59b}
+.mB .k svg{position:absolute;right:12px;bottom:12px;width:90px;height:34px}
+.mB .grid2{display:grid;grid-template-columns:1.5fr 1fr;gap:16px}
+.mB .panel{background:#272449;border:1px solid #ffffff10;border-radius:18px;padding:18px}
+.mB .panel h3{margin:0 0 12px;font-size:1rem;font-weight:600;display:flex;justify-content:space-between}
+.mB .panel h3 small{color:#9d99c7;font-weight:400}
+.mB .tl{display:flex;flex-direction:column;gap:10px}
+.mB .tl .it{display:grid;grid-template-columns:54px 1fr auto;gap:12px;align-items:center;padding:10px;border-radius:14px;background:#1e1b38}
+.mB .tl .d{text-align:center;border-radius:12px;padding:6px 0;background:#ffffff0a;font-weight:700;line-height:1.1}
+.mB .tl .d small{display:block;color:#9d99c7;font-size:.65rem;font-weight:500;text-transform:uppercase}
+.mB .tl b{font-weight:600;font-size:.92rem}
+.mB .tl p{margin:2px 0 0;color:#9d99c7;font-size:.78rem}
+.mB .tag{font-size:.7rem;padding:3px 9px;border-radius:99px;font-weight:600}
+.mB .ring{display:flex;gap:18px;align-items:center}
+.mB .ring svg{width:130px;height:130px}
+.mB .leg{display:flex;flex-direction:column;gap:8px;font-size:.84rem;color:#c9c6ea}
+.mB .leg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:8px}
+.mB .chart svg{width:100%;height:150px;display:block}
+
+/* ========== C · AGENDA EN COLOR ========== */
+.mC{background:#fbfbfd;color:#1f2433;font-family:"DM Sans",sans-serif;display:grid;grid-template-columns:230px 1fr}
+.mC aside{background:#fff;border-right:1px solid #eceef4;padding:22px 16px;display:flex;flex-direction:column;gap:4px}
+.mC .brand{font-family:"DM Serif Display",serif;font-size:1.35rem;margin:0 8px 18px}
+.mC aside a{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;color:#596079;font-size:.88rem;font-weight:500;text-decoration:none}
+.mC aside a.on{background:#f1efff;color:#5b4bdb;font-weight:700}
+.mC aside .cat{margin-top:18px;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:#9aa0b4;padding:0 10px 6px}
+.mC aside .dot{width:9px;height:9px;border-radius:3px}
+.mC main{padding:22px 26px;display:flex;flex-direction:column;gap:18px}
+.mC .hd{display:flex;align-items:center;gap:12px}
+.mC .hd h2{margin:0;font-family:"DM Serif Display",serif;font-weight:400;font-size:1.9rem}
+.mC .seg{margin-left:auto;display:flex;background:#f0f1f6;border-radius:10px;padding:3px}
+.mC .seg span{padding:7px 12px;border-radius:8px;font-size:.82rem;font-weight:600;color:#596079}
+.mC .seg span.on{background:#fff;color:#1f2433;box-shadow:0 1px 3px #0000001a}
+.mC .add{border:0;border-radius:10px;background:#5b4bdb;color:#fff;font:inherit;font-weight:700;padding:10px 14px}
+.mC .two{display:grid;grid-template-columns:1.35fr 1fr;gap:18px}
+.mC .cal{background:#fff;border:1px solid #eceef4;border-radius:16px;padding:14px}
+.mC .cal .mh{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-weight:700}
+.mC .cal table{width:100%;border-collapse:collapse;table-layout:fixed}
+.mC .cal th{font-size:.7rem;color:#9aa0b4;text-transform:uppercase;letter-spacing:.06em;padding:4px;text-align:left}
+.mC .cal td{height:74px;vertical-align:top;border-top:1px solid #f1f2f6;padding:4px;font-size:.75rem;color:#8b91a6}
+.mC .cal td.today b{background:#5b4bdb;color:#fff;border-radius:6px;padding:1px 6px}
+.mC .chip{display:block;margin-top:4px;border-radius:6px;padding:3px 6px;font-size:.68rem;font-weight:600;color:#1f2433;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mC .kan{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.mC .col{background:#f4f5f9;border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:8px}
+.mC .col h4{margin:0 2px 2px;font-size:.78rem;color:#596079;display:flex;justify-content:space-between}
+.mC .card{background:#fff;border-radius:12px;padding:10px;border:1px solid #eceef4;border-left:4px solid var(--c);display:flex;flex-direction:column;gap:6px}
+.mC .card b{font-size:.82rem}
+.mC .card .meta{display:flex;justify-content:space-between;font-size:.7rem;color:#8b91a6}
+.mC .prog{height:5px;background:#eef0f5;border-radius:9px;overflow:hidden}.mC .prog i{display:block;height:100%;background:var(--c)}
+.mC .people{display:flex}.mC .people span{width:20px;height:20px;border-radius:50%;border:2px solid #fff;margin-left:-6px;display:grid;place-items:center;font-size:.55rem;font-weight:700;color:#fff}
+.mC .side{display:flex;flex-direction:column;gap:12px}
+.mC .box{background:#fff;border:1px solid #eceef4;border-radius:16px;padding:14px}
+.mC .box h4{margin:0 0 10px;font-size:.9rem}
+.mC .todo{display:flex;align-items:center;gap:10px;padding:7px 0;border-top:1px solid #f1f2f6;font-size:.82rem}
+.mC .todo .ck{width:18px;height:18px;border-radius:6px;border:2px solid #c9cce0}
+.mC .todo .ck.on{background:#22b07d;border-color:#22b07d}
+.mC .todo small{margin-left:auto;color:#8b91a6}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+
+<div class="page">
+  <header>
+    <h1>Tres propuestas de interfaz</h1>
+    <p class="lede">Maquetas del Panel del Gabinete de Protocolo con tus datos de ejemplo, en tres estilos distintos. Son solo muestras: el programa no cambia hasta que elijas una. Pulsa cada propuesta para verla.</p>
+  </header>
+  <div class="switch" role="group" aria-label="Elegir propuesta">
+    <button data-m="A" aria-pressed="true">A · Mediterránea<small>Luminosa, con imágenes y mar de Mallorca</small></button>
+    <button data-m="B" aria-pressed="false">B · Noche índigo<small>Panel oscuro con degradados y gráficos</small></button>
+    <button data-m="C" aria-pressed="false">C · Agenda en color<small>Calendario y tablero por estados</small></button>
+  </div>
+  <div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span id="url">gabinete-protocolo.vercel.app · Propuesta A</span></div><div class="frame-body" id="stage"></div></div>
+  <div class="notes" id="notes"></div>
+</div>
+
+<script>
+const I = {
+  home:'<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+  cal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+  box:'<path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/>',
+  doc:'<path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/>',
+  mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
+  users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14.5a5 5 0 0 1 5.5 5"/>',
+  star:'<path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9z"/>',
+  chart:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+  pin:'<path d="M12 21s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/>',
+  search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  flag:'<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>'
+};
+const ic = k => `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${I[k]}</svg>`;
+// Ilustraciones de ejemplo (las mismas escenas del programa, simplificadas)
+const SC = {
+  gala:`<rect width="400" height="240" fill="#1d2340"/><rect y="168" width="400" height="72" fill="#262d52"/><ellipse cx="200" cy="46" rx="44" ry="12" fill="#d7b468"/>${[[90,186],[200,204],[310,186]].map(([x,y]) => `<ellipse cx="${x}" cy="${y}" rx="58" ry="17" fill="#f5f1e8"/>`).join('')}`,
+  boda:`<rect width="400" height="240" fill="#f4e9e6"/><rect y="196" width="400" height="44" fill="#e6d3cc"/><path d="M108 200 V118 A92 92 0 0 1 292 118 V200" fill="none" stroke="#7d9a7a" stroke-width="9"/><circle cx="187" cy="128" r="19" fill="none" stroke="#c9a24a" stroke-width="6"/><circle cx="213" cy="128" r="19" fill="none" stroke="#dcbc66" stroke-width="6"/>`,
+  viaje:`<rect width="400" height="240" fill="#d9ecf6"/><circle cx="320" cy="56" r="26" fill="#f7c948"/><polygon points="110,170 210,60 310,170" fill="#6f9488"/><rect y="170" width="400" height="70" fill="#9aa39a"/><rect x="104" y="124" width="190" height="64" rx="10" fill="#e2554a"/>${[0,1,2,3,4].map(i => `<rect x="${116 + i * 34}" y="134" width="26" height="22" rx="3" fill="#cfe8f5"/>`).join('')}`
+};
+const sc = k => `<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">${SC[k]}</svg>`;
+
+const EVS = [
+  {n:'Gala de los Premios de Turismo', d:'11', m:'dic', lugar:'Auditorio municipal', av:62, sc:'gala', est:'Planificación', c:'#f5b642', cat:'Galas y premios'},
+  {n:'Boda de Laura y Marc', d:'12', m:'jun', lugar:'Finca en Santa Maria', av:35, sc:'boda', est:'Confirmado', c:'#ef7aa1', cat:'Sociales'},
+  {n:'Viaje de estudios 4.º ESO', d:'12', m:'abr', lugar:'Andalucía', av:20, sc:'viaje', est:'Idea', c:'#4fb3e8', cat:'Académicos'}
+];
+
+const M = {
+A:{titulo:'Mediterránea', html:() => `<div class="mock mA">
+  <div class="top"><div class="logo">Gabinete de Protocolo</div><nav>${['Panel','Eventos','Packs','Proveedores','Convocatorias','Actas','Protocolo'].map((x, i) => `<a href="#" class="${i ? '' : 'on'}">${x}</a>`).join('')}</nav><div class="user">Juan Solivellas<div class="av">JS</div></div></div>
+  <div class="hero"><h2>Buenos días, Juan. Tienes 3 actos en marcha.</h2><p>La gala de turismo es en 45 días y quedan 8 tareas. El comité se reúne el 5 de noviembre.</p><div class="btns"><button class="btn sun">+ Nuevo evento</button><button class="btn glass">Contratar un pack</button></div>
+    <svg class="wave" viewBox="0 0 1200 46" preserveAspectRatio="none"><path d="M0 30 C200 0 400 46 600 24 S1000 6 1200 26 V46 H0z" fill="#f7f6f2"/></svg></div>
+  <div class="row3">${[['3','actos en marcha'],['8','tareas pendientes'],['42','proveedores en Mallorca'],['87 %','éxito medio']].map(([b, s]) => `<div class="kpi"><b>${b}</b><span>${s}</span></div>`).join('')}</div>
+  <div class="sec"><div><h3>Próximos actos</h3><div class="evs">${EVS.map(e => `<div class="ev"><div class="img">${sc(e.sc)}<div class="date">${e.d}<small>${e.m}</small></div></div><div class="body"><h4>${e.n}</h4><p>${e.lugar} · ${e.est}</p><div class="bar"><i style="width:${e.av}%"></i></div></div></div>`).join('')}</div></div>
+    <div class="side"><h3>Accesos rápidos</h3>${[['flag','Precedencias y mesas','Ordena y sienta autoridades','#e3f3f2','#0b5560'],['mail','Invitaciones','Tarjetón, saluda, boda…','#fdf1d8','#9a6b06'],['users','Proveedores Mallorca','42 empresas valoradas','#eaf0fb','#2c5aa0'],['chart','Evaluar un acto','Indicadores y SMART','#f6e9ee','#9b2c55']].map(([i, t, s, bg, c]) => `<div class="tile"><div class="ico" style="background:${bg};color:${c}">${ic(i)}</div><div><b>${t}</b><span>${s}</span></div></div>`).join('')}</div></div>
+</div>`,
+  notas:[['Para quién','Clientes y equipos que valoran una imagen cálida y de marca, ligada a Mallorca. Muy buena para enseñar el programa a terceros.'],['Qué cambia','Menú arriba en lugar de barra lateral. Portada con saludo y resumen. Cada evento con imagen grande, fecha destacada y barra de avance. Tipografía con serifas de aire editorial.'],['Inspiración','Webs de turismo y wedding planners del Mediterráneo; tarjetas con foto tipo Airbnb; grandes titulares editoriales.']]},
+B:{titulo:'Noche índigo', html:() => {
+  const spark = (pts, c) => `<svg viewBox="0 0 90 34"><polyline points="${pts.map((v, i) => `${i * 15},${34 - v}`).join(' ')}" fill="none" stroke="${c}" stroke-width="2.4" stroke-linecap="round"/></svg>`;
+  const area = [12, 18, 15, 26, 22, 34, 30, 42, 38, 51, 47, 60];
+  const W = 600, H = 150, x = i => 20 + i * (W - 40) / 11, y = v => H - 20 - v * 1.9;
+  return `<div class="mock mB"><div class="rail"><div class="lg">GP</div>${[['home',1],['cal'],['box'],['users'],['mail'],['doc'],['flag'],['chart']].map(([k, on]) => `<a href="#" class="${on ? 'on' : ''}">${ic(k)}</a>`).join('')}</div>
+  <main><div class="hd"><div><h2>Panel</h2><p>Lunes, 27 de octubre · 3 actos en marcha</p></div><div class="search">${ic('search')} Buscar evento, proveedor, cargo…</div><button class="newbtn">+ Nuevo evento</button></div>
+  <div class="kpis">${[['Eventos','3','+1 este mes',[6,10,8,14,12,20,24],'#00f59b'],['Tareas pendientes','8','−4 esta semana',[24,20,22,15,14,10,8],'#00d0ff'],['Presupuesto previsto','13.490 €','62 % comprometido',[5,9,12,14,20,22,26],'#3b66ff'],['Éxito medio','87 %','Último acto',[14,18,16,22,24,26,28],'#00f59b']].map(([l, v, e, p, c]) => `<div class="k"><span>${l}</span><b>${v}</b><em>${e}</em>${spark(p, c)}</div>`).join('')}</div>
+  <div class="grid2"><div class="panel"><h3>Próximos actos <small>por fecha</small></h3><div class="tl">${EVS.map(e => `<div class="it"><div class="d">${e.d}<small>${e.m}</small></div><div><b>${e.n}</b><p>${e.lugar} · ${e.av} % preparado</p></div><span class="tag" style="background:${e.c}22;color:${e.c}">${e.est}</span></div>`).join('')}</div></div>
+    <div class="panel"><h3>Presupuesto de la gala <small>13.490 €</small></h3><div class="ring"><svg viewBox="0 0 42 42"><circle cx="21" cy="21" r="15.9" fill="none" stroke="#ffffff14" stroke-width="5"/>${[[49,'#00f59b',0],[21,'#00d0ff',49],[11,'#3b66ff',70],[19,'#8f8bc0',81]].map(([p, c, o]) => `<circle cx="21" cy="21" r="15.9" fill="none" stroke="${c}" stroke-width="5" stroke-dasharray="${p} ${100 - p}" stroke-dashoffset="${25 - o}"/>`).join('')}<text x="21" y="23" text-anchor="middle" fill="#fff" font-size="6" font-family="Outfit" font-weight="600">62 %</text></svg>
+      <div class="leg">${[['Cóctel','#00f59b','6.600 €'],['Sonido e imagen','#00d0ff','2.800 €'],['Trofeos','#3b66ff','1.500 €'],['Resto','#8f8bc0','2.590 €']].map(([l, c, v]) => `<div><i style="background:${c}"></i>${l} · ${v}</div>`).join('')}</div></div></div></div>
+  <div class="panel chart"><h3>Asistentes confirmados <small>últimas 12 semanas</small></h3><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none"><defs><linearGradient id="gB" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#00d0ff" stop-opacity=".45"/><stop offset="1" stop-color="#00d0ff" stop-opacity="0"/></linearGradient><linearGradient id="lB" x1="0" x2="1"><stop offset="0" stop-color="#00f59b"/><stop offset=".5" stop-color="#00d0ff"/><stop offset="1" stop-color="#3b66ff"/></linearGradient></defs>${[0, 1, 2, 3].map(g => `<line x1="20" x2="${W - 20}" y1="${20 + g * 36.6}" y2="${20 + g * 36.6}" stroke="#ffffff10"/>`).join('')}<path d="M${x(0)} ${y(area[0])} ${area.map((v, i) => `L${x(i)} ${y(v)}`).join(' ')} L${x(11)} ${H - 20} L${x(0)} ${H - 20}Z" fill="url(#gB)"/><polyline points="${area.map((v, i) => `${x(i)},${y(v)}`).join(' ')}" fill="none" stroke="url(#lB)" stroke-width="3"/><circle cx="${x(11)}" cy="${y(60)}" r="5" fill="#3b66ff" stroke="#fff" stroke-width="2"/></svg></div>
+  </main></div>`; },
+  notas:[['Para quién','Uso diario intensivo por el equipo: mucha información de un vistazo, cómoda de noche y en pantallas grandes.'],['Qué cambia','Barra lateral solo con iconos para ganar espacio. Indicadores con mini gráficas, línea de próximos actos, anillo de presupuesto y gráfica de asistentes. Buscador global arriba.'],['Inspiración','El estilo índigo con degradado verde-cian-azul de tu gestor de proyectos, para que tus dos webs se parezcan; paneles tipo Linear o Vercel.']]},
+C:{titulo:'Agenda en color', html:() => {
+  const dias = []; for (let d = -1; d < 34; d++) dias.push(d);
+  const marcas = {5:['Comité Premios','#c9c2ff'], 11:['Gala Premios','#ffe3a8'], 13:['Junta vecinos','#c8f0dd'], 19:['Reunión AMPA','#bfe6fb'], 26:['Visita oficial','#ffd0d0']};
+  return `<div class="mock mC"><aside><div class="brand">Gabinete</div>${[['home','Panel',1],['cal','Agenda'],['box','Packs'],['users','Proveedores'],['mail','Convocatorias'],['doc','Actas'],['flag','Protocolo'],['chart','Evaluación']].map(([k, l, on]) => `<a href="#" class="${on ? 'on' : ''}">${ic(k)}${l}</a>`).join('')}
+    <div class="cat">Categorías</div>${[['Oficiales','#ff8c8c'],['Corporativos','#7c6cf2'],['Sociales','#ef7aa1'],['Académicos','#4fb3e8'],['Galas y premios','#f5b642'],['Vecinales','#3cc68a']].map(([l, c]) => `<a href="#"><span class="dot" style="background:${c}"></span>${l}</a>`).join('')}</aside>
+  <main><div class="hd"><h2>Noviembre 2026</h2><div class="seg"><span>Día</span><span>Semana</span><span class="on">Mes</span></div><button class="add">+ Nuevo</button></div>
+    <div class="two"><div class="cal"><div class="mh"><span>‹</span><span>Noviembre</span><span>›</span></div><table><thead><tr>${['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'].map(d => `<th>${d}</th>`).join('')}</tr></thead><tbody>${[0, 1, 2, 3, 4].map(w => `<tr>${[0, 1, 2, 3, 4, 5, 6].map(d => { const n = w * 7 + d - 5; const ok = n >= 1 && n <= 30; const mk = marcas[n]; return `<td class="${n === 3 ? 'today' : ''}">${ok ? `<b>${n}</b>` : ''}${ok && mk ? `<span class="chip" style="background:${mk[1]}">${mk[0]}</span>` : ''}</td>`; }).join('')}</tr>`).join('')}</tbody></table></div>
+      <div class="side"><div class="box"><h4>Tareas de esta semana</h4>${[['Confirmar autoridades','Gala',1],['Enviar convocatoria del comité','Comité',1],['Pedir presupuesto de catering','Gala',0],['Revisar plano de mesas','Boda',0]].map(([t, e, on]) => `<div class="todo"><span class="ck ${on ? 'on' : ''}"></span>${t}<small>${e}</small></div>`).join('')}</div>
+        <div class="box"><h4>Proveedores mejor valorados</h4>${[['M&M Experiences','5,0★','Organización'],['Fosh Catering','4,9★','Catering'],['Floraevent','4,9★','Flores']].map(([n, v, s]) => `<div class="todo"><b style="font-size:.82rem">${n}</b><small>${s} · ${v}</small></div>`).join('')}</div></div></div>
+    <div class="kan">${[['Idea',[[EVS[2], '#4fb3e8']]],['Planificación',[[EVS[0], '#f5b642'], [{n:'Junta de propietarios', lugar:'C/ Mayor, 5', av:50}, '#3cc68a']]],['Confirmado',[[EVS[1], '#ef7aa1']]],['Celebrado',[[{n:'Gala de Turismo 2025', lugar:'Índice 87 %', av:100}, '#7c6cf2']]]].map(([t, cs]) => `<div class="col"><h4>${t}<span>${cs.length}</span></h4>${cs.map(([e, c]) => `<div class="card" style="--c:${c}"><b>${e.n}</b><div class="meta"><span>${e.lugar}</span><span>${e.av} %</span></div><div class="prog"><i style="width:${e.av}%"></i></div><div class="people">${['#7c6cf2', '#ef7aa1', '#3cc68a'].map((p, i) => `<span style="background:${p}">${['JS', 'AM', 'TR'][i]}</span>`).join('')}</div></div>`).join('')}</div>`).join('')}</div>
+  </main></div>`; },
+  notas:[['Para quién','Quien organiza muchos actos a la vez y piensa en fechas: agencias, ayuntamientos, centros educativos.'],['Qué cambia','Calendario mensual con cada acto coloreado por categoría. Tablero por estados (idea, planificación, confirmado, celebrado) que se puede arrastrar. Tareas de la semana y proveedores mejor valorados al lado.'],['Inspiración','Agendas tipo Google Calendar o Notion Calendar y tableros tipo Trello o Monday, con colores por categoría.']]}
+};
+const stage = document.getElementById('stage'), notes = document.getElementById('notes'), url = document.getElementById('url');
+function show(k){
+  stage.innerHTML = M[k].html();
+  notes.innerHTML = M[k].notas.map(([t, p]) => `<div class="note"><h3>${t}</h3><p>${p}</p></div>`).join('');
+  url.textContent = `gabinete-protocolo.vercel.app · Propuesta ${k} · ${M[k].titulo}`;
+  document.querySelectorAll('[data-m]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.m === k)));
+  try { localStorage.setItem('propuesta', k); } catch {}
+}
+document.querySelector('.switch').addEventListener('click', e => { const b = e.target.closest('[data-m]'); if (b) show(b.dataset.m); });
+let ini = 'A'; try { ini = localStorage.getItem('propuesta') || 'A'; } catch {}
+show(M[ini] ? ini : 'A');
+</script>

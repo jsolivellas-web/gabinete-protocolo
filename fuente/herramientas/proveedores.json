@@ -1,0 +1,1010 @@
+{
+ "Proveedores por Evento": [
+  [
+   "Categoría de Protocolo",
+   "Tipo de Evento / Ejemplo",
+   "Servicio Necesario",
+   "Nombre de la Empresa",
+   "Teléfono",
+   "Email",
+   "Ubicación (Mallorca)",
+   "Valoración (Google)",
+   "Nº Reseñas",
+   "Notas / Recomendado para"
+  ],
+  [
+   "OFICIALES E INSTITUCIONALES / DIPLOMÁTICOS",
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null
+  ],
+  [
+   "",
+   "Toma de posesión, Visita oficial, Recepción oficial, Firma de convenio, Inauguración, Actos conmemorativos, Plenos, etc.",
+   "Organización integral / Protocolo",
+   "CREA Group Events",
+   "+34 609 21 09 29",
+   "Via web creagroupevents.com",
+   "Opera en Mallorca (HQ Barcelona/Madrid)",
+   "Alta experiencia MICE",
+   "-",
+   "Especialistas en eventos corporativos e institucionales de alto nivel"
+  ],
+  [
+   "",
+   "",
+   "Venue principal / Auditorios",
+   "Palau de Congressos de Palma",
+   "971 62 69 10",
+   "sales.pcp@melia.com",
+   "Carrer de Felicià Fuster, 2, Palma",
+   "4.2",
+   "2185",
+   "Mayor centro de convenciones de Baleares. Ideal para actos oficiales y congresos"
+  ],
+  [
+   "",
+   "",
+   "Catering formal",
+   "Fosh Catering Mallorca",
+   "871 11 62 94",
+   "-",
+   "C/ d'Asival, 7, Palma",
+   "4.9",
+   "68",
+   "Catering premium para eventos institucionales y de empresa"
+  ],
+  [
+   "",
+   "",
+   "Audiovisual / Técnico",
+   "VELVET PRODUCTIONS",
+   "618 93 51 48",
+   "-",
+   "C/ Gremi de Passamaners, 8a, Nave 22, Palma",
+   "4.8",
+   "32",
+   "Producción audiovisual para actos formales"
+  ],
+  [
+   "",
+   "",
+   "Decoración / Flores",
+   "Floraevent",
+   "699 01 15 77",
+   "-",
+   "Cami de Son Garbi, 188, Algaida",
+   "4.9",
+   "28",
+   "Decoración floral para actos institucionales"
+  ],
+  [
+   "CORPORATIVOS Y EMPRESARIALES",
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null
+  ],
+  [
+   "",
+   "Congresos, Convenciones, Juntas, Lanzamientos, Team building, Cenas de empresa, Networking, Viajes de incentivos",
+   "Organización integral",
+   "M&M Experiences",
+   "608 92 64 48",
+   "info@mmexperiences.es",
+   "Carrer d'Andalusia, 16, Palma",
+   "5.0",
+   "127+",
+   "Cobertura completa: corporativos, team building, incentivos, catas, etc."
+  ],
+  [
+   "",
+   "",
+   "Organización integral",
+   "Mallorkevents (Oh! Palma)",
+   "971 72 00 59",
+   "info@ohpalma.com",
+   "Calle Miquel Capllonch, 6 local 11, Palma",
+   "-",
+   "-",
+   "Más de 20 años. Eventos de empresa, estructuras, espectáculos"
+  ],
+  [
+   "",
+   "",
+   "Organización integral",
+   "MC EVENTPLANNER",
+   "601 37 72 75",
+   "-",
+   "Carrer de Jordi Villalonga i Velasco, 7, Palma",
+   "4.8",
+   "116",
+   "Planificación personalizada para eventos de empresa y bodas"
+  ],
+  [
+   "",
+   "",
+   "Venue / Hoteles y salas",
+   "Palau de Congressos de Palma",
+   "971 62 69 10",
+   "sales.pcp@melia.com",
+   "Carrer de Felicià Fuster, 2, Palma",
+   "4.2",
+   "2185",
+   "Espacios multifuncionales para congresos y convenciones"
+  ],
+  [
+   "",
+   "",
+   "Catering",
+   "La Van Mallorca",
+   "660 38 96 92",
+   "-",
+   "Pça. de Miquel Dolç, 10, Palma",
+   "4.9",
+   "77",
+   "Catering y servicios de eventos"
+  ],
+  [
+   "",
+   "",
+   "Catering",
+   "Tot a Punt Events & Catering",
+   "971 84 52 87",
+   "-",
+   "Via Palma, 54, Manacor",
+   "4.7",
+   "197",
+   "Cobertura isla, bueno para eventos fuera de Palma"
+  ],
+  [
+   "",
+   "",
+   "Team building / Actividades",
+   "M&M Experiences / Bolita Events",
+   "608 92 64 48",
+   "info@mmexperiences.es",
+   "Palma",
+   "5.0",
+   "-",
+   "Actividades outdoor, catamaranes, gymkanas"
+  ],
+  [
+   "DEPORTIVOS",
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null
+  ],
+  [
+   "",
+   "Competiciones, Torneos, Carreras, Entrega de trofeos, Galas del deporte, Campus",
+   "Organización y logística",
+   "M&M Experiences",
+   "608 92 64 48",
+   "info@mmexperiences.es",
+   "Carrer d'Andalusia, 16, Palma",
+   "5.0",
+   "127+",
+   "Pueden coordinar eventos deportivos y galas"
+  ],
+  [
+   "",
+   "",
+   "Venue / Espacios",
+   "Palau de Congressos / Hoteles con salas",
+   "971 62 69 10",
+   "sales.pcp@melia.com",
+   "Palma",
+   "4.2",
+   "2185",
+   "Para galas y entregas de premios"
+  ],
+  [
+   "",
+   "",
+   "Transporte grupos",
+   "Transports Rafel Servera (Rafabus)",
+   "629 74 92 79",
+   "-",
+   "Camí de les Pedreres, 47, Palma",
+   "4.8",
+   "62",
+   "Autobuses para traslados de equipos o participantes"
+  ],
+  [
+   "",
+   "",
+   "Catering",
+   "Fosh Catering / La Van",
+   "871 11 62 94",
+   "-",
+   "Palma",
+   "4.9",
+   "-",
+   "Para cenas de gala deportiva"
+  ],
+  [
+   "ACADÉMICOS Y EDUCATIVOS",
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null
+  ],
+  [
+   "",
+   "Viaje de estudios, Excursiones escolares, Graduaciones, Congresos científicos, Colonias",
+   "Agencia de viajes / Organización grupo",
+   "VIAJES PARTHENON",
+   "637 67 13 61",
+   "-",
+   "C. del Cardenal Rossell, 44, Coll den Rabassa",
+   "4.8",
+   "78",
+   "Agencia local para grupos"
+  ],
+  [
+   "",
+   "",
+   "Agencia de viajes grupos",
+   "Món de Viatges",
+   "971 24 47 00",
+   "-",
+   "TORCUATO LUCA DE TENA 7, Palma",
+   "4.4",
+   "21",
+   "Planificación de viajes en grupo"
+  ],
+  [
+   "",
+   "",
+   "Agencia especializada viajes estudios",
+   "Mi Viaje De Estudios",
+   "-",
+   "-",
+   "El Arenal, Palma",
+   "-",
+   "-",
+   "Especializados en viajes de estudios (verificar contacto actual)"
+  ],
+  [
+   "",
+   "",
+   "Transporte (autobuses)",
+   "Autocares Marquès",
+   "971 43 04 43",
+   "-",
+   "Carrer Gremi de Boneters, 47, Palma",
+   "4.7",
+   "23",
+   "Ideal para grupos escolares"
+  ],
+  [
+   "",
+   "",
+   "Museos / Actividades culturales",
+   "Es Baluard Museu d'Art Contemporani",
+   "971 90 82 00",
+   "-",
+   "Plaça de la Porta de Santa Catalina, 10, Palma",
+   "4.2",
+   "4446",
+   "Visitas guiadas para grupos"
+  ],
+  [
+   "",
+   "",
+   "Museos",
+   "Fundació Joan March",
+   "971 71 04 28",
+   "-",
+   "Carrer de Sant Miquel, 11, Palma",
+   "4.7",
+   "1585",
+   "Excelente para visitas educativas"
+  ],
+  [
+   "",
+   "",
+   "Museos",
+   "Fundació Miró Mallorca",
+   "971 70 14 20",
+   "-",
+   "C/ de Saridakis, 29, Palma",
+   "4.4",
+   "3245",
+   "Visitas culturales"
+  ],
+  [
+   "",
+   "",
+   "Hotel / Alojamiento grupos",
+   "Hoteles Palma (consultar Meliá, etc.)",
+   "-",
+   "-",
+   "Palma y resto isla",
+   "-",
+   "-",
+   "Recomendado contactar via agencia o Convention Bureau"
+  ],
+  [
+   "",
+   "",
+   "Material / Organización",
+   "Agencias de viajes + Event planners",
+   "-",
+   "-",
+   "-",
+   "-",
+   "-",
+   "Para material didáctico y logística, coordinar con agencia"
+  ],
+  [
+   "SOCIALES Y FAMILIARES",
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null
+  ],
+  [
+   "",
+   "Bodas, Pedidas, Despedidas, Bautizos, Comuniones, Cumpleaños, Aniversarios, Baby shower",
+   "Organización integral / Wedding planner",
+   "M&M Experiences",
+   "608 92 64 48",
+   "info@mmexperiences.es",
+   "Carrer d'Andalusia, 16, Palma",
+   "5.0",
+   "127+",
+   "Especialistas en bodas y eventos privados, decoración, catering, coordinación"
+  ],
+  [
+   "",
+   "",
+   "Organización",
+   "Mallorkevents (Oh! Palma)",
+   "971 72 00 59",
+   "info@ohpalma.com",
+   "Calle Miquel Capllonch, 6, Palma",
+   "-",
+   "-",
+   "Bodas, despedidas, fiestas infantiles, espectáculos"
+  ],
+  [
+   "",
+   "",
+   "Organización",
+   "MC EVENTPLANNER",
+   "601 37 72 75",
+   "-",
+   "Carrer de Jordi Villalonga i Velasco, 7, Palma",
+   "4.8",
+   "116",
+   "Bodas de destino y eventos familiares"
+  ],
+  [
+   "",
+   "",
+   "Decoración floral",
+   "Floraevent / Flores de Mallorca",
+   "699 01 15 77",
+   "-",
+   "Algaida / Palma",
+   "4.9 / 4.8",
+   "28 / 634",
+   "Decoración para bodas y celebraciones"
+  ],
+  [
+   "",
+   "",
+   "Catering",
+   "Fosh Catering / La Sal Catering",
+   "871 11 62 94",
+   "-",
+   "Palma",
+   "4.9",
+   "-",
+   "Menús para bodas y fiestas privadas"
+  ],
+  [
+   "CULTURALES",
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null
+  ],
+  [
+   "",
+   "Exposiciones, Conciertos, Festivales, Presentaciones de libro, Teatro, Catas de vino, Visitas guiadas",
+   "Venue / Teatro o sala",
+   "Teatro del Mar",
+   "971 24 84 00",
+   "-",
+   "Carrer de Llucmajor, 90, Palma",
+   "4.5",
+   "334",
+   "Ideal para conciertos, teatro y eventos culturales"
+  ],
+  [
+   "",
+   "",
+   "Venue / Teatro",
+   "Teatre Sans",
+   "971 72 71 66",
+   "-",
+   "Carrer de Can Sanç, 5, Palma",
+   "4.7",
+   "327",
+   "Sala para obras de teatro y presentaciones"
+  ],
+  [
+   "",
+   "",
+   "Cata de vinos / Bodega",
+   "Celler Macià Batle",
+   "971 14 00 14",
+   "-",
+   "Camí Coanegra, s/n, Santa Maria del Camí",
+   "4.7",
+   "578",
+   "Catas y visitas en bodega mallorquina"
+  ],
+  [
+   "",
+   "",
+   "Cata de vinos / Bodega",
+   "Bodegas Oliver Moragues",
+   "601 85 14 51",
+   "-",
+   "Cami darrere ses Vinyes, Algaida",
+   "5.0",
+   "577",
+   "Excelente para catas y eventos enoturísticos"
+  ],
+  [
+   "",
+   "",
+   "Organización evento en teatro + cata",
+   "M&M Experiences o CREA Group",
+   "608 92 64 48",
+   "info@mmexperiences.es",
+   "Palma",
+   "5.0",
+   "-",
+   "Pueden coordinar venue + cata + catering + AV"
+  ],
+  [
+   "",
+   "",
+   "Museos / Exposiciones",
+   "Es Baluard / Fundació Miró",
+   "971 90 82 00",
+   "-",
+   "Palma",
+   "4.2 / 4.4",
+   "4446 / 3245",
+   "Espacios para exposiciones o visitas"
+  ],
+  [
+   "",
+   "",
+   "Audiovisual",
+   "LUME Audiovisual Services",
+   "679 91 35 09",
+   "-",
+   "Carrer de Joan Munar, 18, Palma",
+   "5.0",
+   "14",
+   "Para sonido y luces en eventos culturales"
+  ],
+  [
+   "GALAS Y PREMIOS / SOCIAL INSTITUCIONAL",
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null
+  ],
+  [
+   "",
+   "Cenas de gala, Entrega de premios, Galas benéficas, Cócteles, Bailes de gala",
+   "Organización y venue",
+   "Palau de Congressos de Palma",
+   "971 62 69 10",
+   "sales.pcp@melia.com",
+   "Carrer de Felicià Fuster, 2, Palma",
+   "4.2",
+   "2185",
+   "Espacios perfectos para galas de alto nivel"
+  ],
+  [
+   "",
+   "",
+   "Organización integral",
+   "M&M Experiences / CREA Group",
+   "608 92 64 48",
+   "info@mmexperiences.es",
+   "Palma",
+   "5.0",
+   "-",
+   "Coordinación completa de galas"
+  ],
+  [
+   "",
+   "",
+   "Catering premium",
+   "Fosh Catering",
+   "871 11 62 94",
+   "-",
+   "Palma",
+   "4.9",
+   "68",
+   "Ideal para cenas de gala"
+  ],
+  [
+   "",
+   "",
+   "Decoración",
+   "Floraevent / Bombillas y Flores",
+   "699 01 15 77",
+   "-",
+   "Algaida / Pont d'Inca",
+   "4.9 / 4.6",
+   "-",
+   "Decoración elegante para galas"
+  ],
+  [
+   "RELIGIOSOS",
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null
+  ],
+  [
+   "",
+   "Misas solemnes, Procesiones, Romerías, Celebraciones",
+   "Organización logística",
+   "Mallorkevents / Event planners locales",
+   "971 72 00 59",
+   "info@ohpalma.com",
+   "Palma",
+   "-",
+   "-",
+   "Para logística, carpas, sonido, transporte"
+  ],
+  [
+   "",
+   "",
+   "Transporte",
+   "Rafabus / Autocares Marquès",
+   "629 74 92 79",
+   "-",
+   "Palma",
+   "4.8",
+   "-",
+   "Para procesiones o grupos"
+  ],
+  [
+   "",
+   "",
+   "Catering (si aplica)",
+   "Tot a Punt / La Van",
+   "971 84 52 87",
+   "-",
+   "Manacor / Palma",
+   "4.7",
+   "-",
+   "Para comidas posteriores"
+  ],
+  [
+   "SOLIDARIOS Y OCIO",
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null
+  ],
+  [
+   "",
+   "Carreras solidarias, Mercadillos, Fiestas populares, Rutas gastronómicas, Escape rooms / Gymkanas, Viajes de grupo",
+   "Organización",
+   "M&M Experiences",
+   "608 92 64 48",
+   "info@mmexperiences.es",
+   "Palma",
+   "5.0",
+   "127+",
+   "Gymkanas, rutas, experiencias de ocio"
+  ],
+  [
+   "",
+   "",
+   "Transporte grupos",
+   "Rafabus / Bus Mallorca",
+   "629 74 92 79",
+   "-",
+   "Palma",
+   "4.8 / 4.5",
+   "-",
+   "Para carreras o viajes de grupo"
+  ],
+  [
+   "",
+   "",
+   "Catering / Food trucks (consultar)",
+   "La Van / Tot a Punt",
+   "660 38 96 92",
+   "-",
+   "Palma / Manacor",
+   "4.9",
+   "-",
+   "Para eventos solidarios y fiestas"
+  ],
+  [
+   "",
+   "",
+   "Rutas gastronómicas / Bodegas",
+   "Celler Macià Batle / Oliver Moragues",
+   "971 14 00 14",
+   "-",
+   "Santa Maria / Algaida",
+   "4.7 / 5.0",
+   "578 / 577",
+   "Para rutas y catas solidarias o de ocio"
+  ]
+ ],
+ "Proveedores Generales": [
+  [
+   "Tipo de Servicio",
+   "Empresa Recomendada",
+   "Teléfono",
+   "Email",
+   "Ubicación",
+   "Valoración",
+   "Notas"
+  ],
+  [
+   "Organización de eventos",
+   "M&M Experiences",
+   "608 92 64 48",
+   "info@mmexperiences.es",
+   "Carrer d'Andalusia 16, Palma",
+   "5.0 (127+)",
+   "Versátil para casi todos los tipos"
+  ],
+  [
+   "Organización de eventos",
+   "Mallorkevents (Oh! Palma)",
+   "971 72 00 59",
+   "info@ohpalma.com",
+   "Miquel Capllonch 6, Palma",
+   "-",
+   "Amplia gama de servicios y alquileres"
+  ],
+  [
+   "Venue principal",
+   "Palau de Congressos de Palma",
+   "971 62 69 10",
+   "sales.pcp@melia.com",
+   "Felicià Fuster 2, Palma",
+   "4.2 (2185)",
+   "Congresos, galas, actos oficiales"
+  ],
+  [
+   "Catering",
+   "Fosh Catering",
+   "871 11 62 94",
+   "-",
+   "Asival 7, Palma",
+   "4.9 (68)",
+   "Premium"
+  ],
+  [
+   "Catering",
+   "La Van Mallorca",
+   "660 38 96 92",
+   "-",
+   "Miquel Dolç 10, Palma",
+   "4.9 (77)",
+   "Eventos varios"
+  ],
+  [
+   "Decoración floral",
+   "Floraevent",
+   "699 01 15 77",
+   "-",
+   "Algaida",
+   "4.9 (28)",
+   "Bodas y eventos"
+  ],
+  [
+   "Audiovisual",
+   "VELVET PRODUCTIONS",
+   "618 93 51 48",
+   "-",
+   "Palma",
+   "4.8 (32)",
+   "Producción técnica"
+  ],
+  [
+   "Transporte grupos",
+   "Rafabus",
+   "629 74 92 79",
+   "-",
+   "Palma",
+   "4.8 (62)",
+   "Autobuses"
+  ],
+  [
+   "Bodegas / Catas",
+   "Celler Macià Batle",
+   "971 14 00 14",
+   "-",
+   "Santa Maria del Camí",
+   "4.7 (578)",
+   "Catas de vino"
+  ],
+  [
+   "Agencia viajes grupos",
+   "VIAJES PARTHENON",
+   "637 67 13 61",
+   "-",
+   "Coll den Rabassa",
+   "4.8 (78)",
+   "Viajes de estudios"
+  ]
+ ],
+ "Notas Importantes": [
+  [
+   ""
+  ],
+  [
+   "1. Todos los datos están basados en búsquedas actuales (octubre 2026) de fuentes públicas (Google Maps, webs de empresas, directorios)."
+  ],
+  [
+   "2. Solo se incluyen empresas y venues ubicados en Mallorca o que operan principalmente en la isla."
+  ],
+  [
+   "3. Las valoraciones y número de reseñas provienen de Google. Pueden variar."
+  ],
+  [
+   "4. Algunos emails no estaban disponibles públicamente; se recomienda contactar por teléfono o web."
+  ],
+  [
+   "5. Para eventos oficiales/diplomáticos de alto nivel, se recomienda también contactar con el Mallorca Convention Bureau."
+  ],
+  [
+   "6. Verificar disponibilidad, precios y capacidad actual al contactar, ya que pueden cambiar."
+  ],
+  [
+   "7. Para viajes de estudios: las agencias locales ayudan con hoteles, autobuses, visitas a museos y actividades. Coordinar material educativo con el centro escolar."
+  ],
+  [
+   "8. Para cata de vinos en teatro/sala: combinar venue (teatro) + bodega + catering + AV + organización."
+  ],
+  [
+   "9. Este documento es una guía inicial. Se recomienda solicitar presupuestos comparativos."
+  ],
+  [
+   "10. Fuente principal de datos: Google Places, webs oficiales y directorios de Mallorca."
+  ],
+  [
+   "11. Recursos clave adicionales: Mallorca Convention Bureau (asesoramiento gratuito y red de proveedores) y MallorcaLeads (directorio MICE)."
+  ],
+  [
+   "12. Se han añadido categorías críticas: fotografía, DJ/música, azafatas, seguridad, producción AV avanzada (AICO) y más DMCs."
+  ],
+  [
+   "13. Para eventos oficiales o grandes congresos, empezar siempre por el Convention Bureau."
+  ],
+  [
+   "14. Datos actualizados a octubre 2026. Verificar siempre contactos actuales."
+  ]
+ ],
+ "Proveedores Adicionales": [
+  [
+   "Tipo de Servicio",
+   "Nombre de la Empresa",
+   "Teléfono",
+   "Email",
+   "Ubicación (Mallorca)",
+   "Valoración (Google)",
+   "Nº Reseñas",
+   "Notas / Especialidad"
+  ],
+  [
+   "Recurso institucional MICE",
+   "Mallorca Convention Bureau",
+   "971 09 29 19",
+   "info@mallorcacb.com",
+   "C/ Ter, 27 · 3º oficina 5, 07009 Palma",
+   "-",
+   "-",
+   "Asesoramiento gratuito, conexión con +120 proveedores MICE, normativas y autoridades. Web: mallorcaconventionbureau.com"
+  ],
+  [
+   "Directorio MICE",
+   "MallorcaLeads",
+   "607 81 59 43",
+   "hello@mallorcaleads.com",
+   "Carrer de Bonaire, 16, Palma",
+   "5.0",
+   "58",
+   "Directorio y consultoría gratuita de proveedores MICE. Web: mallorcaleads.com"
+  ],
+  [
+   "Producción audiovisual / Escenografía",
+   "AICO Event Production",
+   "971 739 250",
+   "info@aico.es",
+   "Carrer Can Valero, 12 / Pol. Can Valero, Palma",
+   "-",
+   "-",
+   "Líder en AV, iluminación, sonido, traducción, carpas beduinas, escenografía. +30 años. Ideal para eventos grandes"
+  ],
+  [
+   "Fotografía eventos / bodas",
+   "Eva Plasencia Fotógrafa",
+   "609 74 72 64",
+   "-",
+   "Camí de Jesús, 113, Palma",
+   "5.0",
+   "108",
+   "Fotografía profesional para eventos y bodas"
+  ],
+  [
+   "Fotografía bodas",
+   "CESAR STEFANELLI",
+   "625 46 71 19",
+   "-",
+   "Carrer de Ramon Picó I Campamar, 8, Palma",
+   "5.0",
+   "76",
+   "Wedding photography especializada"
+  ],
+  [
+   "DJ / Música eventos",
+   "Cube Music",
+   "655 56 00 06",
+   "-",
+   "Avinguda del Comte de Sallent, 10, Palma",
+   "4.9",
+   "50",
+   "DJ premium para yachts, bodas, corporativos + sonido e iluminación"
+  ],
+  [
+   "DJ eventos",
+   "CAM - Dj Camembert",
+   "722 14 23 28",
+   "-",
+   "Carrer de Francesc Martí i Móra, Palma",
+   "5.0",
+   "101",
+   "DJ para bodas, fiestas privadas y corporativos (Fra/Eng/Esp)"
+  ],
+  [
+   "Azafatas / Hostesses",
+   "Pinup Azafatas",
+   "653 23 38 36",
+   "-",
+   "Carrer d'Andorra, Palma",
+   "4.6",
+   "5",
+   "Agencia de azafatas para eventos"
+  ],
+  [
+   "Azafatas / Congresos",
+   "Hexel Congresses & Events Hostesses",
+   "971 22 29 00",
+   "-",
+   "Carrer d'Andrea Doria, 47, Palma",
+   "4.3",
+   "28",
+   "Especializados en congresos y eventos"
+  ],
+  [
+   "Seguridad eventos",
+   "Safeguard Seguridad",
+   "628 46 80 94",
+   "central@safeguardseguridad.com",
+   "Bartolomeu Calafell 23, 07600 Palma",
+   "-",
+   "-",
+   "+30 años. Seguridad para hoteles, eventos y establecimientos"
+  ],
+  [
+   "Seguridad privada",
+   "Blisegur",
+   "-",
+   "-",
+   "Mallorca (servicio isla)",
+   "-",
+   "-",
+   "Vigilancia para eventos, hoteles, etc. Vigilantes certificados"
+  ],
+  [
+   "DMC / Eventos corporativos",
+   "Balearic Elements DMC",
+   "-",
+   "-",
+   "Can Pastilla / Palma",
+   "-",
+   "-",
+   "DMC especializada en MICE, incentivos, team building, bodas. Licencia oficial"
+  ],
+  [
+   "DMC / Incentivos",
+   "LifeXperiences",
+   "971 10 09 08",
+   "info@lifexperiences.com",
+   "Francesc Vidal Sureda 71, Palma",
+   "-",
+   "-",
+   "DMC líder en MICE, incentivos, team building, yates, etc."
+  ],
+  [
+   "Organización eventos",
+   "Bolita Events",
+   "-",
+   "-",
+   "Carrer del Mascarell 1, Palma",
+   "-",
+   "-",
+   "Especializados en eventos corporativos, retiros, catamaranes, yincanas"
+  ],
+  [
+   "Música en vivo / Bandas",
+   "Panela! Live Music Productions",
+   "-",
+   "-",
+   "Carrer del Quatre de Novembre, 5, Palma",
+   "4.9",
+   "30",
+   "Bandas y música en vivo para bodas y eventos"
+  ]
+ ]
+}
