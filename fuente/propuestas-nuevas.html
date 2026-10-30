@@ -1,9 +1,9 @@
-<title>Nuevas propuestas de interfaz</title>
+<title>Interfaz más moderna</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700;800&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap">
 <style>
 /* Página contenedora neutra; cada maqueta lleva su propia paleta fija porque es una muestra visual, no sigue el tema. */
 :root{--bg:#eef0f3;--fg:#1b1f27;--muted:#5d6472;--line:#d5d9e0;--card:#ffffff;--accent:#1b1f27}
@@ -12,7 +12,7 @@
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--fg);font-family:"Inter",system-ui,sans-serif;margin:0}
 .page{max-width:1240px;margin:0 auto;padding-block:28px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:18px}
-.page h1{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:2.1rem;margin:0;text-wrap:balance;letter-spacing:-.02em}
+.page h1{font-family:"Instrument Sans",system-ui,sans-serif;font-size:2.1rem;margin:0;text-wrap:balance;letter-spacing:-.02em}
 .page .lede{color:var(--muted);max-width:72ch;margin:6px 0 0;line-height:1.55}
 .switch{display:flex;gap:8px;flex-wrap:wrap}
 .switch button{font:inherit;font-weight:600;border:1px solid var(--line);background:var(--card);color:var(--fg);padding:10px 14px;border-radius:12px;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;min-width:200px;flex:1}
@@ -32,6 +32,131 @@ body{background:var(--bg);color:var(--fg);font-family:"Inter",system-ui,sans-ser
 svg.ic{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .img svg,.img{display:block;width:100%;height:100%}
 .mock button{font:inherit;cursor:pointer}
+
+/* ========== H · ESTUDIO ========== */
+.mH{--ink:#1a1c1c;--mut:#6b706e;--line:#e6e5e1;--bg:#fafaf8;--acc:#2f5d5a;background:var(--bg);color:var(--ink);font-family:"Geist",system-ui,sans-serif;display:grid;grid-template-columns:216px minmax(0,1fr);font-size:.875rem;line-height:1.4}
+.mH .num{font-family:"Geist Mono",monospace;font-variant-numeric:tabular-nums}
+.mH aside{border-right:1px solid var(--line);padding:14px 10px;display:flex;flex-direction:column;gap:1px}
+.mH .brand{display:flex;align-items:center;gap:9px;padding:4px 8px 12px;font-weight:600}
+.mH .brand i{width:24px;height:24px;border-radius:6px;background:var(--ink);color:#fafaf8;display:grid;place-items:center;font:600 .62rem "Geist Mono",monospace}
+.mH .find{display:flex;align-items:center;gap:8px;margin-bottom:10px;padding:7px 8px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--mut);font-size:.8rem}
+.mH .find kbd{margin-left:auto;font:500 .68rem "Geist Mono",monospace}
+.mH .find svg.ic,.mH aside a svg.ic{width:15px;height:15px}
+.mH aside .gr{padding:12px 8px 3px;font-size:.7rem;color:var(--mut)}
+.mH aside a{display:flex;align-items:center;gap:9px;padding:6px 8px;border-radius:7px;color:#3c403f;text-decoration:none}
+.mH aside a.on{background:#eeeeea;color:var(--ink);font-weight:500}
+.mH aside .usr{margin-top:auto;padding:10px 8px 2px;font-size:.8rem;color:var(--mut)}
+.mH main{padding:22px 28px 30px;min-width:0;display:flex;flex-direction:column;gap:18px}
+.mH .hd{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mH .hd h2{margin:0;font-size:1.3rem;font-weight:600;letter-spacing:-.015em}
+.mH .hd p{margin:1px 0 0;color:var(--mut);font-size:.82rem}
+.mH .hd div:first-child{margin-right:auto}
+.mH .b{border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);padding:7px 12px;font-weight:500;font-size:.82rem}
+.mH .b.p{background:var(--ink);border-color:var(--ink);color:#fafaf8}
+.mH .met{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);border-radius:10px;background:#fff}
+.mH .met div{padding:13px 16px;border-left:1px solid var(--line);min-width:0}
+.mH .met div:first-child{border-left:0}
+.mH .met span{display:block;color:var(--mut);font-size:.76rem}
+.mH .met b{display:block;font-family:"Geist Mono",monospace;font-weight:500;font-size:1.45rem;letter-spacing:-.03em;margin:3px 0 1px}
+.mH .met small{color:var(--mut);font-size:.72rem}
+.mH .card{border:1px solid var(--line);border-radius:10px;background:#fff;min-width:0}
+.mH .ct{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:11px 16px;border-bottom:1px solid var(--line);font-weight:600;font-size:.84rem}
+.mH .ct small{font-weight:400;color:var(--mut)}
+.mH .tl{padding:38px 16px 10px;position:relative}
+.mH .axis{position:relative;height:30px;border-top:1px solid #cfcec9}
+.mH .axis u{position:absolute;top:-1px;width:1px;height:6px;background:#cfcec9;text-decoration:none}
+.mH .axis em{position:absolute;top:9px;transform:translateX(-50%);font:400 .68rem "Geist Mono",monospace;color:var(--mut)}
+.mH .axis em:first-of-type{transform:none}
+.mH .mk{position:absolute;bottom:100%;margin-bottom:-5px;transform:translateX(-5px);display:flex;flex-direction:column-reverse;align-items:flex-start;gap:6px;white-space:nowrap;font-size:.76rem;font-weight:500}
+.mH .mk::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--acc);box-shadow:0 0 0 3px #fff}
+.mH .mk.sq::before{border-radius:2px;background:var(--ink)}
+.mH .two{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);gap:18px;align-items:start}
+.mH .rw{display:grid;grid-template-columns:44px minmax(0,1fr) 62px 104px 118px;gap:12px;align-items:center;padding:9px 16px;border-top:1px solid #f0efec}
+.mH .rw:first-of-type{border-top:0}
+.mH .rw .th{width:44px;height:32px;border-radius:5px;overflow:hidden;filter:saturate(.45)}
+.mH .rw b{display:block;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mH .rw .sub{display:block;color:var(--mut);font-size:.76rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mH .st{display:flex;align-items:center;gap:6px;color:#3c403f;font-size:.78rem}
+.mH .st::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--c)}
+.mH .pr{display:flex;align-items:center;gap:8px;font:400 .72rem "Geist Mono",monospace;color:var(--mut)}
+.mH .pr i{flex:1;height:3px;border-radius:2px;background:#ececE8;overflow:hidden;display:block}
+.mH .pr i::after{content:"";display:block;height:100%;width:var(--p);background:var(--ink)}
+.mH .tk{display:flex;gap:9px;align-items:center;padding:8px 16px;border-top:1px solid #f0efec;font-size:.82rem}
+.mH .tk:first-of-type{border-top:0}
+.mH .tk i{width:14px;height:14px;flex:none;border:1px solid #bdbcb6;border-radius:4px}
+.mH .tk small{margin-left:auto;color:var(--mut);font:400 .72rem "Geist Mono",monospace;white-space:nowrap}
+.mH .tabbar{display:none}
+@container (max-width:1100px){.mH .two{grid-template-columns:minmax(0,1fr)}}
+@container (max-width:760px){
+  .mH{grid-template-columns:minmax(0,1fr)}
+  .mH aside{display:none}
+  .mH main{padding:16px 14px}
+  .mH .met{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mH .met div:nth-child(3){border-left:0}
+  .mH .met div:nth-child(n+3){border-top:1px solid var(--line)}
+  .mH .two{grid-template-columns:minmax(0,1fr)}
+  .mH .rw{grid-template-columns:44px minmax(0,1fr) 54px}
+  .mH .rw .st,.mH .rw .pr{display:none}
+  .mH .hide-s{display:none}
+  .mH .tabbar{display:flex;border-top:1px solid var(--line);background:#fff;justify-content:space-around;padding:8px 4px}
+  .mH .tabbar a{display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--mut);font-size:.66rem;text-decoration:none}
+  .mH .tabbar a.on{color:var(--ink);font-weight:600}
+}
+
+/* ========== I · SERENO CONTEMPORÁNEO ========== */
+.mI{--ink:#191b1a;--mut:#6d716e;--bg:#ecebe6;--tile:#fbfaf7;--dark:#1f2523;background:var(--bg);color:var(--ink);font-family:"Instrument Sans",system-ui,sans-serif;padding:14px 22px 26px}
+.mI .bar{display:flex;align-items:center;gap:22px;background:var(--tile);border-radius:14px;padding:9px 10px 9px 18px}
+.mI .logo{font-weight:600;letter-spacing:-.02em;font-size:1.02rem}
+.mI .bar nav{display:flex;gap:18px;margin:0 auto;overflow-x:auto;scrollbar-width:none}
+.mI .bar nav a{color:var(--mut);text-decoration:none;font-size:.86rem;font-weight:500;white-space:nowrap}
+.mI .bar nav a.on{color:var(--ink);font-weight:600}
+.mI .av{width:32px;height:32px;flex:none;border-radius:10px;background:var(--dark);color:#f4f2ec;display:grid;place-items:center;font-weight:600;font-size:.74rem}
+.mI .hl{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:34px 6px 20px}
+.mI .hl h2{margin:0;font-size:3.5rem;font-weight:500;letter-spacing:-.045em;line-height:1}
+.mI .hl p{margin:10px 0 0;color:var(--mut);font-size:1rem}
+.mI .go{border:0;border-radius:12px;background:var(--dark);color:#f4f2ec;font-weight:600;font-size:.88rem;padding:12px 18px}
+.mI .gr{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px}
+.mI .t{background:var(--tile);border-radius:20px;padding:18px;min-width:0;position:relative;overflow:hidden}
+.mI .lb{font-size:.82rem;color:var(--mut);font-weight:500}
+.mI .fe{grid-column:span 7;min-height:326px;background:var(--dark);color:#f4f2ec;display:flex;flex-direction:column;justify-content:space-between;padding:24px}
+.mI .fe .im{position:absolute;inset:0 0 0 34%;filter:saturate(.35) brightness(.9)}
+.mI .fe .im svg{display:block;width:100%;height:100%}
+.mI .fe::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#1f2523 34%,#1f252300 78%)}
+.mI .fe > div{position:relative;z-index:1}
+.mI .fe > .im{position:absolute;z-index:0}
+.mI .fe .lb{color:#b9bdb8}
+.mI .dd{font-size:6.2rem;font-weight:500;letter-spacing:-.06em;line-height:.9;margin-top:10px}
+.mI .dd small{font-size:1.1rem;letter-spacing:-.01em;margin-left:8px;color:#b9bdb8}
+.mI .fe h3{margin:0;font-size:1.45rem;font-weight:500;letter-spacing:-.025em;max-width:20ch;line-height:1.15}
+.mI .fe p{margin:6px 0 12px;color:#b9bdb8;font-size:.86rem}
+.mI .ln{height:3px;max-width:260px;border-radius:2px;background:#ffffff2e}
+.mI .ln i{display:block;height:100%;background:#f4f2ec;border-radius:2px}
+.mI .kp{grid-column:span 5;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mI .kp .t{display:flex;flex-direction:column;justify-content:space-between;gap:18px}
+.mI .kp b{font-size:3.1rem;font-weight:400;letter-spacing:-.05em;line-height:1}
+.mI .kp b.m{font-size:2.3rem}
+.mI .rn{grid-column:span 4;display:flex;flex-direction:column;gap:10px}
+.mI .rn h3{margin:0;font-size:1.3rem;font-weight:500;letter-spacing:-.025em;line-height:1.15}
+.mI .rn ol{margin:auto 0 0;padding:0;list-style:none;font-size:.84rem;color:var(--mut)}
+.mI .rn li{padding:7px 0;border-top:1px solid #e7e5de}
+.mI .ac{grid-column:span 8}
+.mI .ac .row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}
+.mI .ac .im{height:128px;border-radius:12px;overflow:hidden;filter:saturate(.45)}
+.mI .ac b{display:block;margin-top:9px;font-size:.92rem;font-weight:600;letter-spacing:-.01em}
+.mI .ac span{font-size:.8rem;color:var(--mut)}
+.mI .ql{display:flex;flex-wrap:wrap;gap:6px 26px;padding:18px 6px 0;font-size:.9rem;font-weight:500}
+.mI .ql a{color:var(--ink);text-decoration:none;display:inline-flex;gap:5px;align-items:center}
+.mI .ql svg.ic{width:13px;height:13px;color:var(--mut)}
+@container (max-width:760px){
+  .mI{padding:10px 12px 20px}
+  .mI .bar nav{display:none}.mI .bar{justify-content:space-between}
+  .mI .hl{padding:24px 4px 16px}.mI .hl h2{font-size:2.5rem}
+  .mI .fe,.mI .kp,.mI .rn,.mI .ac{grid-column:1/-1}
+  .mI .fe .im{inset:0 0 0 20%}
+  .mI .fe::after{background:linear-gradient(0deg,#1f2523 42%,#1f252300 88%),linear-gradient(90deg,#1f2523 22%,#1f252300 70%)}
+  .mI .ac .row{grid-template-columns:minmax(0,1fr)}
+  .mI .ac .im{height:150px}
+}
 
 /* ========== G · BENTO SERENO (A + E) ========== */
 .mG{background:#f5f3ee;color:#24302f;font-family:"Manrope",sans-serif;padding:20px 24px 26px}
@@ -95,187 +220,17 @@ svg.ic{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-wid
   .mG .hero h2{font-size:2.1rem}
 }
 
-/* ========== D · CRISTAL LÍQUIDO ========== */
-.mD{position:relative;overflow:hidden;font-family:"Plus Jakarta Sans",sans-serif;color:#1d1b2a;background:#f3eee8;padding:18px 22px 110px;min-height:760px}
-.mD .aur{position:absolute;inset:0;background:radial-gradient(40% 50% at 12% 18%,#ff9f7a 0%,transparent 70%),radial-gradient(38% 46% at 88% 12%,#8fd3ff 0%,transparent 70%),radial-gradient(46% 56% at 72% 88%,#b7a0ff 0%,transparent 70%),radial-gradient(40% 42% at 22% 92%,#ffd877 0%,transparent 70%)}
-.mD > *:not(.aur){position:relative}
-.mD .g{background:rgba(255,255,255,.44);backdrop-filter:blur(22px) saturate(170%);-webkit-backdrop-filter:blur(22px) saturate(170%);border:1px solid rgba(255,255,255,.75);box-shadow:0 10px 40px rgba(60,40,90,.12),inset 0 1px 0 rgba(255,255,255,.9);border-radius:26px}
-.mD .top{display:flex;gap:12px;align-items:center;padding:8px 8px 8px 16px;border-radius:999px}
-.mD .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.05rem;white-space:nowrap}
-.mD .logo i{width:30px;height:30px;border-radius:50%;background:conic-gradient(from 200deg,#ff8a65,#ffd36e,#7cc6ff,#b19cff,#ff8a65);box-shadow:inset 0 0 0 3px #ffffffaa}
-.mD .search{flex:1;max-width:420px;margin-left:auto;display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:#ffffff80;color:#6a6580;font-size:.85rem;min-width:0}
-.mD .av{width:38px;height:38px;flex:none;border-radius:50%;background:linear-gradient(135deg,#ff8a65,#b19cff);color:#fff;display:grid;place-items:center;font-weight:800;font-size:.85rem}
-.mD .main{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:18px;margin-top:18px}
-.mD .feat{position:relative;border-radius:30px;overflow:hidden;min-height:350px;box-shadow:0 20px 50px rgba(40,20,70,.25)}
-.mD .feat .img{position:absolute;inset:0}
-.mD .feat .img svg{object-fit:cover}
-.mD .feat .tag{position:absolute;left:16px;top:16px;padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.3);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.5);color:#fff;font-size:.78rem;font-weight:700}
-.mD .ov{position:absolute;left:14px;right:14px;bottom:14px;display:flex;gap:16px;align-items:center;padding:16px 18px;border-radius:22px;background:rgba(20,16,40,.38);backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);border:1px solid rgba(255,255,255,.25);color:#fff;flex-wrap:wrap}
-.mD .ov h2{margin:0;font-size:1.35rem;font-weight:800;line-height:1.15}
-.mD .ov p{margin:4px 0 0;font-size:.84rem;opacity:.85}
-.mD .ov .cd{margin-left:auto;text-align:center;line-height:1}
-.mD .ov .cd b{font-size:2.4rem;font-weight:800;display:block}
-.mD .ov .cd small{font-size:.72rem;opacity:.85;text-transform:uppercase;letter-spacing:.08em}
-.mD .ring{width:62px;height:62px;flex:none}
-.mD .col{display:flex;flex-direction:column;gap:14px}
-.mD .hi{padding:20px 22px}
-.mD .hi h3{margin:0;font-size:1.5rem;font-weight:800;letter-spacing:-.01em}
-.mD .hi p{margin:6px 0 14px;color:#4b4660;font-size:.88rem;line-height:1.5}
-.mD .btn{border:0;border-radius:999px;padding:11px 18px;font-weight:700;font-size:.86rem;background:#1d1b2a;color:#fff}
-.mD .btn.l{background:#ffffffa0;color:#1d1b2a;border:1px solid #ffffff}
-.mD .kp{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.mD .kp .g{padding:14px 16px;border-radius:22px}
-.mD .kp b{display:block;font-size:1.7rem;font-weight:800}
-.mD .kp span{font-size:.78rem;color:#4b4660}
-.mD .kp em{display:inline-block;margin-top:6px;font-style:normal;font-size:.7rem;font-weight:700;padding:3px 8px;border-radius:999px}
-.mD h4{margin:22px 4px 10px;font-size:1rem;font-weight:800}
-.mD .row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
-.mD .pc{padding:8px 8px 12px;border-radius:24px}
-.mD .pc .img{height:116px;border-radius:18px;overflow:hidden}
-.mD .pc b{display:block;margin:10px 6px 2px;font-size:.88rem}
-.mD .pc span{display:block;margin:0 6px;font-size:.75rem;color:#5b5670}
-.mD .dock{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);display:flex;gap:4px;padding:8px;border-radius:26px;max-width:calc(100% - 32px);overflow-x:auto;scrollbar-width:none}
-.mD .dock a{display:flex;align-items:center;gap:8px;height:46px;min-width:46px;justify-content:center;padding:0 12px;border-radius:18px;color:#3d3852;text-decoration:none;font-weight:700;font-size:.84rem;white-space:nowrap}
-.mD .dock a.on{background:#fff;box-shadow:0 4px 14px rgba(60,40,90,.15);color:#1d1b2a}
-.mD .dock svg.ic{width:21px;height:21px}
-@container (max-width:760px){
-  .mD{padding:14px 14px 100px}
-  .mD .main{grid-template-columns:minmax(0,1fr)}
-  .mD .row{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .mD .search{display:none}.mD .logo{margin-right:auto}
-  .mD .feat{min-height:380px}
-}
-
-/* ========== E · BENTO EXPRESIVO ========== */
-.mE{background:#f6f2ea;color:#15131c;font-family:"Inter",sans-serif;padding:20px 24px 26px}
-.mE .top{display:flex;align-items:center;gap:16px;margin-bottom:18px;flex-wrap:wrap}
-.mE .logo{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:1.6rem;letter-spacing:-.03em}
-.mE .logo span{color:#6d4aff}
-.mE nav{display:flex;gap:4px;background:#fff;padding:5px;border-radius:999px;overflow-x:auto;scrollbar-width:none;max-width:100%}
-.mE nav a{padding:8px 14px;border-radius:999px;font-weight:600;font-size:.84rem;color:#4a4656;text-decoration:none;white-space:nowrap}
-.mE nav a.on{background:#15131c;color:#fff}
-.mE .av{margin-left:auto;width:40px;height:40px;border-radius:14px;background:#d4f55c;display:grid;place-items:center;font-weight:800}
-.mE .bento{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(150px,auto);gap:14px;grid-template-areas:"hero hero next next" "hero hero task succ" "bud bud prov conv" "quick quick quick conv"}
-.mE .t{border-radius:30px;padding:20px;position:relative;overflow:hidden;min-width:0}
-.mE .big{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;letter-spacing:-.04em;line-height:.9}
-.mE .hero{grid-area:hero;background:#6d4aff;color:#fff;display:flex;flex-direction:column;justify-content:space-between;padding:26px}
-.mE .hero h2{margin:0;font-size:3.1rem;max-width:9ch}
-.mE .hero p{margin:0;font-size:.95rem;opacity:.9;max-width:34ch;line-height:1.45}
-.mE .hero .b{display:flex;gap:8px;flex-wrap:wrap;position:relative;z-index:1}
-.mE .pill{border:0;border-radius:999px;padding:12px 18px;font-weight:700;font-size:.86rem;background:#d4f55c;color:#15131c}
-.mE .pill.o{background:transparent;color:#fff;box-shadow:inset 0 0 0 2px #ffffff80}
-.mE .star{position:absolute;right:-30px;top:-30px;width:190px;height:190px;animation:gira 30s linear infinite}
-@keyframes gira{to{transform:rotate(360deg)}}
-.mE .next{grid-area:next;padding:0;color:#fff}
-.mE .next .img{position:absolute;inset:0}
-.mE .next .ov{position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,8,20,.75),rgba(10,8,20,.1) 70%);padding:20px;display:flex;flex-direction:column;justify-content:space-between}
-.mE .next .dt{font-size:2.6rem}
-.mE .next .dt small{display:block;font-family:"Inter";font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.85;margin-top:4px}
-.mE .next b{font-size:1.05rem;max-width:22ch}
-.mE .chip{display:inline-block;padding:5px 11px;border-radius:999px;font-size:.74rem;font-weight:700}
-.mE .task{grid-area:task;background:#d4f55c}
-.mE .task .big{font-size:4.6rem}
-.mE .lbl{font-weight:600;font-size:.86rem}
-.mE .arrow{position:absolute;right:14px;bottom:14px;width:38px;height:38px;border-radius:50%;background:#15131c;color:#d4f55c;display:grid;place-items:center}
-.mE .succ{grid-area:succ;background:#15131c;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
-.mE .succ svg{width:88px;height:88px}
-.mE .bud{grid-area:bud;background:#ff6a4d;color:#15131c;display:flex;flex-direction:column;justify-content:space-between}
-.mE .bud .big{font-size:2.8rem}
-.mE .stack{display:flex;height:26px;border-radius:10px;overflow:hidden;gap:3px}
-.mE .stack i{display:block;height:100%}
-.mE .leg{display:flex;gap:12px;flex-wrap:wrap;font-size:.74rem;font-weight:600}
-.mE .leg i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:5px;vertical-align:middle}
-.mE .prov{grid-area:prov;background:#a9dcff}
-.mE .prov .big{font-size:3.2rem}
-.mE .avs{display:flex;position:absolute;left:20px;bottom:18px}
-.mE .avs span{width:32px;height:32px;border-radius:50%;border:3px solid #a9dcff;margin-right:-9px;display:grid;place-items:center;font-size:.62rem;font-weight:800;color:#fff}
-.mE .conv{grid-area:conv;background:#ffc6e2;display:flex;flex-direction:column;gap:10px}
-.mE .cal{background:#fff;border-radius:20px;text-align:center;padding:10px 0 12px;width:96px}
-.mE .cal small{display:block;background:#ff6a4d;color:#fff;font-weight:800;font-size:.72rem;letter-spacing:.1em;margin:-10px 0 6px;padding:5px 0;border-radius:20px 20px 0 0}
-.mE .cal .big{font-size:2.6rem}
-.mE .conv ol{margin:0;padding-left:18px;font-size:.8rem;line-height:1.55}
-.mE .ok{display:inline-flex;align-items:center;gap:6px;font-size:.76rem;font-weight:700;background:#15131c;color:#fff;border-radius:999px;padding:5px 11px;align-self:flex-start}
-.mE .quick{grid-area:quick;background:#fff;display:flex;align-items:center;gap:10px;flex-wrap:wrap;align-content:center}
-.mE .quick h3{width:100%;margin:0 0 2px;font-family:"Bricolage Grotesque";font-size:1.15rem}
-.mE .q{display:flex;align-items:center;gap:8px;padding:9px 14px 9px 9px;border-radius:999px;background:#f3efe8;font-weight:600;font-size:.84rem;border:0}
-.mE .q span{width:30px;height:30px;border-radius:50%;display:grid;place-items:center}
-.mE .q svg.ic{width:16px;height:16px}
-@container (max-width:760px){
-  .mE{padding:14px}
-  .mE .bento{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:minmax(140px,auto);grid-template-areas:"hero hero" "hero hero" "next next" "task succ" "bud bud" "prov conv" "quick quick"}
-  .mE .hero h2{font-size:2.5rem}
-}
-@media (prefers-reduced-motion: reduce){.mE .star{animation:none}}
-
-/* ========== F · ESCAPARATE NOCTURNO ========== */
-.mF{background:#0c0b11;color:#f4f2f7;font-family:"Inter",sans-serif;padding-bottom:30px}
-.mF .heroF{position:relative;height:460px;overflow:hidden}
-.mF .heroF .img{position:absolute;inset:0;transform:scale(1.04)}
-.mF .heroF::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0c0b11 0%,#0c0b11d9 30%,#0c0b1100 72%),linear-gradient(0deg,#0c0b11 0%,#0c0b1100 40%)}
-.mF .bar{position:absolute;z-index:2;left:0;right:0;top:0;display:flex;align-items:center;gap:22px;padding:18px 28px}
-.mF .logo{font-family:"Syne",sans-serif;font-weight:800;letter-spacing:.14em;font-size:1rem}
-.mF .bar nav{display:flex;gap:18px;overflow-x:auto;scrollbar-width:none}
-.mF .bar nav a{color:#ffffffa6;text-decoration:none;font-size:.86rem;font-weight:500;white-space:nowrap}
-.mF .bar nav a.on{color:#fff;font-weight:700}
-.mF .bar .r{margin-left:auto;display:flex;align-items:center;gap:12px}
-.mF .av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#ffc857,#ff4d8d);display:grid;place-items:center;font-weight:800;font-size:.78rem;color:#0c0b11}
-.mF .hc{position:absolute;z-index:2;left:28px;bottom:34px;max-width:560px;display:flex;flex-direction:column;gap:14px}
-.mF .eb{font-size:.74rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#ffc857}
-.mF h2{margin:0;font-family:"Syne",sans-serif;font-weight:800;font-size:3.2rem;line-height:1;letter-spacing:-.02em}
-.mF .meta{color:#ffffffb3;font-size:.92rem}
-.mF .cds{display:flex;gap:10px;flex-wrap:wrap}
-.mF .cds div{padding:10px 14px;border-radius:14px;background:#ffffff14;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid #ffffff22;min-width:86px}
-.mF .cds b{display:block;font-family:"Syne";font-size:1.5rem}
-.mF .cds small{color:#ffffffa6;font-size:.72rem}
-.mF .bs{display:flex;gap:10px;flex-wrap:wrap}
-.mF .w{border:0;border-radius:12px;padding:12px 20px;font-weight:700;background:#fff;color:#0c0b11}
-.mF .gl{border:1px solid #ffffff40;border-radius:12px;padding:12px 18px;font-weight:600;background:#ffffff14;color:#fff}
-.mF .thumbs{position:absolute;z-index:2;right:28px;bottom:34px;display:flex;gap:10px}
-.mF .thumbs div{width:120px;height:76px;border-radius:12px;overflow:hidden;border:2px solid #ffffff30}
-.mF .thumbs div.on{border-color:#ffc857}
-.mF section{padding:6px 28px 0}
-.mF h3{font-family:"Syne",sans-serif;font-size:1.2rem;margin:22px 0 12px;display:flex;justify-content:space-between;align-items:baseline}
-.mF h3 small{font-family:"Inter";font-size:.8rem;color:#ffffff80;font-weight:500}
-.mF .scroll{display:flex;gap:14px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
-.mF .poster{flex:0 0 190px;aspect-ratio:3/4;border-radius:18px;overflow:hidden;position:relative}
-.mF .poster .img{position:absolute;inset:0}
-.mF .poster::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#0c0b11f0 0%,#0c0b1100 55%)}
-.mF .poster .st{position:absolute;z-index:1;left:10px;top:10px;font-size:.68rem;font-weight:700;padding:4px 9px;border-radius:999px;background:#0c0b11b0;backdrop-filter:blur(8px)}
-.mF .poster .tx{position:absolute;z-index:1;left:12px;right:12px;bottom:12px}
-.mF .poster b{display:block;font-size:.92rem;line-height:1.2}
-.mF .poster span{font-size:.74rem;color:#ffffffa6}
-.mF .pk{flex:0 0 280px;border-radius:18px;background:#17151f;border:1px solid #ffffff12;overflow:hidden}
-.mF .pk .img{height:140px}
-.mF .pk div.t{padding:12px 14px}
-.mF .pk b{display:block}
-.mF .pk span{font-size:.8rem;color:#ffffff99}
-.mF .pk em{font-style:normal;float:right;color:#ffc857;font-weight:700;font-size:.86rem}
-.mF .pv{flex:0 0 112px;text-align:center}
-.mF .pv .c{width:84px;height:84px;margin:0 auto 8px;border-radius:50%;padding:3px;background:linear-gradient(135deg,#ffc857,#ff4d8d,#7b5cff)}
-.mF .pv .c span{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;background:#1d1a27;border:3px solid #0c0b11;font-family:"Syne";font-weight:800;font-size:1.1rem}
-.mF .pv b{display:block;font-size:.8rem;line-height:1.25}
-.mF .pv small{color:#ffc857;font-size:.74rem;font-weight:700}
-@container (max-width:760px){
-  .mF .heroF{height:560px}
-  .mF .bar{padding:14px 16px;gap:14px}.mF .bar nav{display:none}
-  .mF .hc{left:16px;right:16px;bottom:24px}
-  .mF h2{font-size:2.3rem}
-  .mF .thumbs{display:none}
-  .mF section{padding:4px 16px 0}
-  .mF .heroF::after{background:linear-gradient(0deg,#0c0b11 0%,#0c0b11cc 45%,#0c0b1133 100%)}
-}
 </style>
 
 <div class="page">
   <header>
-    <h1>Propuestas de interfaz</h1>
-    <p class="lede">Maquetas del Panel con tus datos de ejemplo, inspiradas en las tendencias de 2026: el «cristal líquido» de Apple, las cuadrículas tipo bento de colores intensos de Material 3 Expressive y los escaparates oscuros con la imagen como protagonista. La <b>G</b> es la fusión que pediste de la A (Mediterránea) y la E (Bento), con colores neutros y suaves. Son solo muestras: el programa no cambia hasta que elijas una.</p>
+    <h1>Dos ejemplos más modernos</h1>
+    <p class="lede">Ambos mantienen los tonos neutros y todo el contenido del Panel; cambia la forma de presentarlo. Son solo muestras con datos de ejemplo: el programa no cambia hasta que elijas uno. El tercer botón enseña la interfaz actual para comparar.</p>
   </header>
   <div class="switch" role="group" aria-label="Elegir propuesta">
-    <button data-m="G" aria-pressed="true">G · Bento sereno<small>Fusión de la A y la E, en tonos neutros</small></button>
-    <button data-m="D" aria-pressed="false">D · Cristal líquido<small>Paneles de vidrio sobre un fondo de atardecer</small></button>
-    <button data-m="E" aria-pressed="false">E · Bento expresivo<small>Bloques de colores vivos y números grandes</small></button>
-    <button data-m="F" aria-pressed="false">F · Escaparate nocturno<small>Oscuro, de cine, con el acto como cartel</small></button>
+    <button data-m="H" aria-pressed="true">Ejemplo 1 · Estudio<small>Herramienta de trabajo actual, limpia y precisa</small></button>
+    <button data-m="I" aria-pressed="false">Ejemplo 2 · Sereno contemporáneo<small>Tu Panel de ahora, con aire de revista moderna</small></button>
+    <button data-m="G" aria-pressed="false">Interfaz actual<small>Para comparar: Bento sereno</small></button>
   </div>
   <div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span id="url">gabinete-protocolo.vercel.app</span></div><div class="frame-body" id="stage"></div></div>
   <div class="notes" id="notes"></div>
@@ -342,7 +297,34 @@ const PV = [['M&M','M&M Experiences','5,0'],['FC','Fosh Catering','4,9'],['FE','
 const NAV = ['Panel','Eventos','Packs','Proveedores','Convocatorias','Actas','Protocolo','Evaluación'];
 
 const M = {
-G:{titulo:'Bento sereno', html:() => `<div class="mock mG">
+H:{titulo:'Estudio', html:() => `<div class="mock mH">
+  <aside><div class="brand"><i>GP</i>Gabinete</div><div class="find">${ic('search')}Buscar<kbd>Ctrl K</kbd></div>
+    ${[['home','Panel',1],['cal','Eventos'],['box','Packs'],['users','Proveedores'],['mail','Convocatorias'],['doc','Actas']].map(([k, l, on]) => `<a href="#" class="${on ? 'on' : ''}">${ic(k)}${l}</a>`).join('')}
+    <div class="gr">Protocolo</div>${[['news','Análisis de noticias'],['flag','Precedencias y mesas'],['star','Tratamientos']].map(([k, l]) => `<a href="#">${ic(k)}${l}</a>`).join('')}
+    <div class="gr">Medir</div><a href="#">${ic('chart')}Evaluación</a><div class="usr">Juan Solivellas</div></aside>
+  <main>
+    <div class="hd"><div><h2>Buenos días, Juan</h2><p>Viernes, 30 de octubre</p></div><button class="b hide-s">Contratar pack</button><button class="b p">Nuevo evento</button></div>
+    <div class="met">${[['Actos en marcha','3','1 este mes'],['Tareas pendientes','8','4 esta semana'],['Presupuesto previsto','13.490 €','Gala de Turismo'],['Éxito medio','87 %','último acto']].map(([l, v, s]) => `<div><span>${l}</span><b>${v}</b><small>${s}</small></div>`).join('')}</div>
+    <div class="card"><div class="ct">Próximas 8 semanas<small>hoy, 30 oct</small></div><div class="tl"><div class="axis">${[0,1,2,3,4,5,6,7,8].map(i => `<u style="left:${i * 12.5}%"></u>`).join('')}<em style="left:0">30 oct</em><em style="left:25%">13 nov</em><em style="left:50%">27 nov</em><em style="left:75%">11 dic</em><span class="mk sq" style="left:12.2%">Comité · 5 nov</span><span class="mk" style="left:75%">Gala · 11 dic</span></div></div></div>
+    <div class="two"><div class="card"><div class="ct">Actos<small>por fecha</small></div>${EVS.slice(0, 4).map(e => `<div class="rw"><div class="th">${sc(e.sc)}</div><div><b>${e.n}</b><span class="sub">${e.lugar}</span></div><span class="num" style="font-size:.76rem">${e.d} ${e.m}</span><span class="st" style="--c:${({Confirmado:'#2f5d5a',Planificación:'#b58a3c',Idea:'#a9a8a2'})[e.est]}">${e.est}</span><span class="pr"><i style="--p:${e.av}%"></i>${e.av} %</span></div>`).join('')}</div>
+      <div class="card"><div class="ct">Esta semana<small>4 tareas</small></div>${[['Confirmar autoridades','lun'],['Enviar convocatoria','mar'],['Presupuesto de catering','jue'],['Revisar plano de mesas','vie']].map(([t, d]) => `<div class="tk"><i></i>${t}<small>${d}</small></div>`).join('')}</div></div>
+  </main>
+  <nav class="tabbar" style="grid-row:2">${[['home','Panel',1],['cal','Eventos'],['box','Packs'],['flag','Protocolo'],['doc','Actas']].map(([k, l, on]) => `<a href="#" class="${on ? 'on' : ''}">${ic(k)}${l}</a>`).join('')}</nav>
+</div>`,
+  notas:[['Qué es','El salto grande: deja de parecer una web y pasa a parecer una herramienta profesional actual, como Linear o Notion. Pensada para trabajar a diario.'],['Qué cambia','Menú lateral con buscador, cifras en una sola franja, una línea de tiempo con las próximas fechas, y los actos en una lista compacta con su estado y avance. Sin bloques de color: solo gris, tinta y un verde muy oscuro. En el móvil, barra de pestañas abajo.'],['Qué pierde','Menos imagen y menos calidez: los actos aparecen con miniatura. Es la opción más sobria y la que más información enseña de un vistazo.']]},
+I:{titulo:'Sereno contemporáneo', html:() => `<div class="mock mI">
+  <div class="bar"><div class="logo">Gabinete</div><nav>${['Panel','Eventos','Packs','Proveedores','Convocatorias','Actas','Protocolo','Evaluación'].map((x, i) => `<a href="#" class="${i ? '' : 'on'}">${x}</a>`).join('')}</nav><div class="av">JS</div></div>
+  <div class="hl"><div><h2>Buenos días, Juan.</h2><p>3 actos en marcha y 8 tareas por cerrar.</p></div><button class="go">+ Nuevo evento</button></div>
+  <div class="gr">
+    <div class="t fe"><div class="im">${sc('gala')}</div><div><div class="lb">Próximo acto</div><div class="dd">11<small>diciembre</small></div></div><div><h3>${EVS[0].n}</h3><p>${EVS[0].lugar} · en 42 días · 62 % preparado</p><div class="ln"><i style="width:62%"></i></div></div></div>
+    <div class="kp">${[['8','Tareas pendientes',''],['87 %','Éxito medio',''],['42','Proveedores en Mallorca',''],['13.490 €','Presupuesto de la gala','m']].map(([v, l, c]) => `<div class="t"><div class="lb">${l}</div><b class="${c}">${v}</b></div>`).join('')}</div>
+    <div class="t rn"><div class="lb">Próxima reunión · 5 de noviembre</div><h3>Comité de los Premios de Turismo</h3><ol><li>Lectura del acta anterior</li><li>Fallo del jurado</li><li>Escaleta de la gala</li></ol></div>
+    <div class="t ac"><div class="lb">Más actos en marcha</div><div class="row">${EVS.slice(1, 4).map(e => `<div><div class="im">${sc(e.sc)}</div><b>${e.n}</b><span>${e.d} ${e.m} · ${e.est}</span></div>`).join('')}</div></div>
+  </div>
+  <div class="ql">${['Precedencias y mesas','Invitaciones','Actas y presupuestos','Tratamientos','Analizar noticia','Evaluar un acto'].map(x => `<a href="#">${x}${ic('arrow')}</a>`).join('')}</div>
+</div>`,
+  notas:[['Qué es','La evolución de lo que ya tienes: sigue siendo un Panel en bloques, pero con aspecto de revista de diseño actual.'],['Qué cambia','Adiós a las serifas, los pasteles, la ola y los botones redondos con icono. Una sola tipografía moderna con titulares grandes, cifras finas, bloques blancos sobre gris cálido y un único bloque oscuro para el próximo acto, con la fecha enorme.'],['Qué mantiene','La calidez, las imágenes de los eventos y el menú arriba. Es el cambio más seguro si te gusta cómo está organizado ahora.']]},
+G:{titulo:'Interfaz actual', html:() => `<div class="mock mG">
   <div class="top"><div class="logo">Gabinete de Protocolo</div><nav>${NAV.map((x, i) => `<a href="#" class="${i ? '' : 'on'}">${x}</a>`).join('')}</nav><div class="av">JS</div></div>
   <div class="bento">
     <div class="t hero"><div><div class="eb">Panel de control</div><h2>Buenos días, Juan.</h2><p>Tienes 3 actos en marcha y 8 tareas por cerrar. El comité de los premios se reúne el 5 de noviembre.</p></div>
@@ -360,52 +342,6 @@ G:{titulo:'Bento sereno', html:() => `<div class="mock mG">
   </div>
 </div>`,
   notas:[['Para quién','Si te gustaba la idea de la A (cálida, con imágenes y titulares con serifas) pero con la organización de la E, y con un aspecto más sobrio y profesional.'],['Qué toma de cada una','De la A: menú arriba, tipografía con serifas, el saludo sobre un degradado verde mar con ola, la fecha destacada y la barra de avance. De la E: la cuadrícula de bloques de distintos tamaños, los números grandes, el presupuesto, la próxima reunión y los accesos rápidos.'],['Colores','Blanco roto, arena, piedra y salvia, con un verde mar apagado como único color principal y un toque terracota suave. Sin colores chillones ni animaciones.']]},
-D:{titulo:'Cristal líquido', html:() => `<div class="mock mD"><div class="aur"></div>
-  <div class="top g"><div class="logo"><i></i>Gabinete de Protocolo</div><div class="search">${ic('search')} Buscar evento, proveedor, cargo…</div><div class="av">JS</div></div>
-  <div class="main">
-    <div class="feat">${sc('gala')}<span class="tag">Próximo acto · Galas y premios</span>
-      <div class="ov"><div class="ring">${ring(62, '#ffd877', '#ffffff33', '62 %', '#fff')}</div><div><h2>${EVS[0].n}</h2><p>11 de diciembre · ${EVS[0].lugar} · 8 tareas pendientes</p></div><div class="cd"><b>45</b><small>días</small></div></div></div>
-    <div class="col">
-      <div class="g hi"><h3>Buenos días, Juan</h3><p>Tienes 3 actos en marcha. El comité de los premios se reúne el 5 de noviembre y la convocatoria ya está enviada.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn">+ Nuevo evento</button><button class="btn l">Contratar un pack</button></div></div>
-      <div class="kp">${[['3','actos en marcha','+1 este mes','#ff9f7a33','#b34a1f'],['8','tareas pendientes','4 esta semana','#ffd87744','#8a5d00'],['42','proveedores','en Mallorca','#8fd3ff44','#1d5f8a'],['87 %','éxito medio','último acto','#b7a0ff44','#5b3fa0']].map(([b, s, e, bg, c]) => `<div class="g"><b>${b}</b><span>${s}</span><br><em style="background:${bg};color:${c}">${e}</em></div>`).join('')}</div>
-    </div>
-  </div>
-  <h4>Tus actos</h4>
-  <div class="row">${EVS.slice(1, 5).map(e => `<div class="g pc">${sc(e.sc)}<b>${e.n}</b><span>${e.d} ${e.m} · ${e.est}</span></div>`).join('')}</div>
-  <nav class="dock g">${[['home','Panel',1],['cal','Eventos'],['box','Packs'],['users','Proveedores'],['mail','Convocatorias'],['doc','Actas'],['flag','Protocolo'],['chart','Evaluación']].map(([k, l, on]) => `<a href="#" class="${on ? 'on' : ''}" title="${l}">${ic(k)}${on ? l : ''}</a>`).join('')}</nav>
-</div>`,
-  notas:[['Para quién','Si quieres que el programa se vea como una app de Apple actual: elegante, luminoso y tranquilo, con mucha profundidad pero poco ruido.'],['Qué cambia','Fondo de atardecer mediterráneo con paneles de vidrio esmerilado. El próximo acto ocupa media pantalla, con su imagen, la cuenta atrás y el avance. El menú pasa a una barra flotante abajo, como en el móvil.'],['Inspiración','El «Liquid Glass» de Apple (iOS 26) y el glassmorphism 2.0: el vidrio solo en barras y tarjetas cortas, para que el texto se lea bien.']]},
-E:{titulo:'Bento expresivo', html:() => `<div class="mock mE">
-  <div class="top"><div class="logo">gabinete<span>.</span></div><nav>${NAV.map((x, i) => `<a href="#" class="${i ? '' : 'on'}">${x}</a>`).join('')}</nav><div class="av">JS</div></div>
-  <div class="bento">
-    <div class="t hero"><svg class="star" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 0 L61 30 L93 20 L72 46 L100 64 L67 68 L70 100 L50 76 L30 100 L33 68 L0 64 L28 46 L7 20 L39 30 Z" fill="#d4f55c"/></svg>
-      <h2 class="big">Buenos días, Juan.</h2><p>3 actos en marcha y 8 tareas por cerrar. La gala de turismo es la siguiente.</p>
-      <div class="b"><button class="pill">+ Nuevo evento</button><button class="pill o">Contratar un pack</button></div></div>
-    <div class="t next">${sc('gala')}<div class="ov"><div class="big dt">11 dic<small>Próximo acto</small></div><div><b>${EVS[0].n}</b><br><span class="chip" style="background:#ff6a4d;color:#15131c;margin-top:8px">en 45 días · 62 % listo</span></div></div></div>
-    <div class="t task"><div class="big">8</div><div class="lbl">tareas pendientes</div><span class="arrow">${ic('arrow')}</span></div>
-    <div class="t succ">${ring(87, '#d4f55c', '#ffffff22', '87%', '#fff')}<div class="lbl">éxito medio</div></div>
-    <div class="t bud"><div><div class="lbl">Presupuesto de la gala</div><div class="big">13.490 €</div></div>
-      <div><div class="stack">${[[49,'#15131c'],[21,'#ffffff'],[11,'#d4f55c'],[19,'#ffc6e2']].map(([p, c]) => `<i style="width:${p}%;background:${c}"></i>`).join('')}</div>
-      <div class="leg" style="margin-top:8px">${[['Cóctel','#15131c'],['Sonido e imagen','#ffffff'],['Trofeos','#d4f55c'],['Resto','#ffc6e2']].map(([l, c]) => `<span><i style="background:${c}"></i>${l}</span>`).join('')}</div></div></div>
-    <div class="t prov"><div class="big">42</div><div class="lbl">proveedores en Mallorca</div><div class="avs">${[['#6d4aff','MM'],['#ff6a4d','FC'],['#15131c','FE'],['#2b9c6b','SM']].map(([c, t]) => `<span style="background:${c}">${t}</span>`).join('')}</div></div>
-    <div class="t conv"><div class="lbl">Próxima reunión</div><div class="cal"><small>NOV</small><div class="big">5</div></div><b>Comité de los Premios de Turismo</b><span class="ok">✓ Plazo legal cumplido</span><ol><li>Lectura del acta anterior</li><li>Fallo del jurado</li><li>Escaleta de la gala</li><li>Ruegos y preguntas</li></ol></div>
-    <div class="t quick"><h3>¿Qué quieres hacer?</h3>${[['flag','Precedencias','#6d4aff'],['mail','Invitaciones','#ff6a4d'],['doc','Acta con presupuesto','#15131c'],['star','Tratamientos','#2b9c6b'],['news','Analizar noticia','#1d6fd8'],['chart','Evaluar un acto','#c2185b']].map(([i, l, c]) => `<button class="q"><span style="background:${c};color:#fff">${ic(i)}</span>${l}</button>`).join('')}</div>
-  </div>
-</div>`,
-  notas:[['Para quién','Si buscas algo moderno, alegre y con personalidad: se entiende de un vistazo y destaca mucho al enseñarlo a clientes o en redes.'],['Qué cambia','El Panel se convierte en una cuadrícula de bloques de distintos tamaños y colores intensos: lo importante es más grande. Números enormes, formas redondeadas y una estrella decorativa que gira despacio.'],['Inspiración','Las cuadrículas bento de las presentaciones de Apple y el estilo Material 3 Expressive de Google: color audaz, formas grandes y tipografía expresiva.']]},
-F:{titulo:'Escaparate nocturno', html:() => `<div class="mock mF">
-  <div class="heroF">${sc('gala')}
-    <div class="bar"><div class="logo">GABINETE</div><nav>${NAV.map((x, i) => `<a href="#" class="${i ? '' : 'on'}">${x}</a>`).join('')}</nav><div class="r">${ic('search')}${ic('bell')}<div class="av">JS</div></div></div>
-    <div class="hc"><div class="eb">Próximo acto · Galas y premios</div><h2>${EVS[0].n}</h2><div class="meta">11 de diciembre · ${EVS[0].lugar} · 240 invitados</div>
-      <div class="cds">${[['45','días'],['8','tareas'],['62 %','preparado'],['13.490 €','presupuesto']].map(([b, s]) => `<div><b>${b}</b><small>${s}</small></div>`).join('')}</div>
-      <div class="bs"><button class="w">Abrir evento</button><button class="gl">Ver plano de mesas</button></div></div>
-    <div class="thumbs">${['gala','boda','viaje'].map((k, i) => `<div class="${i ? '' : 'on'}">${sc(k)}</div>`).join('')}</div>
-  </div>
-  <section><h3>Tus actos <small>6 en marcha</small></h3><div class="scroll">${EVS.map(e => `<div class="poster">${sc(e.sc)}<span class="st">${e.est}</span><div class="tx"><b>${e.n}</b><span>${e.d} ${e.m} · ${e.lugar}</span></div></div>`).join('')}</div></section>
-  <section><h3>Packs para contratar <small>todo incluido, a tu gusto</small></h3><div class="scroll">${PK.map(([n, k, p, q]) => `<div class="pk">${sc(k)}<div class="t"><em>${p}</em><b>${n}</b><span>${q} · sin IVA</span></div></div>`).join('')}</div></section>
-  <section><h3>Proveedores destacados en Mallorca <small>mejor valorados</small></h3><div class="scroll">${PV.map(([i, n, v]) => `<div class="pv"><div class="c"><span>${i}</span></div><b>${n}</b><small>★ ${v}</small></div>`).join('')}</div></section>
-</div>`,
-  notas:[['Para quién','Si quieres impacto: cada acto se presenta como un estreno. Ideal para galas, bodas y eventos de imagen, y muy cómodo de noche.'],['Qué cambia','Portada a pantalla completa con el próximo acto como cartel, cuenta atrás y botones directos. Debajo, filas que se deslizan con tus actos, los packs y los proveedores, como en una plataforma de cine.'],['Inspiración','Plataformas como Netflix, Apple TV o Airbnb Experiencias: la imagen manda, el texto acompaña y todo se descubre deslizando.']]}
 };
 const stage = document.getElementById('stage'), notes = document.getElementById('notes'), url = document.getElementById('url');
 function show(k){
@@ -416,5 +352,5 @@ function show(k){
   try { localStorage.setItem('propuesta2', k); } catch {}
 }
 document.querySelector('.switch').addEventListener('click', e => { const b = e.target.closest('[data-m]'); if (b) show(b.dataset.m); });
-show('G');
+show('H');
 </script>

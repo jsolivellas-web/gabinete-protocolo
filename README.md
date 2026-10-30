@@ -14,7 +14,7 @@ Programa web para organizar cualquier tipo de evento: eventos y tareas, packs co
 | `fuente/gestor-protocolo.html` | **El original del programa.** Todos los cambios se hacen aquí. También es la versión que se publica en Claude (https://claude.ai/artifact/JufLkyuhWR986s4XSBnDQ5). |
 | `fuente/herramientas/generar_web.py` | Convierte el original en `index.html` añadiendo el inicio de sesión y el guardado en Supabase. |
 | `fuente/herramientas/leer_xlsx.py`, `proveedores.json` | Lector de Excel sin dependencias y los proveedores de Mallorca extraídos de él. |
-| `fuente/propuestas-interfaz.html`, `fuente/propuestas-nuevas.html` | Las propuestas de interfaz. Se aplicó la G · Bento sereno (fusión de la A y la E, en tonos neutros) con `herramientas/aplicar_tema_g.py`. |
+| `fuente/propuestas-interfaz.html`, `fuente/propuestas-nuevas.html` | Las propuestas de interfaz. La interfaz actual es «Sereno contemporáneo» (aplicada con `herramientas/aplicar_tema_contemporaneo.py`). |
 
 `fuente/` no se publica en Vercel (ver `.vercelignore`).
 
