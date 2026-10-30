@@ -1,4 +1,4 @@
-import io, os, sys
+import io, os, shutil, sys
 # Uso (desde cualquier sitio): python fuente/herramientas/generar_web.py
 # Lee fuente/gestor-protocolo.html y escribe index.html (versión web con Supabase) en la raíz del repositorio.
 os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
@@ -71,5 +71,6 @@ mark = '/* ============================================================\n   ARRA
 rep(mark, cloud + mark)
 rep('render();\ninitCaps();', 'render();\ninitCaps();\nstartCloud();')
 wr('index.html', s)
+shutil.copyfile('fuente/portada.jpg', 'portada.jpg')
 
 print('ok: index.html generado')

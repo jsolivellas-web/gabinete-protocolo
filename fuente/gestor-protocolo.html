@@ -87,7 +87,7 @@ button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
 :root[data-theme="oscuro"] button.primary{color:#13201e}
 @media (prefers-color-scheme: dark){:root[data-theme="oscuro-auto"] button.primary{color:#13201e}}
 button.ghost{border-color:transparent;background:transparent;color:var(--ink-2)}
-@media (hover:hover) and (pointer:fine){button.ghost:hover{color:var(--ink);background:var(--paper)}}
+@media (hover:hover) and (pointer:fine){button.ghost:hover{color:var(--ink);background:var(--paper)}.p-hl button.ghost:hover{color:#fff;background:#ffffff33}}
 button.danger{color:var(--bad)}
 button.small{padding:5px 12px;font-size:.78rem}
 button:disabled{opacity:.5;cursor:default}
@@ -220,11 +220,16 @@ label.btn{cursor:pointer}
 .stars{color:var(--gold);letter-spacing:1px}
 .sel{user-select:all}
 .prov-sug{display:flex;flex-direction:column;gap:8px;margin-top:8px}
-.p-hl{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:12px 4px 0}
-.p-hl h1{font-size:3.5rem;letter-spacing:-.045em;line-height:1}
-.p-hl p{margin:10px 0 0;color:var(--ink-2);font-size:1rem;max-width:62ch}
+.p-hl{position:relative;overflow:hidden;min-height:340px;border-radius:24px;background:var(--navy);color:#fff;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:28px}
+.p-hl > img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 42%}
+.p-hl::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,24,23,.82) 0%,rgba(20,24,23,.5) 42%,rgba(20,24,23,.05) 72%),linear-gradient(0deg,rgba(20,24,23,.55) 0%,rgba(20,24,23,0) 45%)}
+.p-hl > div{position:relative;z-index:1}
+.p-hl h1{font-size:3.5rem;letter-spacing:-.045em;line-height:1;color:#fff}
+.p-hl p{margin:10px 0 0;color:#ffffffe0;font-size:1rem;max-width:44ch}
 .p-hl .btns{display:flex;gap:8px;flex-wrap:wrap}
-.p-gr{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px;margin-top:-8px}
+.p-hl button.primary{background:#fbfaf7;border-color:#fbfaf7;color:#191b1a}
+.p-hl button.ghost{background:rgba(20,24,23,.5);border-color:#ffffff66;color:#fff;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.p-gr{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px;margin-top:-10px}
 .pt{background:var(--sheet);border:0;border-radius:20px;padding:18px;min-width:0;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:stretch;gap:0;text-align:left;white-space:normal;font-weight:400;color:var(--ink);font-size:inherit}
 button.pt{cursor:pointer}
 button.pt:active:not(:disabled){transform:scale(.985)}
@@ -265,7 +270,10 @@ button.pt:active:not(:disabled){transform:scale(.985)}
 @media (hover:hover) and (pointer:fine){.p-ql button:hover{text-decoration:underline;text-underline-offset:3px}}
 .p-ql svg{width:13px;height:13px;fill:none;stroke:var(--ink-2);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 @media (max-width:900px){
+  .p-hl{min-height:400px;padding:22px;align-content:flex-end}
   .p-hl h1{font-size:2.5rem}
+  .p-hl > img{object-position:50% 50%}
+  .p-hl::after{background:linear-gradient(0deg,rgba(20,24,23,.92) 0%,rgba(20,24,23,.74) 58%,rgba(20,24,23,.1) 92%)}
   .p-fe,.p-kp,.p-rn,.p-ac{grid-column:1/-1}
   .p-fe .im{inset:0 0 0 20%}
   .p-fe::after{background:linear-gradient(0deg,#1f2523 42%,#1f252300 88%),linear-gradient(90deg,#1f2523 22%,#1f252300 70%)}
@@ -807,7 +815,7 @@ function renderPanel(v){
   const mas = prox.slice(1, 4);
   const tile = (go, lb, val, cls = '') => `<button class="pt" data-view-go="${go}"><span class="lb">${lb}</span><b class="${cls}">${val}</b></button>`;
   v.innerHTML = `
-  <header class="p-hl"><div><h1>${saludo}.</h1><p>${resumen}</p></div>
+  <header class="p-hl"><img src="portada.jpg" alt="Collage de eventos: concierto, congreso, carrera popular, festival y cena de gala" width="1800" height="1004" fetchpriority="high"><div><h1>${saludo}.</h1><p>${resumen}</p></div>
     <div class="btns"><button class="ghost" data-view-go="packs">Contratar un pack</button><button class="primary" data-act="new-ev">+ Nuevo evento</button></div></header>
   <div class="p-gr">
     ${sig ? `<button class="pt p-fe" data-open-ev="${sig.id}"><div class="im">${sceneSVG(escenaDe(sig.tipo))}</div><div><div class="lb">Próximo acto</div><div class="p-dd">${+sig.fecha.slice(8, 10)}<small>${fmes(sig.fecha, 'long')}</small></div></div>
